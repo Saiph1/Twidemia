@@ -1,4 +1,4 @@
-# Twidemic
+# Twidemia
 CSCI3100 project
 
 To start the project
