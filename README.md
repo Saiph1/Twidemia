@@ -7,7 +7,7 @@ To start the project
 2. Clone this repository
 3. Install required libraries in the cloned directory
 ```
-num install
+npm install
 ```
 4. Run nextjs server in development mode
 ```
