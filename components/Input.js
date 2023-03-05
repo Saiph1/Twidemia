@@ -1,5 +1,5 @@
 export default function Input() {
   return (
-    <div>Input componenet</div>
+    <div>Tweet Input Component</div>
   )
 }
