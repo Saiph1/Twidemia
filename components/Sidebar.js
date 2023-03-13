@@ -2,7 +2,6 @@ import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
 import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon} from "@heroicons/react/solid"
 import { signOut } from "next-auth/react"
-import { server } from "@/config";
 
 export default function Sidebar({user}) {
   return (

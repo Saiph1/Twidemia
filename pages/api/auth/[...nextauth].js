@@ -1,8 +1,7 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import {server} from '../../../config'
 import clientPromise from "../../../lib/mongodb";
-// import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
+import checkCredentials from "../../../lib/signin";
 
 
 export const authOptions = {
@@ -25,17 +24,11 @@ export const authOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-
-        const res = await fetch(`${server}/api/auth`, {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" }
-        })
-        const user = await res.json()
+        const data = await checkCredentials(credentials)
 
         // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user
+        if (data) {
+          return data
         }
         // Return null if user data could not be retrieved
         return null
@@ -59,6 +52,10 @@ export const authOptions = {
 
       return session
     }
+  },
+  pages: {
+    signIn: '/auth/signin',
+    // error: '@/pages/auth/error', not implemented
   }
 }
 
