@@ -1,9 +1,8 @@
-import clientPromise from '@/lib/mongodb'
-import { hash } from 'bcryptjs';
-
+import clientPromise from "@/lib/mongodb";
+import { hash } from "bcryptjs";
 
 async function handler(req, res) {
-  if (req.method !== 'POST') {
+  if (req.method !== "POST") {
     return;
   }
 
@@ -22,22 +21,26 @@ async function handler(req, res) {
   */
 
   const client = await clientPromise;
-  const db = client.db('csci3180');
-  const existingUser = await db.collection('user').findOne({ username: username });
+  const db = client.db("csci3180");
+  const existingUser = await db
+    .collection("user")
+    .findOne({ username: username });
 
   if (existingUser) {
-    res.status(200).json({ user: null, message: `User "${username}" exists already!` });
+    res
+      .status(200)
+      .json({ user: null, message: `User "${username}" exists already!` });
     return;
   }
 
   const hashedPassword = await hash(password, 8);
 
-  db.collection('user').insertOne({
+  db.collection("user").insertOne({
     username: username,
     password: hashedPassword,
   });
 
-  res.status(201).json({ user: username, message: 'Created user!' });
+  res.status(201).json({ user: username, message: "Created user!" });
 }
 
 export default handler;
