@@ -10,7 +10,7 @@ CSCI3100 project
     npm install
     ```
 
-1. Create a folder called `.env.local` in the root folder, with the following contents:
+1. Create a file called `.env.local` in the root folder, with the following contents:
     ```
     MONGODB_URI=mongodb+srv://twidemia:twidemia123@csci3180.3ddoeqw.mongodb.net/?retryWrites=true&w=majority
 
