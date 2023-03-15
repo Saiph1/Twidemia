@@ -6,28 +6,28 @@ CSCI3100 project
 1. First install nodejs at https://nodejs.org/en/download/
 1. Clone this repository
 1. Install required libraries in the cloned directory
-```
-npm install
-```
+    ```
+    npm install
+    ```
 
 1. Create a folder called `.env.local` in the root folder, with the following contents:
-```
-MONGODB_URI=mongodb+srv://twidemia:twidemia123@csci3180.3ddoeqw.mongodb.net/?retryWrites=true&w=majority
+    ```
+    MONGODB_URI=mongodb+srv://twidemia:twidemia123@csci3180.3ddoeqw.mongodb.net/?retryWrites=true&w=majority
 
-NEXTAUTH_SECRET=YxHMNOc9B+x9LlUD3wYU/ewzBgaI0bSmbnOZDoWEHZg=
-NEXTAUTH_URL=http://localhost:3000
+    NEXTAUTH_SECRET=YxHMNOc9B+x9LlUD3wYU/ewzBgaI0bSmbnOZDoWEHZg=
+    NEXTAUTH_URL=http://localhost:3000
 
-```
+    ```
 
 1. Run nextjs server in development mode
-```
-npm run dev
-```
+    ```
+    npm run dev
+    ```
 
 1. Access the project on:
-```
-localhost:3000
-```
+    ```
+    localhost:3000
+    ```
 
 1. For development, download github desktop at https://desktop.github.com/
 
