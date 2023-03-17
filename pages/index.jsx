@@ -6,8 +6,9 @@ import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
 
+import Slider from '@mui/material/Slider'
+
 import React from 'react'
-import  { Redirect } from 'react-router-dom'
 
 
 export default function Home() {
