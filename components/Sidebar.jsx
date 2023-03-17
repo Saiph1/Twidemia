@@ -4,11 +4,11 @@ import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon, BookOpenIcon} from "@
 import {useRouter} from "next/router";
 
 export default function Sidebar() {
-    const handleProfile = (id, e) => {
-        e.preventDefault;
-        //router.push("/location?venueid="+id);
-        router.push("/profile/" + id); //change to params
-    }
+    // const handleProfile = (id, e) => {
+    //     e.preventDefault;
+    //     //router.push("/location?venueid="+id);
+    //     router.push("/profile/" + id); //change to params
+    // }
     return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
         {/* Twidemia Logo */}
@@ -20,8 +20,8 @@ export default function Sidebar() {
         {/* Menu */}
         <div className="mt-4 mb-2.5 xl-items-start"> 
             <a href="/"> <SidebarMenuItem text="Home" Icon={HomeIcon} active/> </a>
-            <a href="profile" onClick={handleProfile}> <SidebarMenuItem text="Profile" Icon={UserIcon}/> </a>
-            <a href="explore" onClick={()=>console.log("hi")}> <SidebarMenuItem text="Explore" Icon={BookOpenIcon} /> </a>
+            <a href="profile" > <SidebarMenuItem text="Profile" Icon={UserIcon}/> </a>
+            <a href="explore" > <SidebarMenuItem text="Explore" Icon={BookOpenIcon} /> </a>
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
 
         </div>
