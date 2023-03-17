@@ -1,7 +1,14 @@
 import Head from 'next/head'
-
+import dbConnect from "../lib/dbConnect";
+import mongoose from "mongoose";
 // https://flowbite.com/blocks/marketing/login/
 export default function login() {
+    // Just a simple example for testing backend   
+    const handleclick = () =>{
+        fetch('api/user', {method: 'POST'})
+        .then(()=>console.log("success."))
+    }
+
     return (
       <>
         <Head>
@@ -42,10 +49,12 @@ export default function login() {
                             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white">Forgot password?</a>
                         </div>
                         <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login</button>
+                        
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-white"> Sign up</a>
                         </p>
                     </form>
+                    <button class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onClick={handleclick}>Backend testing button</button>
                 </div>
             </div>
         </div>
@@ -59,3 +68,20 @@ export default function login() {
       </>
     )
   }
+
+  export async function getServerSideProps(props) {
+    let isDbConnected = false;
+    try {
+        // Try to connect the DB.
+        if (await dbConnect()) isDbConnected = true;
+    } catch (e) {
+        // If it cannot connect to DB, output log to console by using error flag.
+        console.error(e)
+    }
+
+    // Show the mongoose connection status in back end.
+    console.log(mongoose.connection.readyState);
+
+    // Return all post and login status by props.
+    return {props: {isDbConnected}}
+}

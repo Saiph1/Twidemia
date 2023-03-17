@@ -5,7 +5,7 @@ import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
 
-import Slider from '@mui/material/Slider';
+// import Slider from '@mui/material/Slider';
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
 
       
       <main className="flex min-h-screen max-w-7xl mx-auto">
-
+        
         {/* Sidebar */}
         <Sidebar />
         
@@ -30,7 +30,7 @@ export default function Home() {
         
         {/* Widgets */}
         <Widgets/>
-
+        
         {/* Model */}
       </main>
 
