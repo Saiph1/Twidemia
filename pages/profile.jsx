@@ -6,7 +6,6 @@ import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
 import ProfileContainer from '@/components/ProfileContainer'
 
-import Slider from '@mui/material/Slider';
 
 export default function Home() {
   return (
