@@ -4,11 +4,10 @@ import Image from 'next/image'
 import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
-import ProfileContainer from '@/components/ProfileContainer'
+import ExploreContainer from '@/components/ExploreContainer'
 
-import Slider from '@mui/material/Slider';
 
-export default function Home() {
+export default function Explore() {
   return (
     <>
       <Head>
@@ -23,7 +22,7 @@ export default function Home() {
 
         {/* Sidebar */}
         <Sidebar />
-        <ProfileContainer/>
+        <ExploreContainer/>
         <Widgets/>
 
       </main>

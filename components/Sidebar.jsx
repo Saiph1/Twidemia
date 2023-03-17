@@ -1,9 +1,15 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
-import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon} from "@heroicons/react/solid"
+import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon, BookOpenIcon} from "@heroicons/react/solid"
+import {useRouter} from "next/router";
 
 export default function Sidebar() {
-  return (
+    const handleProfile = (id, e) => {
+        e.preventDefault;
+        //router.push("/location?venueid="+id);
+        router.push("/profile/" + id); //change to params
+    }
+    return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
         {/* Twidemia Logo */}
         <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
@@ -13,8 +19,9 @@ export default function Sidebar() {
 
         {/* Menu */}
         <div className="mt-4 mb-2.5 xl-items-start"> 
-            <SidebarMenuItem text="Home" Icon={HomeIcon} active/>
-            <SidebarMenuItem text="Profile" Icon={UserIcon} />
+            <a href="/"> <SidebarMenuItem text="Home" Icon={HomeIcon} active/> </a>
+            <a href="profile" onClick={handleProfile}> <SidebarMenuItem text="Profile" Icon={UserIcon}/> </a>
+            <a href="explore" onClick={()=>console.log("hi")}> <SidebarMenuItem text="Explore" Icon={BookOpenIcon} /> </a>
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
 
         </div>
