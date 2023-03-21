@@ -12,7 +12,7 @@ CSCI3100 project
 
 1. Create a file called `.env.local` in the root folder, with the following contents:
     ```
-    MONGODB_URI=mongodb+srv://twidemia:twidemia123@csci3180.3ddoeqw.mongodb.net/?retryWrites=true&w=majority
+    MONGODB_URI=mongodb+srv://Twidemia_Beta:Pot7Igg91HosFmQ8@cluster0.0zq4ijz.mongodb.net/Twidemia_Beta?retryWrites=true&w=majority
 
     NEXTAUTH_SECRET=YxHMNOc9B+x9LlUD3wYU/ewzBgaI0bSmbnOZDoWEHZg=
     NEXTAUTH_URL=http://localhost:3000
