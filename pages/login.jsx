@@ -5,7 +5,7 @@ import { getCsrfToken, getProviders } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import Link from 'next/link'
+import Link from "next/link";
 // https://flowbite.com/blocks/marketing/login/
 
 export default function Login({ csrfToken, error, providers }) {

@@ -143,7 +143,10 @@ export default function Signup() {
                       />
                     </div>
                     {message ? (
-                      <div className={error? "text-red-500": "text-gray-900"}> {message}</div>
+                      <div className={error ? "text-red-500" : "text-gray-900"}>
+                        {" "}
+                        {message}
+                      </div>
                     ) : (
                       ""
                     )}
