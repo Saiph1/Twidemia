@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import clientPromise from "../../../lib/mongodb";
 import checkCredentials from "../../../lib/signin";
 
 export const authOptions = {
@@ -38,22 +37,22 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userid = user.id;
-        token.username = user.name;
-        token.usertype = user.type;
+        token.userId = user.userId;
+        token.username = user.username;
+        token.admin = user.admin;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.userid;
-      session.user.name = token.username;
-      session.user.type = token.usertype;
+      session.user.userId = token.userId;
+      session.user.username = token.username;
+      session.user.admin = token.admin;
 
       return session;
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/login",
     // error: '@/pages/auth/error', not implemented
   },
 };

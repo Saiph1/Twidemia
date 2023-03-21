@@ -1,5 +1,5 @@
-import clientPromise from "@/lib/mongodb";
-import { hash } from "bcryptjs";
+import dbConnect from "../../../lib/dbConnect";
+import User from "../../../models/User";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,39 +8,32 @@ async function handler(req, res) {
 
   const data = req.body;
 
-  const { username, password } = data;
+  const { email, password } = data;
 
-  /*
-  if (password.trim().length < 7) {
-    res.status(422).json({
-      message:
-        'Invalid input - password should be at least 7 characters long.',
+  await dbConnect();
+  try {
+    const existUser = await User.exists({ email: email });
+    if (existUser) {
+      res.status(200).json({
+        user: null,
+        message: `Email registered already!`,
+      });
+      return;
+    }
+    const user = new User({
+      email: email,
+      password: password,
     });
-    return;
+    user.save();
+    res.status(201).json({
+      user: user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      user: null,
+      message: error.message,
+    });
   }
-  */
-
-  const client = await clientPromise;
-  const db = client.db("csci3180");
-  const existingUser = await db
-    .collection("user")
-    .findOne({ username: username });
-
-  if (existingUser) {
-    res
-      .status(200)
-      .json({ user: null, message: `User "${username}" exists already!` });
-    return;
-  }
-
-  const hashedPassword = await hash(password, 8);
-
-  db.collection("user").insertOne({
-    username: username,
-    password: hashedPassword,
-  });
-
-  res.status(201).json({ user: username, message: "Created user!" });
 }
 
 export default handler;

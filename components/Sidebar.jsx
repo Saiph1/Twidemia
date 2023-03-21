@@ -43,8 +43,8 @@ export default function Sidebar({ user }) {
           className="h-10 w-10 rounded-full xl:mr-2"
         />
         <div className="leading-5 hidden xl:inline">
-          <h4 className="font-bold">{user.name}</h4>
-          <p className="text-gray-500">@{user.id}</p>
+          <h4 className="font-bold">{user.username}</h4>
+          <p className="text-gray-500">@{user.userId}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline"></DotsHorizontalIcon>
       </button>

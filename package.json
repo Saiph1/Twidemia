@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{js,ts,tsx}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -15,6 +15,7 @@
     "@heroicons/react": "^1.0.6",
     "@mui/material": "^5.11.13",
     "@next/font": "13.1.6",
+    "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "bson": "^5.1.0",
     "eslint": "8.34.0",
