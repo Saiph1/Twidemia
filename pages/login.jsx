@@ -37,7 +37,7 @@ export default function Login({ csrfToken, error, providers }) {
     if (error === "CredentialsSignin") {
       setErrorMessage("Please check your email or password");
     }
-  }, []);
+  }, [error]);
 
   if (status === "loading") {
     return <></>;

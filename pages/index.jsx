@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
+import Input from "@/components/Input";
 
 import Slider from "@mui/material/Slider";
 
@@ -35,7 +36,7 @@ export default function Home() {
           <Sidebar user={session.user} />
 
           {/* Feed */}
-          <Feed />
+          <Feed content={{ header: "Home", content: <Input /> }} />
 
           {/* Widgets */}
           <Widgets />
