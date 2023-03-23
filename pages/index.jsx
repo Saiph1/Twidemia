@@ -1,11 +1,11 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from "next/head";
+import Image from "next/image";
 
-import Sidebar from '@/components/Sidebar'
-import Feed from '@/components/Feed'
-import Widgets from '@/components/Widgets'
+import Sidebar from "@/components/Sidebar";
+import Feed from "@/components/Feed";
+import Widgets from "@/components/Widgets";
 
-import Slider from '@mui/material/Slider';
+import Slider from "@mui/material/Slider";
 
 export default function Home() {
   return (
@@ -18,24 +18,18 @@ export default function Home() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      
       <main className="flex min-h-screen max-w-7xl mx-auto">
-
         {/* Sidebar */}
         <Sidebar />
-        
 
         {/* Feed */}
-        <Feed/>
-        
+        <Feed />
+
         {/* Widgets */}
-        <Widgets/>
+        <Widgets />
 
         {/* Model */}
       </main>
-
-      
-      
     </>
-  )
+  );
 }

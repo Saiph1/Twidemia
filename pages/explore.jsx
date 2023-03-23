@@ -1,11 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from "next/head";
+import Image from "next/image";
 
-import Sidebar from '@/components/Sidebar'
-import Feed from '@/components/Feed'
-import Widgets from '@/components/Widgets'
-import ExploreContainer from '@/components/ExploreContainer'
-
+import Sidebar from "@/components/Sidebar";
+import Feed from "@/components/Feed";
+import Widgets from "@/components/Widgets";
+import ExploreContainer from "@/components/ExploreContainer";
 
 export default function Explore() {
   return (
@@ -17,19 +16,12 @@ export default function Explore() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      
       <main className="flex min-h-screen max-w-7xl mx-auto">
-
         {/* Sidebar */}
         <Sidebar />
-        <ExploreContainer/>
-        <Widgets/>
-
+        <ExploreContainer />
+        <Widgets />
       </main>
-
-      
-      
-      
     </>
-  )
+  );
 }
