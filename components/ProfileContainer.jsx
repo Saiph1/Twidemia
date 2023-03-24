@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -14,6 +13,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import CardMedia from '@mui/material/CardMedia';
 
 export default function ProfileContainer() {
   const [open, setOpen] = React.useState(false);
@@ -51,37 +54,39 @@ export default function ProfileContainer() {
       <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
         <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
       </div>
-
+      
       <Card
         sx={{ minWidth: 275 }}
-        style={{ border: "none", boxShadow: "none" }}
+        style={{ border: "none", boxShadow: "none"}}
       >
-        <CardActions
+        <CardActions style={{backgroundImage: `url("test_background.avif")`,  height: 240 }}>
+          <Avatar
+          alt="Remy Sharp"
+          src="/Avatar_test.png"
+          sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1  }}
+          />
+        </CardActions>
+        
+        <CardContent>
+          <CardActions
           disableSpacing
-          sx={{
-            alignSelf: "stretch",
+          sx={{ 
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "flex-start",
-            p: 3,
           }}
-        >
+          >
           <Button size="small" onClick={handleClickOpen}>
             Edit profile
           </Button>
         </CardActions>
-        <Avatar
-          alt="Remy Sharp"
-          src="/Twidemia-logo.png"
-          sx={{ width: 100, height: 100 }}
-        />
-        <CardContent>
+          
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
           <Typography variant="h5" component="div">
-            xxx
+            Username
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            @xxx
+            @User_Id
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             X following X follower
@@ -98,7 +103,6 @@ export default function ProfileContainer() {
             <Button size="small">Learn More</Button>
             </CardActions> */}
       </Card>
-
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit profile</DialogTitle>
         <DialogContent>
@@ -106,6 +110,16 @@ export default function ProfileContainer() {
                         To subscribe to this website, please enter your email address here. We
                         will send updates occasionally.
                     </DialogContentText> */}
+          
+          <Tooltip title="Change your avatar">
+            <IconButton>
+              <Avatar
+                alt="Remy Sharp"
+                src="/Avatar_test.png"
+                sx={{ width: 80, height: 80 }}
+              />
+            </IconButton>
+          </Tooltip>
           <TextField
             autoFocus
             margin="dense"
@@ -131,7 +145,6 @@ export default function ProfileContainer() {
           {/* <DialogContentText>
                         Please input a description at least 100 words.
                     </DialogContentText> */}
-
           <TextField
             autoFocus
             margin="dense"
