@@ -5,10 +5,23 @@ import {
   UserIcon,
   DotsHorizontalIcon,
   InboxIcon,
+  BookOpenIcon,
 } from "@heroicons/react/solid";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Sidebar({ user }) {
+  // const handleProfile = (id, e) => {
+  //     e.preventDefault;
+  //     //router.push("/location?venueid="+id);
+  //     router.push("/profile/" + id); //change to params
+  // }
+  if (!user) {
+    user = {
+      username: "not signin",
+      userId: "not signin",
+    }
+  }
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
       {/* Twidemia Logo */}
@@ -22,8 +35,18 @@ export default function Sidebar({ user }) {
 
       {/* Menu */}
       <div className="mt-4 mb-2.5 xl-items-start">
-        <SidebarMenuItem text="Home" Icon={HomeIcon} active />
-        <SidebarMenuItem text="Profile" Icon={UserIcon} />
+        <a href="/">
+          {" "}
+          <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
+        </a>
+        <a href="profile">
+          {" "}
+          <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
+        </a>
+        <a href="explore">
+          {" "}
+          <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
+        </a>
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
       </div>
 
