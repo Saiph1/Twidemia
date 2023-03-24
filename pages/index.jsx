@@ -10,8 +10,6 @@ import Input from "@/components/Input";
 
 import Slider from "@mui/material/Slider";
 
-import React from "react";
-
 export default function Home() {
   const { status, data: session } = useSession({
     required: true,
