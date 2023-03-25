@@ -3,8 +3,9 @@
 /* just pretending this is a database */
 export default [
   {
+    tweetID: "t-1dfjlasdjfls",
     userID: 928304934820,
-    iconURL: "https://i.imgur.com/3hUCHfOb.jpg",
+    iconURL: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
     userName: 'user1-Sam',
     userCustomizeID: 'mrsamisstupid',
     postDateTime: "54m",
@@ -13,8 +14,9 @@ export default [
     numOfLikes: 100,
   },
   {
+    tweetID: "t-2asldjf2jlsdk",
     userID: 294025493820,
-    iconURL: "https://i.imgur.com/3hUCHfOb.jpg",
+    iconURL: "https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png",
     userName: 'user2-Sky',
     userCustomizeID: 'mrskyissmart',
     postDateTime: "2h",
@@ -23,7 +25,8 @@ export default [
     numOfLikes: 100,
   },
   {
-    userID: 294025493820,
+    tweetID: "t-312kjdslsl3523",
+    userID: 854395830424,
     iconURL: "https://i.imgur.com/3hUCHfOb.jpg",
     userName: 'user3-Floor',
     userCustomizeID: 'mrfloorissmart',

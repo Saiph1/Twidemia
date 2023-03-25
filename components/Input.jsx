@@ -1,15 +1,28 @@
-import TweetData from './tweetHub'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import TweetData from './tweetHub' // <-- delete later after the backend and database complete
+
+//https://www.youtube.com/watch?v=u5gBoKVukIU  <--  UI design Link
 
 export default function Input() {
   
+  // Using .map() to generate each tweet post corresponds to each tweet object in database
+  const [tweetData, setTweetData] = useState()
+
+  useEffect(() => {
+    setTweetData(TweetData)
+  }, [])
+
   return (
     <div className='flex flex-col items-center gap-8 mt-8'>
-      {TweetData.map(tweet => {
+      {tweetData?.map(tweet => {
         return <div key={tweet.userID} className="shadow-tweetPosts bg-white flex rounded-2xl w-9/10 gap-4 py-3 px-6 min-h-[8rem]">
           <div className='max-w-[3rem]'>
-            <img src={tweet.iconURL} alt="icon" className='rounded-full w-full object-cover'/>
+            <img src={tweet.iconURL} alt="icon" className='rounded-full w-full object-cover aspect-square'/>
           </div>
+
           <div className='w-full'>
+            {/* This part is Name, ID, Date */}
             <div className='flex justify-between mb-2 items-center'>
               <div className='flex flex-inline gap-4 items-center'>
                 <h5 className='font-bold'>{tweet.userName}</h5>
@@ -18,17 +31,19 @@ export default function Input() {
               <p className='text-gray-500 text-[12px]'>{tweet.postDateTime}</p>
             </div>
 
+            {/* This part is tweet content */}
             <div className='mb-2'>
               <p className='text-[16px] text-gray-600'>{tweet.tweetContent}</p>
             </div>
 
+            {/* This part is the Like, Comment, Share functions */}
             <div className='w-4/10 flex justify-between ml-[-0.5rem]'>
-              <label className='cursor-pointer  inline-flex gap-1 items-center text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-100 py-1 px-2'>
+              <Link href={`/posts/${tweet.tweetID}`} className='cursor-pointer  inline-flex gap-1 items-center text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-100 py-1 px-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
                 </svg>
-                <span className='text-[14px] '>{tweet.numOfComments}</span>
-              </label>
+                <span className="text-[14px] ">{tweet.numOfComments}</span>
+              </Link>
 
               <label className='cursor-pointer rounded-lg hover:bg-green-100 py-1 px-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5 text-gray-400 hover:text-green-500">
@@ -43,6 +58,7 @@ export default function Input() {
                 <span className='text-[14px] '>{tweet.numOfLikes}</span>
               </label>
             </div>
+
           </div>
         </div>
       })}
