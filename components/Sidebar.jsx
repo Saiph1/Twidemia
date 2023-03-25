@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
-import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon} from "@heroicons/react/solid"
+import {HomeIcon, UserIcon, DotsHorizontalIcon, InboxIcon, SparklesIcon} from "@heroicons/react/solid"
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -16,11 +17,13 @@ export default function Sidebar() {
             <SidebarMenuItem text="Home" Icon={HomeIcon} active/>
             <SidebarMenuItem text="Profile" Icon={UserIcon} />
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
-
+            <Link href={'/explore'} >
+                <SidebarMenuItem text="Explore" Icon={SparklesIcon} />
+            </Link>
         </div>
 
         {/* Button */}
-        <button className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">Tweet</button> 
+        <button className="bg-primary-blue text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">Tweet</button> 
             
 
 

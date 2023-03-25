@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import Tweet from './Tweet'
 import TweetData from './tweetHub' // <-- delete later after the backend and database complete
 
 //https://www.youtube.com/watch?v=u5gBoKVukIU  <--  UI design Link
@@ -14,54 +15,44 @@ export default function Input() {
   }, [])
 
   return (
-    <div className='flex flex-col items-center gap-8 mt-8'>
-      {tweetData?.map(tweet => {
-        return <div key={tweet.userID} className="shadow-tweetPosts bg-white flex rounded-2xl w-9/10 gap-4 py-3 px-6 min-h-[8rem]">
+    <div>
+      <div className='pt-4 pb-4 px-3'>
+        <div className='flex gap-4'>
           <div className='max-w-[3rem]'>
-            <img src={tweet.iconURL} alt="icon" className='rounded-full w-full object-cover aspect-square'/>
+            <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRr0YlatAy-hrNCQjzZ7fqDzNiXt7HGmzVaA&usqp=CAU'}  className='rounded-full w-full object-cover aspect-square'/>
           </div>
 
-          <div className='w-full'>
-            {/* This part is Name, ID, Date */}
-            <div className='flex justify-between mb-2 items-center'>
-              <div className='flex flex-inline gap-4 items-center'>
-                <h5 className='font-bold'>{tweet.userName}</h5>
-                <small className='text-gray-400'>@{tweet.userCustomizeID}</small>
+          <div className='pr-4 w-full'>
+            <textarea className='w-full min-h-[100px] my-1 py-2 px-3 rounded-sm' placeholder='What is happening?'/>
+            <div className='flex justify-between ml-3 items-center'>
+              <div className='flex gap-4'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="#1D9BF0" className="w-6 h-6 cursor-pointer">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="#1D9BF0" className="w-6 h-6 cursor-pointer">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 8.25v7.5m6-7.5h-3V12m0 0v3.75m0-3.75H18M9.75 9.348c-1.03-1.464-2.698-1.464-3.728 0-1.03 1.465-1.03 3.84 0 5.304 1.03 1.464 2.699 1.464 3.728 0V12h-1.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="#1D9BF0" className="w-6 h-6 cursor-pointer">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="#1D9BF0" className="w-6 h-6 cursor-pointer">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
               </div>
-              <p className='text-gray-500 text-[12px]'>{tweet.postDateTime}</p>
+              <button className='bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl'>Tweet</button>
             </div>
-
-            {/* This part is tweet content */}
-            <div className='mb-2'>
-              <p className='text-[16px] text-gray-600'>{tweet.tweetContent}</p>
-            </div>
-
-            {/* This part is the Like, Comment, Share functions */}
-            <div className='w-4/10 flex justify-between ml-[-0.5rem]'>
-              <Link href={`/posts/${tweet.tweetID}`} className='cursor-pointer  inline-flex gap-1 items-center text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-100 py-1 px-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
-                </svg>
-                <span className="text-[14px] ">{tweet.numOfComments}</span>
-              </Link>
-
-              <label className='cursor-pointer rounded-lg hover:bg-green-100 py-1 px-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-5 h-5 text-gray-400 hover:text-green-500">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
-              </label>
-
-              <label className='cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 ">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                </svg>
-                <span className='text-[14px] '>{tweet.numOfLikes}</span>
-              </label>
-            </div>
-
           </div>
         </div>
-      })}
+        
+      </div>
+
+      <div className='h-[14px] bg-gray-100 border-l border-r' />
+
+      <div className='flex flex-col items-center gap-8 mt-8'>
+        {tweetData?.map(tweet => {
+          return <Tweet tweet={tweet} key={tweet.tweetID}/>
+        })}
+      </div>
     </div>
   )
 }

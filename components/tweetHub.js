@@ -31,7 +31,7 @@ export default [
     userName: 'user3-Floor',
     userCustomizeID: 'mrfloorissmart',
     postDateTime: "2h",
-    tweetContent: "Hi!",
+    tweetContent: "Hi! guys, This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distincti",
     numOfComments: 0,
     numOfLikes: 3,
   } 
