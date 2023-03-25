@@ -111,7 +111,7 @@ export default function Login({ csrfToken, error, providers }) {
                         for="password"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                        Password
+                        Comfirm your password
                       </label>
                       <input
                         type="password"
