@@ -6,6 +6,7 @@ import {
   DotsHorizontalIcon,
   InboxIcon,
   BookOpenIcon,
+  UserRemoveIcon
 } from "@heroicons/react/solid";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -20,7 +21,7 @@ export default function Sidebar({ user }) {
     user = {
       username: "not signin",
       userId: "not signin",
-    }
+    };
   }
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
@@ -48,6 +49,7 @@ export default function Sidebar({ user }) {
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
         </a>
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+        <SidebarMenuItem text="Delete User" Icon={UserRemoveIcon} />
       </div>
 
       {/* Button */}

@@ -33,11 +33,7 @@ export default function Admin({ users }) {
 
         <main className="flex min-h-screen max-w-7xl mx-auto">
           <Sidebar user={session.user} />
-          {/* Feed */}
-          <Feed
-            content={{ header: "Admin", content: <Users users={users} /> }}
-          />
-
+          <Users users={users} />
           <Widgets />
 
           {/* Model */}

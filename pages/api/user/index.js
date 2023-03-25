@@ -21,10 +21,10 @@ export default async function handler(req, res) {
       try {
         // This is used for testing purpose for now.
         const user = new User({
-          username: "admin",
-          email: "admin@gmail.com",
-          userId: "adminid",
-          password: "adminpw",
+          username: "11223344",
+          email: "1234@gmail.com",
+          userId: "1234",
+          password: "1234",
           admin: false,
         });
         user.save();
