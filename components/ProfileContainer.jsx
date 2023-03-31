@@ -63,7 +63,7 @@ export default function ProfileContainer() {
           <Avatar
           alt="Remy Sharp"
           src="/Avatar_test.png"
-          sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1  }}
+          sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1 , border: "2.5px solid lightgrey"}}
           />
         </CardActions>
         
