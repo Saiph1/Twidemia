@@ -21,11 +21,11 @@ import CardMedia from '@mui/material/CardMedia';
 export default function ProfileContainer() {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleEditOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleEditClose = () => {
     setOpen(false);
   };
 
@@ -77,13 +77,20 @@ export default function ProfileContainer() {
           }}
           >
           <Button 
+          class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
+          size="small" 
+          >
+            Block
+          </Button>
+
+          <Button 
           class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow" 
           size="small" 
-          onClick={handleClickOpen}
+          onClick={handleEditOpen}
           >
             Edit profile
           </Button>
-        </CardActions>
+          </CardActions>
           
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
           <Typography variant="h5" component="div">
@@ -107,7 +114,7 @@ export default function ProfileContainer() {
             <Button size="small">Learn More</Button>
             </CardActions> */}
       </Card>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleEditClose}>
         <DialogTitle>Edit profile</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
@@ -166,8 +173,8 @@ export default function ProfileContainer() {
           </TextField>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Done</Button>
+          <Button onClick={handleEditClose}>Cancel</Button>
+          <Button onClick={handleEditClose}>Done</Button>
         </DialogActions>
       </Dialog>
     </div>
