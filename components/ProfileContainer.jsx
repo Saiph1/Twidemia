@@ -18,9 +18,19 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import CardMedia from '@mui/material/CardMedia';
 
+import Link from '@mui/material/Link';
+
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+
 export default function ProfileContainer({user}) {
   const [open, setOpen] = React.useState(false);
-
+  const [follower, setFollowerOpen] = React.useState(false);
+  
   const handleEditOpen = () => {
     setOpen(true);
   };
@@ -28,6 +38,15 @@ export default function ProfileContainer({user}) {
   const handleEditClose = () => {
     setOpen(false);
   };
+
+  const handleFollowerOpen = () => {
+    setFollowerOpen(true);
+  };
+
+  const handleFollowerClose = () => {
+    setFollowerOpen(false);
+  };
+
 
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
@@ -99,9 +118,33 @@ export default function ProfileContainer({user}) {
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             @{user.userId}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          
+          <Link
+            component="button"
+            onClick={handleFollowerOpen}
+            // sx={{ mb: 1.5 }} color="text.secondary"
+            variant="subtitle1"
+          >
+            X follower
+          </Link>
+
+
+          <Link
+            component="button" 
+            onClick={() => {
+              // ...process something
+            }}
+            // sx={{ mb: 1.5 }} color="text.secondary"
+            variant="subtitle1"
+          >
+            X following
+          </Link>
+          
+          
+          
+          {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {user.followinglist.length} following {user.followerlist.length} follower
-          </Typography>
+          </Typography> */}
           <Typography variant="body2">
             Year {user.year}. 
             <br/>
@@ -177,6 +220,37 @@ export default function ProfileContainer({user}) {
           <Button onClick={handleEditClose}>Done</Button>
         </DialogActions>
       </Dialog>
+
+      <Dialog open={follower} onClose={handleFollowerClose} fullWidth> 
+        <List >
+          {
+            <ListItem
+              secondaryAction={
+                <IconButton edge="end" onClick={handleFollowerClose}>
+                  Follow
+                </IconButton>
+              }
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  {/* <FolderIcon /> */}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                class="px-5"
+                primary="Single-line item"
+                secondary={true ? 'Secondary text' : null}
+              />
+            </ListItem>
+          }
+        </List>
+
+        <DialogActions>
+          <Button onClick={handleFollowerClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+
     </div>
   );
 }
