@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema({
   username: String,
   userId: {
     type: String,
-    unique: true,
   },
   createdDate: {
     type: Date,
