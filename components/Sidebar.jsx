@@ -40,20 +40,22 @@ export default function Sidebar({ user }) {
 
       {/* Menu */}
       <div className="mt-4 mb-2.5 xl-items-start">
-        <a href="/">
+        <div onClick={() => router.push("/")}>
           {" "}
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
-        </a>
+        </div>
         
         <div onClick={() => router.push("/profile/" + user.userId)}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
         </div>
         
-        <a href="explore">
+        <div onClick={() => router.push("/explore/")}>
           {" "}
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
-        </a>
+        </div>
+
+        
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
       </div>
 
