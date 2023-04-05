@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  faculty: {
+    type: String,
+    unique: true,
+  },
   createdDate: {
     type: Date,
     default: () => Date.now(),
@@ -35,11 +39,14 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   // Storing other model object as object ID array. 
-  followlist: [{
+  followinglist: [{
     type: Schema.Types.ObjectId,
     ref: "User"
   }],
-
+  followerlist: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
   blocklist: [{
     type: Schema.Types.ObjectId,
     ref: "User"

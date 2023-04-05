@@ -18,7 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import CardMedia from '@mui/material/CardMedia';
 
-export default function ProfileContainer() {
+export default function ProfileContainer({user}) {
   const [open, setOpen] = React.useState(false);
 
   const handleEditOpen = () => {
@@ -94,20 +94,18 @@ export default function ProfileContainer() {
           
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
           <Typography variant="h5" component="div">
-            Username
+            {user.username}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            @User_Id
+            @{user.userId}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            X following X follower
+          {user.followlist.length} following X follower
           </Typography>
           <Typography variant="body2">
             Year X. Major/minor
             <br />
-            {
-              "Input a description with at leaast 100 words Input a description with at leaast 100 words Input a description with at leaast 100 words"
-            }
+            {user.Description}
           </Typography>
         </CardContent>
         {/* <CardActions>

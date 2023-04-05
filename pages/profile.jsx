@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
@@ -17,8 +17,14 @@ export default function Home() {
       signIn();
     },
   });
+  const [userdata, setUserdata] = useState("");
+  useEffect(()=>{
+    fetch("/api/user/test")
+    .then((res)=>res.json())
+    .then((data)=>{setUserdata(data); console.log(userdata)});
+  }, [session]);
 
-  if (session) {
+  if (session) { 
     return (
       <>
         <Head>
@@ -31,10 +37,11 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer />
+          <ProfileContainer user={userdata.data} />
           <Widgets />
         </main>
       </>
     );
   }
 }
+
