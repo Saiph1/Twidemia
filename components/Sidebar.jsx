@@ -1,5 +1,8 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
+import Link from '@mui/material/Link';
+
+
 import {
   HomeIcon,
   UserIcon,
@@ -16,6 +19,8 @@ export default function Sidebar({ user }) {
   //     //router.push("/location?venueid="+id);
   //     router.push("/profile/" + id); //change to params
   // }
+  const router = useRouter();
+
   if (!user) {
     user = {
       username: "not signin",
@@ -39,10 +44,12 @@ export default function Sidebar({ user }) {
           {" "}
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
         </a>
-        <a href="profile">
+        
+        <div onClick={() => router.push("/profile/" + user.userId)}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
-        </a>
+        </div>
+        
         <a href="explore">
           {" "}
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
