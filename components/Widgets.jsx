@@ -1,6 +1,6 @@
 import { SearchIcon } from "@heroicons/react/outline";
 
-export default function Widgets() {
+export default function Widgets({  }) {
   return (
     <div className="xl:w-[600px] hidden lg:inline ml-3 space-y-5">
       <div className="sticky top-0 bg-white py-1.5 z-50">
@@ -17,10 +17,10 @@ export default function Widgets() {
       <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
         <h4 className="font-bold text-xl px-4">Who to follow</h4>
 
-        <div className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200">
+        <div className="flex items-center px-4 py-2 hover:bg-gray-200">
           <img className="rounded-full" width="40" src={""} alt="img" />
           <div className="truncate ml-4 leading-5">
-            <h4 className="font-bold hover:underline text-[14px] truncate">
+            <h4 className="font-bold hover:underline text-[14px] truncate cursor-pointer">
               User Name
             </h4>
             <h5 className="text-[13px] text-gray-500 truncate">@userID</h5>
