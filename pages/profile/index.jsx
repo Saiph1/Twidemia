@@ -30,7 +30,7 @@ export default function Home() {
   useEffect(()=>{
     fetch("/api/user/test")
     .then((res)=>res.json())
-    .then((data)=>{setUserdata(data.data); console.log(userdata)});
+    .then((data)=>{setUserdata(data.data); console.log(session)});
   }, [session]);
 
   if (session) { 
@@ -46,7 +46,7 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer user={userdata} />
+          <ProfileContainer user={userdata}/>
           <Widgets />
         </main>
       </>

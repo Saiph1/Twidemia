@@ -27,10 +27,9 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ProfileContainer({user}) {
+export default function ProfileContainer({user, myprofile} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
-  
   const handleEditOpen = () => {
     setOpen(true);
   };
@@ -46,7 +45,7 @@ export default function ProfileContainer({user}) {
   const handleFollowerClose = () => {
     setFollowerOpen(false);
   };
-
+  // console.log("myprofile", myprofile)
 
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
@@ -78,7 +77,7 @@ export default function ProfileContainer({user}) {
         sx={{ minWidth: 275 }}
         style={{ border: "none", boxShadow: "none"}}
       >
-        <CardActions style={{backgroundImage: `url("test_background.avif")`,  height: 240 }}>
+        <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 240 }}>
           <Avatar
           alt="Remy Sharp"
           src="/Avatar_test.png"
@@ -95,20 +94,27 @@ export default function ProfileContainer({user}) {
             alignItems: "flex-start",
           }}
           >
-          <Button 
+          {(!myprofile) && <Button 
           class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
           size="small" 
           >
             Block
-          </Button>
+          </Button>}
+          
+          {(!myprofile) && <Button 
+          class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow " 
+          size="small" 
+          >
+            Follow
+          </Button>}
 
-          <Button 
+          {(myprofile)&&<Button 
           class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow" 
           size="small" 
           onClick={handleEditOpen}
           >
             Edit profile
-          </Button>
+          </Button>}
           </CardActions>
           
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
