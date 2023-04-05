@@ -21,7 +21,10 @@ const UserSchema = new mongoose.Schema({
   },
   faculty: {
     type: String,
-    unique: true,
+  },
+  year: {
+    type: Number,
+    required: true,
   },
   createdDate: {
     type: Date,

@@ -100,10 +100,12 @@ export default function ProfileContainer({user}) {
             @{user.userId}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {user.followlist.length} following X follower
+          {user.followinglist.length} following {user.followerlist.length} follower
           </Typography>
           <Typography variant="body2">
-            Year X. Major/minor
+            Year {user.year}. 
+            <br/>
+            {user.faculty}
             <br />
             {user.Description}
           </Typography>

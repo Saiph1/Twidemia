@@ -26,6 +26,8 @@ export default async function handler(req, res) {
           userId: "test",
           password: "test",
           admin: false,
+          faculty: "Faculty of Engineering",
+          year: 2,
         });
         user.save();
         res.status(201).json({ success: true, data: user });

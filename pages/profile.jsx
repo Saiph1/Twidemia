@@ -17,11 +17,20 @@ export default function Home() {
       signIn();
     },
   });
-  const [userdata, setUserdata] = useState("");
+  const [userdata, setUserdata] = useState({
+    username: "Rendering...",
+    email: "Rendering...",
+    userId: "Rendering...",
+    password: "Rendering...",
+    faculty: "Rendering...",
+    followerlist: [],
+    followinglist: [],
+    year: 0, 
+  });
   useEffect(()=>{
     fetch("/api/user/test")
     .then((res)=>res.json())
-    .then((data)=>{setUserdata(data); console.log(userdata)});
+    .then((data)=>{setUserdata(data.data); console.log(userdata)});
   }, [session]);
 
   if (session) { 
@@ -37,7 +46,7 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer user={userdata.data} />
+          <ProfileContainer user={userdata} />
           <Widgets />
         </main>
       </>
