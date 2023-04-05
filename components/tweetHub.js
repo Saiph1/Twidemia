@@ -9,7 +9,8 @@ export default [
     userName: 'user1-Sam',
     userCustomizeID: 'mrsamisstupid',
     postDateTime: "54m",
-    tweetContent: "Hello guys! This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distinctio cupiditate nobis magnam delectus veniam illo. Alias?",
+    tweetContent:
+      "Hello guys! This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distinctio cupiditate nobis magnam delectus veniam illo. Alias?",
     numOfComments: 3,
     numOfLikes: 100,
   },
@@ -20,7 +21,8 @@ export default [
     userName: 'user2-Sky',
     userCustomizeID: 'mrskyissmart',
     postDateTime: "2h",
-    tweetContent: "Hello guys! This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distinctio cupiditate nobis magnam delectus veniam illo. Alias?",
+    tweetContent:
+      "Hello guys! This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distinctio cupiditate nobis magnam delectus veniam illo. Alias?",
     numOfComments: 33,
     numOfLikes: 100,
   },
@@ -28,11 +30,11 @@ export default [
     tweetID: "t-312kjdslsl3523",
     userID: 854395830424,
     iconURL: "https://i.imgur.com/3hUCHfOb.jpg",
-    userName: 'user3-Floor',
-    userCustomizeID: 'mrfloorissmart',
+    userName: "user3-Floor",
+    userCustomizeID: "mrfloorissmart",
     postDateTime: "2h",
     tweetContent: "Hi! guys, This is my first tweet!! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae dolor aperiam debitis distincti",
     numOfComments: 0,
     numOfLikes: 3,
-  } 
-]
+  },
+];

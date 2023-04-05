@@ -3,11 +3,14 @@ import { SearchIcon } from "@heroicons/react/outline";
 export default function Widgets() {
   return (
     <div className="xl:w-[600px] hidden lg:inline ml-3 space-y-5">
-        <div className="sticky top-0 bg-white py-1.5 z-50">
-            <div className="flex items-center p-3 rounded-full relative">
-                <SearchIcon className="h-5 z-50 text-gray-500" />
-                 <input type="text" placeholder="Search Twitter" className="absolute inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "/>
-            </div>
+      <div className="sticky top-0 bg-white py-1.5 z-50">
+        <div className="flex items-center p-3 rounded-full relative">
+          <SearchIcon className="h-5 z-50 text-gray-500" />
+          <input
+            type="text"
+            placeholder="Search Twitter"
+            className="absolute inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "
+          />
         </div>
 
         <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
@@ -22,13 +25,7 @@ export default function Widgets() {
                 <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold">Follow</button>
             </div> 
         </div>
-
-
-
-
-
-
-
+      </div>
     </div>
-  )
+  );
 }
