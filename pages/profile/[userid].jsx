@@ -15,6 +15,7 @@ export default function Home(props) {
       signIn();
     },
   });
+  const [load, setload] = useState(false);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -25,11 +26,12 @@ export default function Home(props) {
     followinglist: [],
     year: 0, 
   });
-  
+
   useEffect(()=>{
     fetch("/api/user/"+props.id)
     .then((res)=>res.json())
-    .then((data)=>{setUserdata(data.data); console.log(userdata)});
+    .then((data)=>{setUserdata(data.data); console.log(userdata)})
+    .then(()=>setload(true))
   }, [session]);
 
   if (session) { 
@@ -45,7 +47,7 @@ export default function Home(props) {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer user={userdata} myprofile={(session.user.userId === props.id)}/>
+          <ProfileContainer user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
           <Widgets />
         </main>
       </>

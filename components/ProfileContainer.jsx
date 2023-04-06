@@ -27,7 +27,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ProfileContainer({user, myprofile} ) {
+export default function ProfileContainer({user, myprofile, loaded} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
   const handleEditOpen = () => {
@@ -66,197 +66,217 @@ export default function ProfileContainer({user, myprofile} ) {
       label: "Faculty of Law",
     },
   ];
-
-  return (
-    <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
-      <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-        <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
-      </div>
-      
-      <Card
-        sx={{ minWidth: 275 }}
-        style={{ border: "none", boxShadow: "none"}}
-      >
-        <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 240 }}>
-          <Avatar
-          alt="Remy Sharp"
-          src="/Avatar_test.png"
-          sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1 , border: "2.5px solid lightgrey"}}
-          />
-        </CardActions>
+  if (loaded){
+    return (
+      <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
+        <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
+        </div>
         
-        <CardContent>
-          <CardActions
-          disableSpacing
-          sx={{ 
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-start",
-          }}
-          >
-          {(!myprofile) && <Button 
-          class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
-          size="small" 
-          >
-            Block
-          </Button>}
-          
-          {(!myprofile) && <Button 
-          class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow " 
-          size="small" 
-          >
-            Follow
-          </Button>}
-
-          {(myprofile)&&<Button 
-          class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow" 
-          size="small" 
-          onClick={handleEditOpen}
-          >
-            Edit profile
-          </Button>}
+        <Card
+          sx={{ minWidth: 275 }}
+          style={{ border: "none", boxShadow: "none"}}
+        >
+          <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 240 }}>
+            <Avatar
+            alt="Remy Sharp"
+            src="/Avatar_test.png"
+            sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1 , border: "2.5px solid lightgrey"}}
+            />
           </CardActions>
           
-          {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
-          <Typography variant="h5" component="div">
-            {user.username}
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            @{user.userId}
-          </Typography>
-          
-          <Link
-            component="button"
-            onClick={handleFollowerOpen}
-            // sx={{ mb: 1.5 }} color="text.secondary"
-            variant="subtitle1"
-          >
-            X follower
-          </Link>
-
-
-          <Link
-            component="button" 
-            onClick={() => {
-              // ...process something
+          <CardContent>
+            <CardActions
+            disableSpacing
+            sx={{ 
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
             }}
-            // sx={{ mb: 1.5 }} color="text.secondary"
-            variant="subtitle1"
-          >
-            X following
-          </Link>
-          
-          
-          
-          {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {user.followinglist.length} following {user.followerlist.length} follower
-          </Typography> */}
-          <Typography variant="body2">
-            Year {user.year}. 
-            <br/>
-            {user.faculty}
-            <br />
-            {user.Description}
-          </Typography>
-        </CardContent>
-        {/* <CardActions>
-            <Button size="small">Learn More</Button>
-            </CardActions> */}
-      </Card>
-      <Dialog open={open} onClose={handleEditClose}>
-        <DialogTitle>Edit profile</DialogTitle>
-        <DialogContent>
-          {/* <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We
-                        will send updates occasionally.
-                    </DialogContentText> */}
-          
-          <Tooltip title="Change your avatar">
-            <IconButton>
-              <Avatar
-                alt="Remy Sharp"
-                src="/Avatar_test.png"
-                sx={{ width: 80, height: 80 }}
-              />
-            </IconButton>
-          </Tooltip>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="User Name"
-            type="string"
-            fullWidth
-            variant="standard"
-            required
-          />
-
-          <TextField
-            autoFocus
-            margin="dense"
-            id="faculty"
-            label="Description"
-            type="string"
-            fullWidth
-            variant="standard"
-            helperText="Please input a description for least 100 words."
-            required
-          />
-          {/* <DialogContentText>
-                        Please input a description at least 100 words.
-                    </DialogContentText> */}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="faculty"
-            select
-            label="Faculty"
-            defaultValue=""
-            helperText="Please select your faculty"
-          >
-            {faculties.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleEditClose}>Cancel</Button>
-          <Button onClick={handleEditClose}>Done</Button>
-        </DialogActions>
-      </Dialog>
-
-      <Dialog open={follower} onClose={handleFollowerClose} fullWidth> 
-        <List >
-          {
-            <ListItem
-              secondaryAction={
-                <IconButton edge="end" onClick={handleFollowerClose}>
-                  Follow
-                </IconButton>
-              }
             >
-              <ListItemAvatar>
-                <Avatar>
-                  {/* <FolderIcon /> */}
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                class="px-5"
-                primary="Single-line item"
-                secondary={true ? 'Secondary text' : null}
-              />
-            </ListItem>
-          }
-        </List>
+            {(!myprofile) && <Button 
+            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
+            size="small" 
+            >
+              Block
+            </Button>}
+            
+            {(!myprofile) && <Button 
+            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow " 
+            size="small" 
+            >
+              Follow
+            </Button>}
+  
+            {(myprofile)&&<Button 
+            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow" 
+            size="small" 
+            onClick={handleEditOpen}
+            >
+              Edit profile
+            </Button>}
+            </CardActions>
+            
+            {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
+            <Typography variant="h5" component="div">
+              {user.username}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              @{user.userId}
+            </Typography>
+            
+            <Link
+              component="button"
+              onClick={handleFollowerOpen}
+              // sx={{ mb: 1.5 }} color="text.secondary"
+              variant="subtitle1"
+            >
+              X follower
+            </Link>
+  
+  
+            <Link
+              component="button" 
+              onClick={() => {
+                // ...process something
+              }}
+              // sx={{ mb: 1.5 }} color="text.secondary"
+              variant="subtitle1"
+            >
+              X following
+            </Link>
+            
+            
+            
+            {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {user.followinglist.length} following {user.followerlist.length} follower
+            </Typography> */}
+            <Typography variant="body2">
+              Year {user.year}. 
+              <br/>
+              {user.faculty}
+              <br />
+              {user.Description}
+            </Typography>
+          </CardContent>
+          {/* <CardActions>
+              <Button size="small">Learn More</Button>
+              </CardActions> */}
+        </Card>
+        <Dialog open={open} onClose={handleEditClose}>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogContent>
+            {/* <DialogContentText>
+                          To subscribe to this website, please enter your email address here. We
+                          will send updates occasionally.
+                      </DialogContentText> */}
+            
+            <Tooltip title="Change your avatar">
+              <IconButton>
+                <Avatar
+                  alt="Remy Sharp"
+                  src="/Avatar_test.png"
+                  sx={{ width: 80, height: 80 }}
+                />
+              </IconButton>
+            </Tooltip>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="User Name"
+              type="string"
+              fullWidth
+              variant="standard"
+              required
+            />
+  
+            <TextField
+              autoFocus
+              margin="dense"
+              id="faculty"
+              label="Description"
+              type="string"
+              fullWidth
+              variant="standard"
+              helperText="Please input a description for least 100 words."
+              required
+            />
+            {/* <DialogContentText>
+                          Please input a description at least 100 words.
+                      </DialogContentText> */}
+            <TextField
+              autoFocus
+              margin="dense"
+              id="faculty"
+              select
+              label="Faculty"
+              defaultValue=""
+              helperText="Please select your faculty"
+            >
+              {faculties.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleEditClose}>Cancel</Button>
+            <Button onClick={handleEditClose}>Done</Button>
+          </DialogActions>
+        </Dialog>
+  
+        <Dialog open={follower} onClose={handleFollowerClose} fullWidth> 
+          <List >
+            {
+              <ListItem
+                secondaryAction={
+                  <IconButton edge="end" onClick={handleFollowerClose}>
+                    Follow
+                  </IconButton>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    {/* <FolderIcon /> */}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  class="px-5"
+                  primary="Single-line item"
+                  secondary={true ? 'Secondary text' : null}
+                />
+              </ListItem>
+            }
+          </List>
+  
+          <DialogActions>
+            <Button onClick={handleFollowerClose}>Close</Button>
+          </DialogActions>
+        </Dialog>
+  
+  
+      </div>
+    );
+  }
+  else {
+    return (
+      <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
+        <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
+        </div>
+        <div role="status" className = "flex justify-center">
+          <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+          </svg>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
 
-        <DialogActions>
-          <Button onClick={handleFollowerClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
 
-
-    </div>
-  );
+    )
+  }
+  
 }
