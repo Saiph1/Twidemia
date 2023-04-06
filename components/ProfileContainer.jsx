@@ -30,22 +30,6 @@ import ListItemText from '@mui/material/ListItemText';
 export default function ProfileContainer({user, myprofile, loaded} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
-  const handleEditOpen = () => {
-    setOpen(true);
-  };
-
-  const handleEditClose = () => {
-    setOpen(false);
-  };
-
-  const handleFollowerOpen = () => {
-    setFollowerOpen(true);
-  };
-
-  const handleFollowerClose = () => {
-    setFollowerOpen(false);
-  };
-  // console.log("myprofile", myprofile)
 
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
@@ -66,6 +50,99 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
       label: "Faculty of Law",
     },
   ];
+
+  // For user information.
+  const [username, setUsername] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [facultyValue, setFacultyValue] = React.useState('');
+
+  const handleEditOpen = () => {
+    setOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setOpen(false);
+  };
+
+  const handleDoneClose = () => {
+    // setUsername(document.getElementById("name").value);
+    // setDescription(document.getElementById("description").value);
+    // // setFacultyValue(facultyValue);
+    // console.log(facultyValue);
+    // console.log(document.getElementById("name").value);
+    // console.log(document.getElementById("description").value);
+
+    setUsername(document.getElementById("name").value);
+    setDescription(document.getElementById("description").value);
+    
+    updateUser()
+    setOpen(false);
+  };
+
+  const handleCreateNewItem = (e) => {
+    e.preventDefault();
+    setFacultyValue(e.target.value)
+    // console.log(facultyValue)
+  };
+
+//   const handleClick = event => {
+//     const { myValue } = event.currentTarget.dataset;
+//     console.log(myValue) // --> 123
+// }
+
+  const handleFollowerOpen = () => {
+    setFollowerOpen(true);
+  };
+
+  const handleFollowerClose = () => {
+    setFollowerOpen(false);
+  };
+  // console.log("myprofile", myprofile)
+
+  
+
+
+  async function updateUser() {
+    // setUsername(document.getElementById("name").value);
+    // setDescription(document.getElementById("description").value);
+
+    let requestBody = {
+        username,
+        description,
+        facultyValue,
+    };
+
+    try {
+        // Post the user.
+        let res = await fetch('/api/user/' + user.userId, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(requestBody),
+        });
+
+        let data = await res.json();
+        console.log(data);
+
+        if (res.status === 200) {
+            // If successful, the res will return the created event, and it will be added to the table.
+            // setRows((prevRows) => [...prevRows, createRow(data._id, data.eventTitle),]);
+            console.log("done");
+            // handleDoneClose();
+        } else {
+            // If failed, print the error text with red colour.
+            // document.getElementById('errorText').innerText = data.error.toString();
+            console.log(data.error);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
   if (loaded){
     return (
       <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
@@ -194,7 +271,7 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
             <TextField
               autoFocus
               margin="dense"
-              id="faculty"
+              id="description"
               label="Description"
               type="string"
               fullWidth
@@ -213,17 +290,18 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
               label="Faculty"
               defaultValue=""
               helperText="Please select your faculty"
+              onChange={handleCreateNewItem}
             >
               {faculties.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {option.label} 
                 </MenuItem>
               ))}
             </TextField>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleEditClose}>Cancel</Button>
-            <Button onClick={handleEditClose}>Done</Button>
+            <Button onClick={handleDoneClose}>Done</Button>
           </DialogActions>
         </Dialog>
   
