@@ -7,6 +7,7 @@ import Widgets from "@/components/Widgets";
 import ProfileContainer from "@/components/ProfileContainer";
 import { useSession, signIn } from "next-auth/react";
 import Slider from "@mui/material/Slider";
+import dbConnect from "../../lib/dbConnect";
 
 export default function Home(props) {
   const { status, data: session } = useSession({
@@ -16,6 +17,7 @@ export default function Home(props) {
     },
   });
   const [load, setload] = useState(false);
+  const [update, setupdate] = useState(false);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -32,8 +34,11 @@ export default function Home(props) {
     .then((res)=>res.json())
     .then((data)=>{setUserdata(data.data); console.log(userdata)})
     .then(()=>setload(true))
-  }, [session]);
+  }, [session, update]);
 
+  function updates(){
+    setupdate(!update);
+  }
   if (session) { 
     return (
       <>
@@ -47,8 +52,8 @@ export default function Home(props) {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
-          <Widgets/>
+          <ProfileContainer update_parent={updates} user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
+          <Widgets update_page={updates}/>
         </main>
       </>
     );
