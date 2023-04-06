@@ -26,7 +26,7 @@ export default function Home(props) {
     followinglist: [],
     year: 0, 
   });
-
+  // fetching user data for profile
   useEffect(()=>{
     fetch("/api/user/"+props.id)
     .then((res)=>res.json())
@@ -48,7 +48,7 @@ export default function Home(props) {
           {/* Sidebar */}
           <Sidebar user={session.user} />
           <ProfileContainer user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
-          <Widgets />
+          <Widgets/>
         </main>
       </>
     );
