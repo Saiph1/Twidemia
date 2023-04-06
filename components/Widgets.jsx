@@ -2,7 +2,7 @@ import { SearchIcon } from "@heroicons/react/outline";
 import Widgets_item from "@/components/Widgets_item"
 import { useState, useEffect } from "react";
 
-export default function Widgets({users}) {
+export default function Widgets({users, update_page}) {
   const [alluser, setalluser] = useState();
   const [load, setload] = useState(false); 
   useEffect(()=>{
@@ -26,7 +26,7 @@ export default function Widgets({users}) {
         </div>
         <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
           <h4 className="font-bold text-xl px-4">Who to follow</h4>
-          {alluser.map((file, index)=> <Widgets_item key={index} single_userdata={alluser[index]} load={load}/>)}
+          {alluser.map((file, index)=> <Widgets_item key={index} update_page={update_page} single_userdata={alluser[index]} load={load}/>)}
         </div>
       </div>
     );

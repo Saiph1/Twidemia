@@ -1,8 +1,6 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
 import Link from '@mui/material/Link';
-
-
 import {
   HomeIcon,
   UserIcon,
@@ -13,7 +11,7 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user , update}) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
@@ -45,7 +43,7 @@ export default function Sidebar({ user }) {
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
         </div>
         
-        <div onClick={() => router.push("/profile/" + user.userId)}>
+        <div onClick={() => {update(); router.push("/profile/" + user.userId)}}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
         </div>

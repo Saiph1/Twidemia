@@ -30,14 +30,16 @@ export default function Home(props) {
   });
   // fetching user data for profile
   useEffect(()=>{
+    console.log(props.id);
     fetch("/api/user/"+props.id)
     .then((res)=>res.json())
     .then((data)=>{setUserdata(data.data); console.log(userdata)})
     .then(()=>setload(true))
-  }, [session, update]);
+  }, [session, update, load]);
 
   function updates(){
     setupdate(!update);
+    setload(false);
   }
   if (session) { 
     return (
@@ -51,7 +53,7 @@ export default function Home(props) {
 
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
-          <Sidebar user={session.user} />
+          <Sidebar user={session.user} update={updates} />
           <ProfileContainer update_parent={updates} user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
           <Widgets update_page={updates}/>
         </main>

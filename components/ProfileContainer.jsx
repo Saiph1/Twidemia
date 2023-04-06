@@ -27,7 +27,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ProfileContainer({user, myprofile, loaded} ) {
+export default function ProfileContainer({user, myprofile, loaded, update_parent} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
   // For user information.
@@ -58,7 +58,7 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
     setOpen(true);
   };
 
-  const handleEditClose = () => {
+  const handleEditClose = () => { 
     setOpen(false);
   };
 
@@ -69,7 +69,8 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
     // console.log(facultyValue);
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
-    updateUser()
+    updateUser();
+    update_parent();
     setOpen(false);
   };
 
