@@ -43,7 +43,7 @@ export default function Sidebar({ user , update}) {
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
         </div>
         
-        <div onClick={() => {update(); router.push("/profile/" + user.userId)}}>
+        <div onClick={() => {router.push("/profile/" + user.userId)}}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
         </div>
