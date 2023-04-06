@@ -30,7 +30,10 @@ import ListItemText from '@mui/material/ListItemText';
 export default function ProfileContainer({user, myprofile, loaded} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
-
+  // For user information.
+  const [username, setUsername] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [facultyValue, setFacultyValue] = React.useState('');
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
     {
@@ -51,11 +54,6 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
     },
   ];
 
-  // For user information.
-  const [username, setUsername] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [facultyValue, setFacultyValue] = React.useState('');
-
   const handleEditOpen = () => {
     setOpen(true);
   };
@@ -71,10 +69,6 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
     // console.log(facultyValue);
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
-
-    setUsername(document.getElementById("name").value);
-    setDescription(document.getElementById("description").value);
-    
     updateUser()
     setOpen(false);
   };
@@ -99,12 +93,7 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
   };
   // console.log("myprofile", myprofile)
 
-  
-
-
-  async function updateUser() {
-    // setUsername(document.getElementById("name").value);
-    // setDescription(document.getElementById("description").value);
+  function updateUser() {
 
     let requestBody = {
         username,
@@ -114,35 +103,17 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
 
     try {
         // Post the user.
-        let res = await fetch('/api/user/' + user.userId, {
+        fetch('/api/user/' + user.userId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(requestBody),
-        });
-
-        let data = await res.json();
-        console.log(data);
-
-        if (res.status === 200) {
-            // If successful, the res will return the created event, and it will be added to the table.
-            // setRows((prevRows) => [...prevRows, createRow(data._id, data.eventTitle),]);
-            console.log("done");
-            // handleDoneClose();
-        } else {
-            // If failed, print the error text with red colour.
-            // document.getElementById('errorText').innerText = data.error.toString();
-            console.log(data.error);
-        }
+        })
+        .then((res)=>res.json())
+        .then((data)=>console.log(data));
     } catch (error) {
         console.log(error);
     }
 }
-
-
-
-
-
-
   if (loaded){
     return (
       <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
@@ -265,6 +236,7 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
               type="string"
               fullWidth
               variant="standard"
+              onChange={()=>setUsername(document.getElementById("name").value)}
               required
             />
   
@@ -277,6 +249,7 @@ export default function ProfileContainer({user, myprofile, loaded} ) {
               fullWidth
               variant="standard"
               helperText="Please input a description for least 100 words."
+              onChange={()=>setDescription(document.getElementById("description").value)}
               required
             />
             {/* <DialogContentText>
