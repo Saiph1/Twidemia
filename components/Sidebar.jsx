@@ -11,7 +11,7 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function Sidebar({ user , update}) {
+export default function Sidebar({ user , update=()=>{}}) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
@@ -43,12 +43,12 @@ export default function Sidebar({ user , update}) {
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
         </div>
         
-        <div onClick={() => {router.push("/profile/" + user.userId)}}>
+        <div onClick={() => {update(); router.push("/profile/" + user.userId)}}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
         </div>
         
-        <div onClick={() => router.push("/explore/")}>
+        <div onClick={() =>router.push("/explore/")}>
           {" "}
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
         </div>
