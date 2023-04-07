@@ -31,23 +31,24 @@ export default function Widgets({users, update_page}) {
   }, [focus])
 
 
-const filterBySearch = (event) => {
-  // Access input value
-  const query = event.target.value;
-  // Create copy of item list
-  var updatedList = [...searchUserList];
+  // https://contactmentor.com/build-reactjs-search-filter/
+  const filterBySearch = (event) => {
+    // Access input value
+    const query = event.target.value;
+    // Create copy of item list
+    var updatedList = [...searchUserList];
 
-  // console.log("update list", updatedList);
-  // Include all elements which includes the search query
-  updatedList = updatedList.filter((item) => {
-    // console.log("this is tiem", item.username);
-    return (item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1) && (query.toLowerCase());
-  });
-  // Trigger render with updated values
-  setFilteredList(updatedList);
-  console.log(filteredList);
-  // setFilteredList()
-};
+    // console.log("update list", updatedList);
+    // Include all elements which includes the search query
+    updatedList = updatedList.filter((item) => {
+      // console.log("this is tiem", item.username);
+      return (item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1) && (query.toLowerCase());
+    });
+    // Trigger render with updated values
+    setFilteredList(updatedList);
+    console.log(filteredList);
+    // setFilteredList()
+  };
 
   
 
@@ -72,16 +73,17 @@ const filterBySearch = (event) => {
           <div className="flex items-center p-3 rounded-full relative">
             <SearchIcon className="h-5 z-50 text-gray-500" />
             <input
+              id = "searchbar"
               type="text"
               placeholder="Search Twitter"
               className="absolute inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "
               onChange={filterBySearch}
-              onFocus={()=>setFocus(true)}
-              onBlur={()=>setFocus(false)}
+              // onFocus={()=>setFocus(true)}
+              // onBlur={(e)=>{e.preventDefault; document.getElementById("searchbar").value = ""; setFilteredList([])}}
               // onInput={() => setSearch(document.getElementById('input').value)}
             />
           </div>
-          {focus?  filteredList.map((file, index)=> <Widgets_item key={index} single_userdata={filteredList[index]} load={load}/>) :  <div></div>} 
+          {true?  filteredList.map((file, index)=> <Widgets_item key={index} update_page={update_page} single_userdata={filteredList[index]} load={load}/>) :  <div></div>} 
           {/* {true? <div id="item-list">
               <ol>
                 {filteredList.map((item, index) => (
