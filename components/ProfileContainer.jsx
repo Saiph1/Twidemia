@@ -144,15 +144,17 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
             }}
             >
             {(!myprofile) && <Button 
+            disableRipple
             class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
             size="small" 
             >
               Block
             </Button>}
             
-            {(!myprofile) && <Button 
+            {(!myprofile) && <Button
+            disableRipple 
             class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow " 
-            size="small" 
+            size="small"
             >
               Follow
             </Button>}
