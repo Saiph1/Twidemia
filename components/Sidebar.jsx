@@ -6,10 +6,24 @@ import {
   DotsHorizontalIcon,
   InboxIcon,
   SparklesIcon,
+  BookOpenIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
+  // const handleProfile = (id, e) => {
+  //     e.preventDefault;
+  //     //router.push("/location?venueid="+id);
+  //     router.push("/profile/" + id); //change to params
+  // }
+  if (!user) {
+    user = {
+      username: "not signin",
+      userId: "not signin",
+    };
+  }
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
       {/* Twidemia Logo */}
@@ -23,11 +37,18 @@ export default function Sidebar() {
 
       {/* Menu */}
       <div className="mt-4 mb-2.5 xl-items-start">
-        <SidebarMenuItem text="Home" Icon={HomeIcon} active />
-        <SidebarMenuItem text="Profile" Icon={UserIcon} />
+        <a href="/">
+          {" "}
+          <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
+        </a>
+        <a href="profile">
+          {" "}
+          <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
+        </a>
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
         <Link href={"/explore"}>
           <SidebarMenuItem text="Explore" Icon={SparklesIcon} />
+          {/*BookOpenIcon?*/}
         </Link>
       </div>
 
@@ -37,18 +58,21 @@ export default function Sidebar() {
       </button>
 
       {/* Mini-Profile */}
-      <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
+      <button
+        className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto"
+        onClick={() => signOut()}
+      >
         <img
           src="/Twidemia-logo.png"
           alt=""
           className="h-10 w-10 rounded-full xl:mr-2"
         />
         <div className="leading-5 hidden xl:inline">
-          <h4 className="font-bold">User Name</h4>
-          <p className="text-gray-500">@userID</p>
+          <h4 className="font-bold">{user.username}</h4>
+          <p className="text-gray-500">@{user.userId}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline"></DotsHorizontalIcon>
-      </div>
+      </button>
       <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline"></DotsHorizontalIcon>
     </div>
   );

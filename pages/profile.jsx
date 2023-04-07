@@ -4,7 +4,7 @@ import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
-import Profile from "@/components/Profile";
+import ProfileContainer from "@/components/ProfileContainer";
 
 import { useSession, signIn } from "next-auth/react";
 
@@ -31,7 +31,7 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <Profile />
+          <ProfileContainer />
           <Widgets />
         </main>
       </>
