@@ -17,7 +17,7 @@ export default function Home(props) {
     },
   });
   const [load, setload] = useState(false);
-  const [update, setupdate] = useState(false);
+  // const [id, setid] = useState(props.id); 
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -28,19 +28,21 @@ export default function Home(props) {
     followinglist: [],
     year: 0, 
   });
+  // useEffect(()=>{
+  //   setid(props.id);
+  // })
   // fetching user data for profile
   useEffect(()=>{
     console.log(props.id);
     fetch("/api/user/"+props.id)
     .then((res)=>res.json())
-    .then((data)=>{setUserdata(data.data); console.log(userdata)})
-    .then(()=>setload(true))
-  }, [session, update, load]);
+    .then((data)=>{setUserdata(data.data); setload(true); console.log(userdata)})
+  }, [session, props]);
 
   function updates(){
-    setupdate(!update);
     setload(false);
   }
+
   if (session) { 
     return (
       <>
