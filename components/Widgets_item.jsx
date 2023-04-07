@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link"; 
 
-export default function Widgets_item({single_userdata, update_page}) {
+export default function Widgets_item({single_userdata, update_page=()=>{}}) {
   const router = useRouter(); 
   return(
     <div className="flex items-center px-4 py-2 hover:bg-gray-200">
