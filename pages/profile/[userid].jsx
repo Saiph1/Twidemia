@@ -17,6 +17,8 @@ export default function Home(props) {
     },
   });
   const [load, setload] = useState(false);
+  const [follow, setfollow] = useState(); 
+  const [followupdate, setfollowupdate] = useState(true); 
   // const [id, setid] = useState(props.id); 
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
@@ -33,14 +35,23 @@ export default function Home(props) {
   // })
   // fetching user data for profile
   useEffect(()=>{
+    if (!session) return; 
     console.log(props.id);
     fetch("/api/user/"+props.id)
     .then((res)=>res.json())
-    .then((data)=>{setUserdata(data.data); setload(true); console.log(userdata)})
+    .then((data)=>{
+      setUserdata(data.data);console.log(userdata);
+      setfollow(data.data.followerlist.map(item=>(item.userId === session.user.userId)).includes(true));
+    }).then(()=>setload(true));
   }, [session, props]);
-
+  // item.userId === session.user.UserId
   function updates(){
     setload(false);
+  }
+  function follow_update(){
+    // setload(false); 
+    // setfollowupdate(!followupdate);
+    setfollow(!follow); 
   }
 
   if (session) { 
@@ -56,8 +67,16 @@ export default function Home(props) {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} update={updates} />
-          <ProfileContainer update_parent={updates} user={userdata} myprofile={(session.user.userId === props.id)} loaded={load}/>
-          <Widgets update_page={updates}/>
+          <ProfileContainer 
+            update_parent={updates} 
+            user={userdata} 
+            myprofile={(session.user.userId === props.id)} 
+            loaded={load} 
+            viewerid={session.user.userId} 
+            followed={follow} 
+            followupdate={follow_update}
+          />
+          <Widgets update_page={updates} user={session.user.userId}/>
         </main>
       </>
     );

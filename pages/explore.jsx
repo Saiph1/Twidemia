@@ -27,7 +27,7 @@ export default function Explore() {
         {/* Sidebar */}
         <Sidebar user={session.user}/>
         <ExploreContainer />
-        <Widgets />
+        <Widgets user={session.user.userId} />
       </main>
     </>
   );

@@ -47,7 +47,7 @@ export default function Home() {
           {/* Sidebar */}
           <Sidebar user={session.user} />
           <ProfileContainer user={userdata}/>
-          <Widgets />
+          <Widgets user={session.user.userId} />
         </main>
       </>
     );

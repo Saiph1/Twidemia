@@ -27,7 +27,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ProfileContainer({user, myprofile, loaded, update_parent} ) {
+export default function ProfileContainer({user, myprofile, loaded, update_parent, viewerid="", followed=false, followupdate=()=>{}} ) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
   // For user information.
@@ -94,6 +94,25 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
   };
   // console.log("myprofile", myprofile)
 
+  const handle_follow = () => {
+    fetch('/api/follow/'+viewerid, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user),
+  }).then(()=>console.log("follow done"))
+  .then(()=>followupdate())
+  }
+
+  const handle_unfollow = () => {
+    fetch('/api/follow/'+viewerid, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user),
+  }).then(()=>console.log("unfollow done"))
+  .then(()=>followupdate())
+  
+  }
+
   function updateUser() {
 
     let requestBody = {
@@ -150,13 +169,17 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
             >
               Block
             </Button>}
-            
             {(!myprofile) && <Button
             disableRipple 
-            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow " 
+            class={!followed?
+              "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow "
+              :"bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 border border-gray-300 rounded shadow "}
             size="small"
+            onClick={()=>{
+              if (!followed) handle_follow(); else handle_unfollow();
+            }}
             >
-              Follow
+              {!followed?"Follow":"Unfolllow"}
             </Button>}
   
             {(myprofile)&&<Button 
@@ -182,7 +205,7 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
               // sx={{ mb: 1.5 }} color="text.secondary"
               variant="subtitle1"
             >
-              X follower
+              {user.followerlist.length} follower 
             </Link>
   
   
@@ -194,7 +217,7 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
               // sx={{ mb: 1.5 }} color="text.secondary"
               variant="subtitle1"
             >
-              X following
+             {user.followinglist.length}following
             </Link>
             
             
@@ -281,9 +304,9 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
           </DialogActions>
         </Dialog>
   
-        <Dialog open={follower} onClose={handleFollowerClose} fullWidth> 
-          <List >
-            {
+        <Dialog open={follower} onClose={handleFollowerClose} fullWidth>
+          {/* mapping followers */}
+          {user.followerlist.map((file, index)=><List >
               <ListItem
                 secondaryAction={
                   <IconButton edge="end" onClick={handleFollowerClose}>
@@ -298,12 +321,11 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
                 </ListItemAvatar>
                 <ListItemText
                   class="px-5"
-                  primary="Single-line item"
-                  secondary={true ? 'Secondary text' : null}
+                  primary={user.followerlist[index].username}
+                  secondary={"@"+user.followerlist[index].userId}
                 />
               </ListItem>
-            }
-          </List>
+          </List>)}
   
           <DialogActions>
             <Button onClick={handleFollowerClose}>Close</Button>
