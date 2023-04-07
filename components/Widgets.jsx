@@ -32,23 +32,23 @@ export default function Widgets({users, update_page}) {
 
 
   // https://contactmentor.com/build-reactjs-search-filter/
-const filterBySearch = (event) => {
-  // Access input value
-  const query = event.target.value;
-  // Create copy of item list
-  var updatedList = [...searchUserList];
+  const filterBySearch = (event) => {
+    // Access input value
+    const query = event.target.value;
+    // Create copy of item list
+    var updatedList = [...searchUserList];
 
-  // console.log("update list", updatedList);
-  // Include all elements which includes the search query
-  updatedList = updatedList.filter((item) => {
-    // console.log("this is tiem", item.username);
-    return (item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1) && (query.toLowerCase());
-  });
-  // Trigger render with updated values
-  setFilteredList(updatedList);
-  console.log(filteredList);
-  // setFilteredList()
-};
+    // console.log("update list", updatedList);
+    // Include all elements which includes the search query
+    updatedList = updatedList.filter((item) => {
+      // console.log("this is tiem", item.username);
+      return (item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1) && (query.toLowerCase());
+    });
+    // Trigger render with updated values
+    setFilteredList(updatedList);
+    console.log(filteredList);
+    // setFilteredList()
+  };
 
   
 
