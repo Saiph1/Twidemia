@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
+import Link from '@mui/material/Link';
 import {
   HomeIcon,
   UserIcon,
@@ -10,12 +11,14 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user , update=()=>{}}) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
   //     router.push("/profile/" + id); //change to params
   // }
+  const router = useRouter();
+
   if (!user) {
     user = {
       username: "not signin",
@@ -35,18 +38,22 @@ export default function Sidebar({ user }) {
 
       {/* Menu */}
       <div className="mt-4 mb-2.5 xl-items-start">
-        <a href="/">
+        <div onClick={() => router.push("/")}>
           {" "}
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
-        </a>
-        <a href="profile">
+        </div>
+        
+        <div onClick={() => {update(); router.push("/profile/" + user.userId)}}>
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
-        </a>
-        <a href="explore">
+        </div>
+        
+        <div onClick={() =>router.push("/explore/")}>
           {" "}
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
-        </a>
+        </div>
+
+        
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
       </div>
 

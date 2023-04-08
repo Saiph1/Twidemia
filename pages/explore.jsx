@@ -1,12 +1,19 @@
 import Head from "next/head";
 import Image from "next/image";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import ExploreContainer from "@/components/ExploreContainer";
 
 export default function Explore() {
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn();
+    },
+  });
+
   return (
     <>
       <Head>
@@ -18,9 +25,9 @@ export default function Explore() {
 
       <main className="flex min-h-screen max-w-7xl mx-auto">
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar user={session.user}/>
         <ExploreContainer />
-        <Widgets />
+        <Widgets user={session.user.userId} />
       </main>
     </>
   );
