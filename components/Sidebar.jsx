@@ -21,10 +21,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import Tweet from "./Tweet";
+import Tweet from "./Tweet/Tweet";
 import Input from "./Input";
-
-// import './Sidebar.module.css'
+import TweetInput from "./Tweet/TweetInput";
 
 export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
@@ -57,9 +56,9 @@ export default function Sidebar({ user, update = () => {} }) {
           <Link href={"/"}>
             <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
           </Link>
-          <a href={"profile"}>
+          <Link href={"/profile"}>
             <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
-          </a>
+          </Link>
           <SidebarMenuItem text="Messages" Icon={InboxIcon} />
           <Link href={"/explore"}>
             {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
@@ -70,17 +69,6 @@ export default function Sidebar({ user, update = () => {} }) {
           </Link>
         </div>
 
-        {/* {open && (
-            <div className="flex justify-center items-center fixed z-[9998] top-0 left-0 bg-slate-500 w-screen h-screen opacity-70">
-
-            </div>
-        )} */}
-        {/* {open && (
-            <div className="flex justify-center items-center fixed z-[9999] top-[50%] left-[50%] transform bg-black w-[500px] h-[200px] translate-x-[-50%] translate-y-[-50%] opacity-100">
-                <p className="text-white">123</p>
-            </div>
-        )} */}
-
         {/* Button */}
         <button
           onClick={() => setOpen(true)}
@@ -89,6 +77,17 @@ export default function Sidebar({ user, update = () => {} }) {
           Tweet
         </button>
       </div>
+
+      {/* Overlay part after the Tweet button is clicked */}
+      <div className={`tweetOverlay ${open? 'visible opacity-100': 'hidden opacity-0'}`}>
+        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 max-w-[30%] mx-auto mt-20 relative">
+          <span className="text-[32px] font-[300] text-gray-600 cursor-pointer" onClick={() => setOpen(false)}>&times;</span>
+          <div className="mt-4">
+            <TweetInput />
+          </div>
+        </div>
+      </div>
+
 
       {/* Mini-Profile */}
       <button

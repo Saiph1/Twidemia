@@ -27,7 +27,7 @@ const PostsDetail = () => {
     <main className="flex min-h-screen max-w-7xl w-full mx-auto">
       <Sidebar />
 
-      <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
+      <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
         <div className="">
           <Link
             href={"/"}

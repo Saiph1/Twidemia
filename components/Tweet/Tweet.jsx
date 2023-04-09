@@ -5,7 +5,7 @@ const Tweet = ({ tweet }) => {
   return (
     <div
       key={tweet.userID}
-      className="shadow-tweetPosts bg-white flex rounded-2xl w-9/10 gap-4 py-3 px-6 min-h-[8rem]"
+      className="shadow-tweetPosts bg-white flex rounded-2xl w-[90%] gap-4 py-3 px-6 min-h-[8rem]"
     >
       <div className="max-w-[3rem]">
         <img

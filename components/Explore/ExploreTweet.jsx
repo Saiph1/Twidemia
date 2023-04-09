@@ -3,7 +3,7 @@ import React from "react";
 // *** this page is not finished~
 const ExploreTweet = (props) => {
   return (
-    <div className="shadow-tweetPosts bg-white flex rounded-2xl w-9/10 gap-4 py-3 px-6 min-h-[8rem]">
+    <div className="shadow-tweetPosts bg-white flex rounded-2xl w-[90%] gap-4 py-3 px-6 min-h-[8rem]">
       <div className="max-w-[3rem]">
         <img
           src={props.imageURL}
