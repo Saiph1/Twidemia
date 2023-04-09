@@ -6,7 +6,7 @@ import {
   DotsHorizontalIcon,
   InboxIcon,
   BookOpenIcon,
-  UserRemoveIcon
+  UserRemoveIcon,
 } from "@heroicons/react/solid";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";

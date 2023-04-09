@@ -10,7 +10,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 export default function Input({ users }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [deleteUser, setDeleteUser] = useState({username: "", email: "", userId: ""});
+  const [deleteUser, setDeleteUser] = useState({
+    username: "",
+    email: "",
+    userId: "",
+  });
 
   function handleclick(user) {
     setOpen(true);
@@ -53,7 +57,7 @@ export default function Input({ users }) {
 
       <div className="flex flex-col items-center gap-8 mt-8">
         {users
-          .filter((user) => !user.admin && user.userId!="1234")
+          .filter((user) => !user.admin && user.userId != "1234")
           .map((user) => {
             return (
               <div
@@ -76,7 +80,9 @@ export default function Input({ users }) {
                   </div>
 
                   <div className="mb-2">
-                    <p className="text-[16px] text-gray-600">Email: {user.email}</p>
+                    <p className="text-[16px] text-gray-600">
+                      Email: {user.email}
+                    </p>
                     <p className="text-[16px] text-gray-600">
                       Created Date: {user.createdDate.slice(0, 10)}
                     </p>
