@@ -25,15 +25,18 @@ export default function Home() {
     faculty: "Rendering...",
     followerlist: [],
     followinglist: [],
-    year: 0, 
+    year: 0,
   });
-  useEffect(()=>{
+  useEffect(() => {
     fetch("/api/user/test")
-    .then((res)=>res.json())
-    .then((data)=>{setUserdata(data.data); console.log(session)});
+      .then((res) => res.json())
+      .then((data) => {
+        setUserdata(data.data);
+        console.log(session);
+      });
   }, [session]);
 
-  if (session) { 
+  if (session) {
     return (
       <>
         <Head>
@@ -46,11 +49,10 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer user={userdata}/>
+          <ProfileContainer user={userdata} />
           <Widgets user={session.user.userId} />
         </main>
       </>
     );
   }
 }
-

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 import {
   HomeIcon,
   UserIcon,
@@ -11,7 +11,7 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function Sidebar({ user , update=()=>{}}) {
+export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
@@ -23,7 +23,7 @@ export default function Sidebar({ user , update=()=>{}}) {
     user = {
       username: "not signin",
       userId: "not signin",
-    }
+    };
   }
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
@@ -42,18 +42,22 @@ export default function Sidebar({ user , update=()=>{}}) {
           {" "}
           <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
         </div>
-        
-        <div onClick={() => {update(); router.push("/profile/" + user.userId)}}>
+
+        <div
+          onClick={() => {
+            update();
+            router.push("/profile/" + user.userId);
+          }}
+        >
           {" "}
           <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
         </div>
-        
-        <div onClick={() =>router.push("/explore/")}>
+
+        <div onClick={() => router.push("/explore/")}>
           {" "}
           <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
         </div>
 
-        
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
       </div>
 

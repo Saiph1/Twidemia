@@ -3,7 +3,7 @@ module.exports = {
   // corePlugins: {
   // preflight: false,
   // },
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",

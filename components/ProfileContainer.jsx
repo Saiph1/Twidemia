@@ -13,27 +13,34 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import CardMedia from '@mui/material/CardMedia';
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import CardMedia from "@mui/material/CardMedia";
 
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-
-export default function ProfileContainer({user, myprofile, loaded, update_parent, viewerid="", followed=false, followupdate=()=>{}} ) {
+export default function ProfileContainer({
+  user,
+  myprofile,
+  loaded,
+  update_parent,
+  viewerid = "",
+  followed = false,
+  followupdate = () => {},
+}) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
   // For user information.
-  const [username, setUsername] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [facultyValue, setFacultyValue] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [facultyValue, setFacultyValue] = React.useState("");
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
     {
@@ -58,7 +65,7 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
     setOpen(true);
   };
 
-  const handleEditClose = () => { 
+  const handleEditClose = () => {
     setOpen(false);
   };
 
@@ -76,14 +83,14 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
 
   const handleCreateNewItem = (e) => {
     e.preventDefault();
-    setFacultyValue(e.target.value)
+    setFacultyValue(e.target.value);
     // console.log(facultyValue)
   };
 
-//   const handleClick = event => {
-//     const { myValue } = event.currentTarget.dataset;
-//     console.log(myValue) // --> 123
-// }
+  //   const handleClick = event => {
+  //     const { myValue } = event.currentTarget.dataset;
+  //     console.log(myValue) // --> 123
+  // }
 
   const handleFollowerOpen = () => {
     setFollowerOpen(true);
@@ -95,102 +102,127 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
   // console.log("myprofile", myprofile)
 
   const handle_follow = () => {
-    fetch('/api/follow/'+viewerid, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+    fetch("/api/follow/" + viewerid, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
-  }).then(()=>console.log("follow done"))
-  .then(()=>followupdate())
-  }
+    })
+      .then(() => console.log("follow done"))
+      .then(() => followupdate());
+  };
 
   const handle_unfollow = () => {
-    fetch('/api/follow/'+viewerid, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+    fetch("/api/follow/" + viewerid, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
-  }).then(()=>console.log("unfollow done"))
-  .then(()=>followupdate())
-  
-  }
+    })
+      .then(() => console.log("unfollow done"))
+      .then(() => followupdate());
+  };
 
   function updateUser() {
-
     let requestBody = {
-        username,
-        description,
-        facultyValue,
+      username,
+      description,
+      facultyValue,
     };
 
     try {
-        // Post the user.
-        fetch('/api/user/' + user.userId, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(requestBody),
-        })
-        .then((res)=>res.json())
-        .then((data)=>console.log(data));
+      // Post the user.
+      fetch("/api/user/" + user.userId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
-  if (loaded){
+  }
+  if (loaded) {
     return (
       <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
         <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
+          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">
+            Profile
+          </h2>
         </div>
-        
+
         <Card
           sx={{ minWidth: 275 }}
-          style={{ border: "none", boxShadow: "none"}}
+          style={{ border: "none", boxShadow: "none" }}
         >
-          <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 240 }}>
+          <CardActions
+            style={{
+              backgroundImage: `url("../test_background.avif")`,
+              height: 240,
+            }}
+          >
             <Avatar
-            alt="Remy Sharp"
-            src="/Avatar_test.png"
-            sx={{ width: 100, height: 100 , display: "flex", justifyContent: "flex-start", position: "relative", top:120, margin:1 , border: "2.5px solid lightgrey"}}
+              alt="Remy Sharp"
+              src="/Avatar_test.png"
+              sx={{
+                width: 100,
+                height: 100,
+                display: "flex",
+                justifyContent: "flex-start",
+                position: "relative",
+                top: 120,
+                margin: 1,
+                border: "2.5px solid lightgrey",
+              }}
             />
           </CardActions>
-          
+
           <CardContent>
             <CardActions
-            disableSpacing
-            sx={{ 
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-start",
-            }}
+              disableSpacing
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-start",
+              }}
             >
-            {(!myprofile) && <Button 
-            disableRipple
-            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
-            size="small" 
-            >
-              Block
-            </Button>}
-            {(!myprofile) && <Button
-            disableRipple 
-            class={!followed?
-              "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow "
-              :"bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 border border-gray-300 rounded shadow "}
-            size="small"
-            onClick={()=>{
-              if (!followed) handle_follow(); else handle_unfollow();
-            }}
-            >
-              {!followed?"Follow":"Unfolllow"}
-            </Button>}
-  
-            {(myprofile)&&<Button 
-            class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow" 
-            size="small" 
-            onClick={handleEditOpen}
-            >
-              Edit profile
-            </Button>}
+              {!myprofile && (
+                <Button
+                  disableRipple
+                  class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow "
+                  size="small"
+                >
+                  Block
+                </Button>
+              )}
+              {!myprofile && (
+                <Button
+                  disableRipple
+                  class={
+                    !followed
+                      ? "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow "
+                      : "bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 border border-gray-300 rounded shadow "
+                  }
+                  size="small"
+                  onClick={() => {
+                    if (!followed) handle_follow();
+                    else handle_unfollow();
+                  }}
+                >
+                  {!followed ? "Follow" : "Unfolllow"}
+                </Button>
+              )}
+
+              {myprofile && (
+                <Button
+                  class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadow"
+                  size="small"
+                  onClick={handleEditOpen}
+                >
+                  Edit profile
+                </Button>
+              )}
             </CardActions>
-            
+
             {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
             <Typography variant="h5" component="div">
               {user.username}
@@ -198,36 +230,33 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               @{user.userId}
             </Typography>
-            
+
             <Link
               component="button"
               onClick={handleFollowerOpen}
               // sx={{ mb: 1.5 }} color="text.secondary"
               variant="subtitle1"
             >
-              {user.followerlist.length} follower 
+              {user.followerlist.length} follower
             </Link>
-  
-  
+
             <Link
-              component="button" 
+              component="button"
               onClick={() => {
                 // ...process something
               }}
               // sx={{ mb: 1.5 }} color="text.secondary"
               variant="subtitle1"
             >
-             {user.followinglist.length}following
+              {user.followinglist.length}following
             </Link>
-            
-            
-            
+
             {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
             {user.followinglist.length} following {user.followerlist.length} follower
             </Typography> */}
             <Typography variant="body2">
-              Year {user.year}. 
-              <br/>
+              Year {user.year}.
+              <br />
               {user.faculty}
               <br />
               {user.Description}
@@ -244,7 +273,7 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
                           To subscribe to this website, please enter your email address here. We
                           will send updates occasionally.
                       </DialogContentText> */}
-            
+
             <Tooltip title="Change your avatar">
               <IconButton>
                 <Avatar
@@ -262,10 +291,12 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
               type="string"
               fullWidth
               variant="standard"
-              onChange={()=>setUsername(document.getElementById("name").value)}
+              onChange={() =>
+                setUsername(document.getElementById("name").value)
+              }
               required
             />
-  
+
             <TextField
               autoFocus
               margin="dense"
@@ -275,7 +306,9 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
               fullWidth
               variant="standard"
               helperText="Please input a description for least 100 words."
-              onChange={()=>setDescription(document.getElementById("description").value)}
+              onChange={() =>
+                setDescription(document.getElementById("description").value)
+              }
               required
             />
             {/* <DialogContentText>
@@ -293,7 +326,7 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
             >
               {faculties.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label} 
+                  {option.label}
                 </MenuItem>
               ))}
             </TextField>
@@ -303,10 +336,11 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
             <Button onClick={handleDoneClose}>Done</Button>
           </DialogActions>
         </Dialog>
-  
+
         <Dialog open={follower} onClose={handleFollowerClose} fullWidth>
           {/* mapping followers */}
-          {user.followerlist.map((file, index)=><List >
+          {user.followerlist.map((file, index) => (
+            <List>
               <ListItem
                 secondaryAction={
                   <IconButton edge="end" onClick={handleFollowerClose}>
@@ -315,44 +349,51 @@ export default function ProfileContainer({user, myprofile, loaded, update_parent
                 }
               >
                 <ListItemAvatar>
-                  <Avatar>
-                    {/* <FolderIcon /> */}
-                  </Avatar>
+                  <Avatar>{/* <FolderIcon /> */}</Avatar>
                 </ListItemAvatar>
                 <ListItemText
                   class="px-5"
                   primary={user.followerlist[index].username}
-                  secondary={"@"+user.followerlist[index].userId}
+                  secondary={"@" + user.followerlist[index].userId}
                 />
               </ListItem>
-          </List>)}
-  
+            </List>
+          ))}
+
           <DialogActions>
             <Button onClick={handleFollowerClose}>Close</Button>
           </DialogActions>
         </Dialog>
-  
-  
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
         <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">Profile</h2>
+          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">
+            Profile
+          </h2>
         </div>
-        <div role="status" className = "flex justify-center py-20">
-          <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        <div role="status" className="flex justify-center py-20">
+          <svg
+            aria-hidden="true"
+            class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-
-
-    )
+    );
   }
-  
 }

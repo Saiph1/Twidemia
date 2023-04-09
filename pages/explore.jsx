@@ -25,7 +25,7 @@ export default function Explore() {
 
       <main className="flex min-h-screen max-w-7xl mx-auto">
         {/* Sidebar */}
-        <Sidebar user={session.user}/>
+        <Sidebar user={session.user} />
         <ExploreContainer />
         <Widgets user={session.user.userId} />
       </main>

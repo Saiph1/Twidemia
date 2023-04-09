@@ -17,9 +17,9 @@ export default function Home(props) {
     },
   });
   const [load, setload] = useState(false);
-  const [follow, setfollow] = useState(); 
-  const [followupdate, setfollowupdate] = useState(true); 
-  // const [id, setid] = useState(props.id); 
+  const [follow, setfollow] = useState();
+  const [followupdate, setfollowupdate] = useState(true);
+  // const [id, setid] = useState(props.id);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -28,33 +28,39 @@ export default function Home(props) {
     faculty: "Rendering...",
     followerlist: [],
     followinglist: [],
-    year: 0, 
+    year: 0,
   });
   // useEffect(()=>{
   //   setid(props.id);
   // })
   // fetching user data for profile
-  useEffect(()=>{
-    if (!session) return; 
+  useEffect(() => {
+    if (!session) return;
     console.log(props.id);
-    fetch("/api/user/"+props.id)
-    .then((res)=>res.json())
-    .then((data)=>{
-      setUserdata(data.data);console.log(userdata);
-      setfollow(data.data.followerlist.map(item=>(item.userId === session.user.userId)).includes(true));
-    }).then(()=>setload(true));
+    fetch("/api/user/" + props.id)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserdata(data.data);
+        console.log(userdata);
+        setfollow(
+          data.data.followerlist
+            .map((item) => item.userId === session.user.userId)
+            .includes(true)
+        );
+      })
+      .then(() => setload(true));
   }, [session, props]);
   // item.userId === session.user.UserId
-  function updates(){
+  function updates() {
     setload(false);
   }
-  function follow_update(){
-    // setload(false); 
+  function follow_update() {
+    // setload(false);
     // setfollowupdate(!followupdate);
-    setfollow(!follow); 
+    setfollow(!follow);
   }
 
-  if (session) { 
+  if (session) {
     return (
       <>
         <Head>
@@ -67,16 +73,16 @@ export default function Home(props) {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} update={updates} />
-          <ProfileContainer 
-            update_parent={updates} 
-            user={userdata} 
-            myprofile={(session.user.userId === props.id)} 
-            loaded={load} 
-            viewerid={session.user.userId} 
-            followed={follow} 
+          <ProfileContainer
+            update_parent={updates}
+            user={userdata}
+            myprofile={session.user.userId === props.id}
+            loaded={load}
+            viewerid={session.user.userId}
+            followed={follow}
             followupdate={follow_update}
           />
-          <Widgets update_page={updates} user={session.user.userId}/>
+          <Widgets update_page={updates} user={session.user.userId} />
         </main>
       </>
     );
@@ -84,17 +90,17 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-    let isDbConnected = false;
+  let isDbConnected = false;
 
-    try {
-        // Try to connect the DB.
-        if (await dbConnect()) isDbConnected = true;
-    } catch (e) {
-        // If it cannot connect to DB, output log to console by using error flag.
-        console.error(e)
-    }
+  try {
+    // Try to connect the DB.
+    if (await dbConnect()) isDbConnected = true;
+  } catch (e) {
+    // If it cannot connect to DB, output log to console by using error flag.
+    console.error(e);
+  }
 
-    let id = context.query.userid;
-    // Return all post and login status by props.
-    return {props: {isDbConnected, id}};
+  let id = context.query.userid;
+  // Return all post and login status by props.
+  return { props: { isDbConnected, id } };
 }
