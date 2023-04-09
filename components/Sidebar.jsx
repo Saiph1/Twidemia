@@ -26,15 +26,14 @@ import Input from "./Input";
 
 // import './Sidebar.module.css'
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
   //     router.push("/profile/" + id); //change to params
   // }
-
   const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   if (!user) {
     user = {
       username: "not signin",

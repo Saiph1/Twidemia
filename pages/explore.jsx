@@ -1,6 +1,7 @@
 import ExploreTweet from "@/components/Explore/ExploreTweet";
 import Head from "next/head";
 import Image from "next/image";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
@@ -9,6 +10,13 @@ import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 
 export default function Explore() {
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn();
+    },
+  });
+
   return (
     <>
       <Head>

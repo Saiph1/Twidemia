@@ -36,7 +36,7 @@ export default function Home() {
           <Feed />
 
           {/* Widgets */}
-          <Widgets />
+          <Widgets user={session.user.userId} />
 
           {/* Model */}
         </main>
