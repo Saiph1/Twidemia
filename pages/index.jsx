@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
-
 import Slider from "@mui/material/Slider";
+// import '../styles/Index.mudule.css'
 
 export default function Home() {
   const { status, data: session } = useSession({
@@ -28,7 +28,7 @@ export default function Home() {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
 
