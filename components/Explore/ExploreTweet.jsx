@@ -2,8 +2,6 @@ import React from "react";
 
 // *** this page is not finished~
 const ExploreTweet = (props) => {
-
-
   return (
     <div className="shadow-tweetPosts bg-white flex rounded-2xl w-9/10 gap-4 py-3 px-6 min-h-[8rem]">
       <div className="max-w-[3rem]">
@@ -26,9 +24,7 @@ const ExploreTweet = (props) => {
 
         {/* This part is tweet content */}
         <div className="mb-2">
-          <p className="text-[16px] text-gray-600">
-            {props.content}
-          </p>
+          <p className="text-[16px] text-gray-600">{props.content}</p>
         </div>
 
         {/* This part is the Like, Comment, Share functions */}

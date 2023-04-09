@@ -64,10 +64,10 @@ export default function Sidebar({ user }) {
           <SidebarMenuItem text="Messages" Icon={InboxIcon} />
           <Link href={"/explore"}>
             {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
-              <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
-                  <SparklesIcon className="w-7"/>
-                  <span className="shining_word font-[700] text-lg">Explore</span> 
-              </div>
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <SparklesIcon className="w-7" />
+              <span className="shining_word font-[700] text-lg">Explore</span>
+            </div>
           </Link>
         </div>
 

@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose"
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 const UserSchema = new mongoose.Schema({
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true
+    required: true,
   },
   userId: {
     type: String,
@@ -41,20 +41,25 @@ const UserSchema = new mongoose.Schema({
     default: "Hi there, I'm using Twidemia.",
     required: true,
   },
-  // Storing other model object as object ID array. 
-  followinglist: [{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }],
-  followerlist: [{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }],
-  blocklist: [{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }],
-
+  // Storing other model object as object ID array.
+  followinglist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  followerlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  blocklist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 // hash password if password is changed

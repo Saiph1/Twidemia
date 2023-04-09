@@ -12,8 +12,8 @@ export default function Input() {
   useEffect(() => {
     setTweetData(TweetData);
   }, []);
-  
-  const [privacySetting, setPrivacySetting] = useState("public")
+
+  const [privacySetting, setPrivacySetting] = useState("public");
 
   return (
     <div>
@@ -30,10 +30,8 @@ export default function Input() {
 
           <div className="pr-4 w-full">
             <div className="inline-block relative">
-                <span>Hover me</span>
-                <div>
-
-                </div>
+              <span>Hover me</span>
+              <div></div>
             </div>
             <textarea
               className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm"

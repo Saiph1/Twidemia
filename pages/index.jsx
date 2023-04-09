@@ -9,8 +9,6 @@ import Widgets from "@/components/Widgets";
 import Slider from "@mui/material/Slider";
 // import '../styles/Index.mudule.css'
 
-
-
 export default function Home() {
   const { status, data: session } = useSession({
     required: true,
