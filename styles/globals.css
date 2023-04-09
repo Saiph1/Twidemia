@@ -5,8 +5,42 @@
 @layer components {
     .hoverEffect{
         @apply cursor-pointer hover:bg-gray-200 rounded-full w-[52px] xl:w-auto h-[52px] xl:h-auto xl:p-3
-        
     }
+}
+
+@keyframes text-shine {
+    from {
+        background-position: 0% center;
+    } 
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+/* :root {
+    --purple: rgb(123, 31, 162);
+    --violet: rgb(103, 58, 183);
+    --pink: rgb(244, 143, 177);
+} */
+
+.shining_word {
+    background: linear-gradient(
+        to right,
+        rgb(123, 31, 162),
+        rgb(103, 58, 183),
+        rgb(244, 143, 177),
+        rgb(123, 31, 162)
+    );
+    white-space: nowrap;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: text-shine 2s linear infinite;
+}
+
+.trying_1 {
+    color: #638942;
 }
 
 
