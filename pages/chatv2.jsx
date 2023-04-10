@@ -3,7 +3,6 @@ import { useSession, signIn } from "next-auth/react";
 import Head from "next/head";
 // import axios from "axios";
 // import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
 // import styled from "styled-components";
 // import { allUsersRoute, host } from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
@@ -16,8 +15,7 @@ export default function Chat(props) {
   // const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [load, setload] = useState(false); 
-//   const [currentChat, setCurrentChat] = useState(undefined);
-let socket; 
+//   const [currentChat, setCurrentChat] = useState(undefined); 
 const [currentChat, setCurrentChat] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -120,7 +118,7 @@ const [currentChat, setCurrentChat] = useState({
           ) : (
             <ChatContainer currentChat={currentChat} socket={socket} />
           )} */}
-          <ChatContainer currentChat={currentChat} socket={socket} />
+          <ChatContainer currentChat={currentChat}/>
         </main>
       </>
     );

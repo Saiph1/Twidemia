@@ -2,14 +2,36 @@ import React, { useState, useEffect, useRef } from "react";
 // import styled from "styled-components";
 import ChatInput from "./ChatInput";
 // import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+// import axios from "axios";
 // import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import Typography from "@mui/material/Typography";
+// import io from 'Socket.IO-client'
+import { io } from "socket.io-client";
 
-export default function ChatContainer({ currentChat, socket }) {
+export default function ChatContainer({ currentChat}) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
+  // const [input, setInput] = useState('')
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [update_done, setupdate_done] = useState(false); 
+  let socket=io();
+  useEffect(() => {
+    socketInitializer();
+    // setupdate_done(true);
+  }, [])
+  
+  const socketInitializer = async () => {
+    await fetch('/api/socket');
+
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+
+    socket.on('update-input', msg => {
+      setMessages((prevMessages)=>[...prevMessages, msg]);
+      console.log(messages);
+    })
+  }
 
 //   useEffect(async () => {
 //     const data = await JSON.parse(
@@ -32,8 +54,10 @@ export default function ChatContainer({ currentChat, socket }) {
 //     };
 //     getCurrentChat();
 //   }, [currentChat]);
+
     const handleSendMsg = async (msg) => {
-        alert(msg);
+      console.log(msg); 
+      socket.emit('input-change', msg);
     };
 //   const handleSendMsg = async (msg) => {
 //     const data = await JSON.parse(
@@ -85,14 +109,14 @@ export default function ChatContainer({ currentChat, socket }) {
         <div className="chat-messages">
             {messages.map((message) => {
             return (
-                <div ref={scrollRef} key={uuidv4()}>
+                <div ref={scrollRef}>
                     <div
                         className={`message ${
                         message.fromSelf ? "sended" : "recieved"
                         }`}
                     >
                         <div className="content ">
-                            <p>{message.message}</p>
+                            <p>{message}</p>
                         </div>
                     </div>
                 </div>
