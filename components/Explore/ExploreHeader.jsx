@@ -86,11 +86,11 @@ export default function ExploreHeader() {
             <p className="font-[400] py-1 px-3 rounded-full bg-white border">
               Rewarding
             </p>
-            <p className="font-[400] py-1 px-3 rounded-full bg-white border">
+            <p className="font-[400] py-1 px-3 rounded-full bg-white border hidden xl:block">
               Sources
             </p>
             <div className="font-[400] py-1 px-3 rounded-xl bg-white border flex gap-1 items-center">
-              Search
+              <span className="hidden xl:block">Search</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

@@ -40,7 +40,7 @@ export default function Sidebar({ user, update = () => {} }) {
     };
   }
   return (
-    <div className="flex flex-col inline-block justify-between items-start h-full pr-20">
+    <div className="sticky top-0 z-50 flex flex-col justify-between items-start h-screen pl-3 pr-3 md:pr-20">
       <div>
         {/* Twidemia Logo */}
         <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
@@ -64,7 +64,7 @@ export default function Sidebar({ user, update = () => {} }) {
             {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
               <SparklesIcon className="w-7" />
-              <span className="shining_word font-[700] text-lg">Explore</span>
+              <span className="shining_word font-[700] text-lg hidden xl:block">Explore</span>
             </div>
           </Link>
         </div>
@@ -80,7 +80,7 @@ export default function Sidebar({ user, update = () => {} }) {
 
       {/* Overlay part after the Tweet button is clicked */}
       <div className={`tweetOverlay ${open? 'visible opacity-100': 'hidden opacity-0'}`}>
-        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 max-w-[30%] mx-auto mt-20 relative">
+        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[40%] mx-auto mt-20 relative">
           <span className="text-[32px] font-[300] text-gray-600 cursor-pointer" onClick={() => setOpen(false)}>&times;</span>
           <div className="mt-4">
             <TweetInput />
