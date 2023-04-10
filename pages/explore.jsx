@@ -1,6 +1,7 @@
 import ExploreTweet from "@/components/Explore/ExploreTweet";
 import Head from "next/head";
 import Image from "next/image";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
@@ -9,6 +10,13 @@ import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 
 export default function Explore() {
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn();
+    },
+  });
+
   return (
     <>
       <Head>
@@ -19,7 +27,7 @@ export default function Explore() {
       </Head>
 
       <div className="flex min-h-screen max-w-7xl w-full mx-auto">
-        <Sidebar />
+        <Sidebar user={session.user}/>
 
         {/*ExploreContainer ?*/}
         <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
@@ -27,61 +35,79 @@ export default function Explore() {
 
           {/* delete later !! all comments */}
           <div className="my-8 flex flex-col items-center gap-4">
-            <ExploreTweet 
-              imageURL={"https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/FUNG-Ping-Fu.jpg"} 
-              name={"Micheal Fung"} 
-              userTag={"MF2022"} 
-              time={"2m"} 
-              content={"CSCI1130 is the most easiest CSCI coures!!! everyone gets A grade in my course :D"} 
-              commentNum={"103"} 
-              likes={"22"} 
+            <ExploreTweet
+              imageURL={
+                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/FUNG-Ping-Fu.jpg"
+              }
+              name={"Micheal Fung"}
+              userTag={"MF2022"}
+              time={"2m"}
+              content={
+                "CSCI1130 is the most easiest CSCI coures!!! everyone gets A grade in my course :D"
+              }
+              commentNum={"103"}
+              likes={"22"}
             />
 
-            <ExploreTweet 
-              imageURL={"https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/Irwin-King.jpg"} 
-              name={"Irwin King"} 
-              userTag={"IK-uGG"} 
-              time={"54m"} 
-              content={"My CSCI2100A class will make you cry, try me! and come try yourself"} 
-              commentNum={"23"} 
-              likes={"122"} 
+            <ExploreTweet
+              imageURL={
+                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/Irwin-King.jpg"
+              }
+              name={"Irwin King"}
+              userTag={"IK-uGG"}
+              time={"54m"}
+              content={
+                "My CSCI2100A class will make you cry, try me! and come try yourself"
+              }
+              commentNum={"23"}
+              likes={"122"}
             />
 
-            <ExploreTweet 
-              imageURL={"https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/CHAN-Siu-On.jpg"} 
-              name={"Siu On"} 
-              userTag={"siu-on-chan"} 
-              time={"57m"} 
-              content={"CSCI3130 is just drawing some simple circle and that is it"} 
-              commentNum={"18"} 
-              likes={"40"} 
+            <ExploreTweet
+              imageURL={
+                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/CHAN-Siu-On.jpg"
+              }
+              name={"Siu On"}
+              userTag={"siu-on-chan"}
+              time={"57m"}
+              content={
+                "CSCI3130 is just drawing some simple circle and that is it"
+              }
+              commentNum={"18"}
+              likes={"40"}
             />
 
-            <ExploreTweet 
-              imageURL={"https://www.cse.cuhk.edu.hk/wp-content/uploads/people/TAO-Yufei.jpg"} 
-              name={"Yufei Tao"} 
-              userTag={"@TaoYF"} 
-              time={"3h"} 
-              content={"Wanna have a faster algorithm? take my CSCI3160 course! It is SIMPLE and sweet"} 
-              commentNum={"34"} 
-              likes={"75"} 
+            <ExploreTweet
+              imageURL={
+                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people/TAO-Yufei.jpg"
+              }
+              name={"Yufei Tao"}
+              userTag={"@TaoYF"}
+              time={"3h"}
+              content={
+                "Wanna have a faster algorithm? take my CSCI3160 course! It is SIMPLE and sweet"
+              }
+              commentNum={"34"}
+              likes={"75"}
             />
 
-            <ExploreTweet 
-              imageURL={"https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"} 
-              name={"Michael Lyu"} 
-              userTag={"Lyu-michael"} 
-              time={"1d"} 
-              content={"CSCI3100 course only have 3 assignments, very EASY right?"} 
-              commentNum={"41"} 
-              likes={"62"} 
+            <ExploreTweet
+              imageURL={
+                "https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"
+              }
+              name={"Michael Lyu"}
+              userTag={"Lyu-michael"}
+              time={"1d"}
+              content={
+                "CSCI3100 course only have 3 assignments, very EASY right?"
+              }
+              commentNum={"41"}
+              likes={"62"}
             />
-
-
           </div>
         </div>
 
-        <Widgets />
+        <Widgets user={session.user.userId}/>
       </div>
     </>
   );

@@ -2,7 +2,6 @@ import { useState } from "react"
 
 export default function ExploreHeader() {
     
-
    const selectedSortUnderline = 'border-b-[#FF1493] border-b-4'
 
   const [sortBy, setSortBy] = useState("recent") // recent, topRated, popular

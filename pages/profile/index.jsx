@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
@@ -17,6 +17,24 @@ export default function Home() {
       signIn();
     },
   });
+  const [userdata, setUserdata] = useState({
+    username: "Rendering...",
+    email: "Rendering...",
+    userId: "Rendering...",
+    password: "Rendering...",
+    faculty: "Rendering...",
+    followerlist: [],
+    followinglist: [],
+    year: 0,
+  });
+  useEffect(() => {
+    fetch("/api/user/test")
+      .then((res) => res.json())
+      .then((data) => {
+        setUserdata(data.data);
+        console.log(session);
+      });
+  }, [session]);
 
   if (session) {
     return (
@@ -31,8 +49,8 @@ export default function Home() {
         <main className="flex min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <ProfileContainer />
-          <Widgets />
+          <ProfileContainer user={userdata} />
+          <Widgets user={session.user.userId} />
         </main>
       </>
     );

@@ -25,15 +25,14 @@ import Tweet from "./Tweet/Tweet";
 import Input from "./Input";
 import TweetInput from "./Tweet/TweetInput";
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
   //     router.push("/profile/" + id); //change to params
   // }
-
   const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   if (!user) {
     user = {
       username: "not signin",
@@ -57,16 +56,16 @@ export default function Sidebar({ user }) {
           <Link href={"/"}>
             <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
           </Link>
-          <Link href={"profile"}>
+          <Link href={"/profile/"+user.userId}>
             <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
           </Link>
           <SidebarMenuItem text="Messages" Icon={InboxIcon} />
           <Link href={"/explore"}>
             {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
-              <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
-                  <SparklesIcon className="w-7"/>
-                  <span className="shining_word font-[700] text-lg">Explore</span> 
-              </div>
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <SparklesIcon className="w-7" />
+              <span className="shining_word font-[700] text-lg">Explore</span>
+            </div>
           </Link>
         </div>
 
