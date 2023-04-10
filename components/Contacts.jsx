@@ -16,10 +16,20 @@ export default function Contacts({ contacts, changeChat }) {
 //     setCurrentUserName(data.username);
 //     setCurrentUserImage(data.avatarImage);
 //   }, []);
-  const changeCurrentChat = (index, contact) => {
-    setCurrentSelected(index);
+
+  console.log("contact in contacts.jsx", contacts);  
+  async function changeCurrentChat(index, contact) {
+    const newContact = contact;
+    
+    setCurrentSelected(newContact);
+    // console.log("current select", currentSelected);
+
     changeChat(contact);
+    // console.log("changeChat contact", contact);
+    
   };
+
+  
   return (
     <>
       {/* {currentUserImage && currentUserImage && ( */}
@@ -31,7 +41,18 @@ export default function Contacts({ contacts, changeChat }) {
           <div className="contacts">
             {contacts.map((contact, index) => {
               return (
-                <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
+                <div className="flex items-center px-4 py-2 hover:bg-gray-200" onClick={() => changeCurrentChat(index, contact)}>
+                  <img className="rounded-full" width="40" src={"/default.png"} alt="img" />
+                  <div className="truncate ml-4 leading-5">
+                    <Typography>
+                      <h4 className="font-bold text-[14px] truncate">{contact.username}</h4>
+                    </Typography>
+                  </div>
+                </div>
+                
+                // <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
+                
+                // Originial method:
                 // <div
                 //   key={contact._id}
                 //   className={`contact ${

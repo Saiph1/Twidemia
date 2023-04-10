@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 // import styled from "styled-components";
 import ChatInput from "./ChatInput";
-// import Logout from "./Logout";
 // import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 // import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import Typography from "@mui/material/Typography";
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -71,38 +71,32 @@ export default function ChatContainer({ currentChat, socket }) {
 
   return (
     <div>
-      <div className="chat-header">
-        <div className="user-details">
-          {/* <div className="avatar">
-            <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            />
-          </div> */}
-          <div className="username">
-            {/* <h3>{currentChat.username}</h3> */}
-            <h3>current chat</h3>
-          </div>
+        <div className="chat-header">
+            <div className="user-details">
+                <div className="username">
+                    <Typography>{currentChat.username}</Typography>
+                </div>
+            </div>
         </div>
-        {/* <Logout /> */}
-      </div>
+    
+    
         <div className="chat-messages">
             {messages.map((message) => {
             return (
                 <div ref={scrollRef} key={uuidv4()}>
-                <div
-                    className={`message ${
-                    message.fromSelf ? "sended" : "recieved"
-                    }`}
-                >
-                    <div className="content ">
-                        <p>{message.message}</p>
+                    <div
+                        className={`message ${
+                        message.fromSelf ? "sended" : "recieved"
+                        }`}
+                    >
+                        <div className="content ">
+                            <p>{message.message}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+            })}
+        </div>
       <ChatInput  />
     </div>
   );

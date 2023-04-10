@@ -15,7 +15,19 @@ export default function Chat(props) {
 //   const navigate = useNavigate();
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
-  const [currentChat, setCurrentChat] = useState(undefined);
+//   const [currentChat, setCurrentChat] = useState(undefined);
+  
+const [currentChat, setCurrentChat] = useState({
+    username: "Rendering...",
+    email: "Rendering...",
+    userId: "Rendering...",
+    password: "Rendering...",
+    faculty: "Rendering...",
+    followerlist: [],
+    followinglist: [],
+    year: 0,
+  });
+
   const [currentUser, setCurrentUser] = useState(undefined);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
@@ -27,6 +39,8 @@ export default function Chat(props) {
     followinglist: [],
     year: 0, 
   });
+
+  
   
   const { status, data: session } = useSession({
     required: true,
@@ -52,7 +66,7 @@ export default function Chat(props) {
     });
   }, [session, props]);
   
-// replaced by session above
+// replaced by session above (identify current user)
 //   useEffect(async () => {
 //     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
 //       navigate("/login");
@@ -85,6 +99,7 @@ export default function Chat(props) {
 //   }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
+    console.log("in chatv2", chat);
   };
 
   if (session) { 
