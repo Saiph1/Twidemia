@@ -13,10 +13,11 @@ import dbConnect from "../lib/dbConnect";
 
 export default function Chat(props) {
 //   const navigate = useNavigate();
-  const socket = useRef();
+  // const socket = useRef();
   const [contacts, setContacts] = useState([]);
+  const [load, setload] = useState(false); 
 //   const [currentChat, setCurrentChat] = useState(undefined);
-  
+let socket; 
 const [currentChat, setCurrentChat] = useState({
     username: "Rendering...",
     email: "Rendering...",
@@ -40,8 +41,6 @@ const [currentChat, setCurrentChat] = useState({
     year: 0, 
   });
 
-  
-  
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
