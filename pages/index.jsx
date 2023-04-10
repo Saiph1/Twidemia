@@ -33,7 +33,7 @@ export default function Home() {
           <Sidebar user={session.user} />
 
           {/* Feed */}
-          <Feed content={{ header: "Home", content: <Input /> }} />
+          <Feed />
 
           {/* Widgets */}
           <Widgets user={session.user.userId} />

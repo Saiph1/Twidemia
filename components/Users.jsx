@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function Input({ users }) {
+export default function Users({ users }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [deleteUser, setDeleteUser] = useState({
