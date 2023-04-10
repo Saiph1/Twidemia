@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import checkCredentials from "../../../lib/signin";
 
 export const authOptions = {
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')

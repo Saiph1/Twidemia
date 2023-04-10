@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const users = await User.find({});
+        const users = await User.find({}).populate("followerlist");
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -21,11 +21,13 @@ export default async function handler(req, res) {
       try {
         // This is used for testing purpose for now.
         const user = new User({
-          username: "11223344",
-          email: "1234@gmail.com",
-          userId: "1234",
-          password: "1234",
+          username: "Apr5_test",
+          email: "Apr5_test@gmail.com",
+          userId: "test",
+          password: "test",
           admin: false,
+          faculty: "Faculty of Engineering",
+          year: 2,
         });
         user.save();
         res.status(201).json({ success: true, data: user });

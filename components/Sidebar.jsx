@@ -5,18 +5,35 @@ import {
   UserIcon,
   DotsHorizontalIcon,
   InboxIcon,
+  SparklesIcon,
   BookOpenIcon,
   UserRemoveIcon,
 } from "@heroicons/react/solid";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
+import Tweet from "./Tweet/Tweet";
+import Input from "./Input";
+import TweetInput from "./Tweet/TweetInput";
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
   //     e.preventDefault;
   //     //router.push("/location?venueid="+id);
   //     router.push("/profile/" + id); //change to params
   // }
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
   if (!user) {
     user = {
       username: "not signin",
@@ -24,38 +41,55 @@ export default function Sidebar({ user }) {
     };
   }
   return (
-    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
-      {/* Twidemia Logo */}
-      <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
-        {/* <Image width="50" height="50" src="/Twidemia-logo.png"> </Image> */}
-        <img
-          src={"/Twidemia-logo.png"}
-          style={{ height: "4em", width: "auto" }}
-        ></img>
+    <div className="flex flex-col inline-block justify-between items-start h-full pr-20">
+      <div>
+        {/* Twidemia Logo */}
+        <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
+          {/* <Image width="50" height="50" src="/Twidemia-logo.png"> </Image> */}
+          <img
+            src={"/Twidemia-logo.png"}
+            style={{ height: "4em", width: "auto" }}
+          ></img>
+        </div>
+
+        {/* Menu */}
+        <div className="mt-4 mb-2.5 xl-items-start">
+          <Link href={"/"}>
+            <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
+          </Link>
+          <Link href={"/profile"}>
+            <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
+          </Link>
+          <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+          <SidebarMenuItem text="Delete User" Icon={UserRemoveIcon} />
+          <Link href={"/explore"}>
+            {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <SparklesIcon className="w-7" />
+              <span className="shining_word font-[700] text-lg">Explore</span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={() => setOpen(true)}
+          className="bg-primary-blue text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+        >
+          Tweet
+        </button>
       </div>
 
-      {/* Menu */}
-      <div className="mt-4 mb-2.5 xl-items-start">
-        <a href="/">
-          {" "}
-          <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
-        </a>
-        <a href="profile">
-          {" "}
-          <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
-        </a>
-        <a href="explore">
-          {" "}
-          <SidebarMenuItem text="Explore" Icon={BookOpenIcon} />{" "}
-        </a>
-        <SidebarMenuItem text="Messages" Icon={InboxIcon} />
-        <SidebarMenuItem text="Delete User" Icon={UserRemoveIcon} />
+      {/* Overlay part after the Tweet button is clicked */}
+      <div className={`tweetOverlay ${open? 'visible opacity-100': 'hidden opacity-0'}`}>
+        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 max-w-[30%] mx-auto mt-20 relative">
+          <span className="text-[32px] font-[300] text-gray-600 cursor-pointer" onClick={() => setOpen(false)}>&times;</span>
+          <div className="mt-4">
+            <TweetInput />
+          </div>
+        </div>
       </div>
 
-      {/* Button */}
-      <button className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
-        Tweet
-      </button>
 
       {/* Mini-Profile */}
       <button
@@ -73,6 +107,7 @@ export default function Sidebar({ user }) {
         </div>
         <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline"></DotsHorizontalIcon>
       </button>
+      {/* <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline"></DotsHorizontalIcon> */}
     </div>
   );
 }

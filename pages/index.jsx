@@ -6,9 +6,8 @@ import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
-import Input from "@/components/Input";
-
 import Slider from "@mui/material/Slider";
+// import '../styles/Index.mudule.css'
 
 export default function Home() {
   const { status, data: session } = useSession({
@@ -29,7 +28,7 @@ export default function Home() {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
 
@@ -37,7 +36,7 @@ export default function Home() {
           <Feed content={{ header: "Home", content: <Input /> }} />
 
           {/* Widgets */}
-          <Widgets />
+          <Widgets user={session.user.userId} />
 
           {/* Model */}
         </main>

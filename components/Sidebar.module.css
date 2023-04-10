@@ -1,0 +1,28 @@
+@keyframes text-shine {
+    from {
+        background-position: 0% center;
+    } 
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+.shining_word {
+    white-space: nowrap;
+    background: linear-gradient(
+        to right,
+        rgb(123, 31, 162),
+        rgb(103, 58, 183),
+        rgb(244, 143, 177),
+        rgb(123, 31, 162),
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: text-shine 3s linear infinite;
+}
+
+.trying {
+    color: #239048;
+}
