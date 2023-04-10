@@ -19,6 +19,7 @@ export default function Home(props) {
   const [load, setload] = useState(false);
   const [follow, setfollow] = useState();
   const [followupdate, setfollowupdate] = useState(true);
+  const [edit_update, setedit_update] = useState(true);
   // const [id, setid] = useState(props.id);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
@@ -51,6 +52,23 @@ export default function Home(props) {
       .then(() => setload(true));
   }, [session, props]);
   // item.userId === session.user.UserId
+  useEffect(() => {
+    if (!session) return;
+    console.log(props.id);
+    fetch("/api/user/" + props.id)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserdata(data.data);
+        console.log(userdata);
+        setfollow(
+          data.data.followerlist
+            .map((item) => item.userId === session.user.userId)
+            .includes(true)
+        );
+      })
+      .then(() => setedit_update(true));
+  }, [edit_update]);
+
   function updates() {
     setload(false);
   }
@@ -81,8 +99,9 @@ export default function Home(props) {
             viewerid={session.user.userId}
             followed={follow}
             followupdate={follow_update}
+            editupdate={()=>setedit_update(false)}
           />
-          <Widgets update_page={updates} user={session.user.userId} />
+          <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
         </main>
       </>
     );
