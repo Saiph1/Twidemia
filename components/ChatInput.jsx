@@ -34,7 +34,7 @@ export default function ChatInput({ handleSendMsg }) {
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div> */}
       </div>
-      <form className="input-container" onSubmit={(event) => sendChat(event)}>
+      <form className="input-container" onSubmit={((event) => sendChat(event))}>
         <input
           type="text"
           placeholder="type your message here"
@@ -42,17 +42,17 @@ export default function ChatInput({ handleSendMsg }) {
           value={msg}
         />
 
-        {/* <button type="submit">
-          <InboxIcon /> 
-        </button> */}
+        <button type="submit">
+          Send
+        </button>
 
-        <Button 
+        {/* <Button 
             disableRipple
             // class="sm-white hover:bg-gray-100 text-blue-500 py-2 px-4 mx-4 border border-gray-300 rounded shadow " 
             size="small" 
             >
               Send
-        </Button>
+        </Button> */}
       </form>
     </div>
   );

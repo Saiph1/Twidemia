@@ -32,7 +32,9 @@ export default function ChatContainer({ currentChat, socket }) {
 //     };
 //     getCurrentChat();
 //   }, [currentChat]);
-
+    const handleSendMsg = async (msg) => {
+        alert(msg);
+    };
 //   const handleSendMsg = async (msg) => {
 //     const data = await JSON.parse(
 //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
@@ -97,7 +99,7 @@ export default function ChatContainer({ currentChat, socket }) {
             );
             })}
         </div>
-      <ChatInput  />
+      <ChatInput handleSendMsg={handleSendMsg}/>
     </div>
   );
 }
