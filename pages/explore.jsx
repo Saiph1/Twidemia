@@ -27,7 +27,7 @@ export default function Explore() {
       </Head>
 
       <div className="flex min-h-screen max-w-7xl w-full mx-auto">
-        <Sidebar />
+        <Sidebar user={session.user}/>
 
         {/*ExploreContainer ?*/}
         <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
