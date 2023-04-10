@@ -107,7 +107,7 @@ export default function Explore() {
           </div>
         </div>
 
-        <Widgets />
+        <Widgets user={session.user.userId}/>
       </div>
     </>
   );
