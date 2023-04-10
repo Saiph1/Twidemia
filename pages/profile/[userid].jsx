@@ -76,7 +76,7 @@ export default function Home(props) {
             followed={follow} 
             followupdate={follow_update}
           />
-          <Widgets update_page={updates} user={session.user.userId} profile={props.id}/>
+          <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
         </main>
       </>
     );
