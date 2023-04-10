@@ -34,6 +34,7 @@ export default function ProfileContainer({
   viewerid = "",
   followed = false,
   followupdate = () => {},
+  editupdate,
 }) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
@@ -78,7 +79,7 @@ export default function ProfileContainer({
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
     updateUser();
-    update_parent();
+    editupdate();
     setOpen(false);
   };
 
