@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 export default function TweetInput() {
 
   const [privacySetting, setPrivacySetting] = useState("Public")
