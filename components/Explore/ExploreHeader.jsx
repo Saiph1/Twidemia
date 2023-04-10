@@ -1,5 +1,12 @@
+import { useState } from "react"
+
 export default function ExploreHeader() {
     
+
+   const selectedSortUnderline = 'border-b-[#FF1493] border-b-4'
+
+  const [sortBy, setSortBy] = useState("recent") // recent, topRated, popular
+
     return (
         <>
             <div
@@ -9,10 +16,10 @@ export default function ExploreHeader() {
             {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                 </svg> */}
-            <h4 className="font-semibold">Explore</h4>
+            <h4 className="sm:text-xl font-semibold cursor-pointer">Explore</h4>
           </div>
           <div className="border-b flex ">
-            <div className="flex gap-2 p-4 pr-8 border-b-[#FF1493] border-b-4 text-gray-800">
+            <div onClick={() => setSortBy("recent")} className={`flex gap-2 p-4 pr-8 text-gray-800 cursor-pointer ${sortBy === "recent"? selectedSortUnderline : ''}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -29,7 +36,8 @@ export default function ExploreHeader() {
               </svg>
               Recent
             </div>
-            <div className="flex gap-2 p-4 pr-8 text-gray-800">
+
+            <div onClick={() => setSortBy("topRated")} className={`flex gap-2 p-4 pr-8 text-gray-800 cursor-pointer ${sortBy === "topRated"? selectedSortUnderline : ''}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -46,7 +54,7 @@ export default function ExploreHeader() {
               </svg>
               Top Rated
             </div>
-            <div className="flex gap-2 p-4 pr-8 text-gray-800">
+            <div onClick={() => setSortBy("popular")} className={`flex gap-2 p-4 pr-8 text-gray-800 cursor-pointer ${sortBy === "popular"? selectedSortUnderline : ''}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

@@ -3,7 +3,22 @@ import { useState } from "react";
 
 export default function TweetInput() {
 
-  const [privacySetting, setPrivacySetting] = useState("Public")
+  const [privacySetting, setPrivacySetting] = useState("Public") // Public, Follower, Self
+  const [tweetContent, setTweetContent] = useState()
+
+  async function handlePostTweet() {
+    const response = await fetch('/api/tweet/compose', {
+      method: 'POST',
+      body: JSON.stringify({
+        privacySetting, tweetContent
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json()
+    console.log(data);
+  }
 
   function privacyOptionUI(name) {
     switch(name) {
@@ -54,7 +69,7 @@ export default function TweetInput() {
       <div className="pr-4 w-full relative">
         {/* privacy setting here */}
         <div className="px-2 reletive grid gap-3">
-          <button className="toggle">
+          <button className="toggle" onClick={(e) => e.preventDefault()}>
             <div className="flex gap-3">
               {privacyOptionUI(privacySetting)}
             </div>
@@ -76,6 +91,8 @@ export default function TweetInput() {
         <textarea
           className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm text-xl text-primary-black focus:outline-0 placeholder:text-xl bg-transparent"
           placeholder="What is happening?"
+          value={tweetContent} 
+          onChange={(e) => setTweetContent(e.target.value)}
         />
         <div className="flex justify-between ml-3 items-center border-t pt-3">
           <div className="flex gap-4">
@@ -136,7 +153,8 @@ export default function TweetInput() {
               />
             </svg>
           </div>
-          <button className="bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl">
+          {/* Post tweet button */}
+          <button className="bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl" onClick={handlePostTweet}>
             Tweet
           </button>
         </div>
