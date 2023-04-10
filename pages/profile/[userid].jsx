@@ -88,7 +88,7 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} update={updates} />
           <ProfileContainer

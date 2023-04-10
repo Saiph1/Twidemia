@@ -59,7 +59,9 @@ export default function Sidebar({ user, update = () => {} }) {
           <Link href={"/profile/"+user.userId}>
             <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
           </Link>
-          <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+          <Link href={"/chatv2"}>
+            <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+          </Link>
           <Link href={"/explore"}>
             {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">

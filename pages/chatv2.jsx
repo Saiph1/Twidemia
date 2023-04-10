@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSession, signIn } from "next-auth/react";
 import Head from "next/head";
+import Sidebar from "@/components/Sidebar";
+import Widgets from "@/components/Widgets";
 // import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 // import styled from "styled-components";
@@ -109,9 +111,9 @@ const [currentChat, setCurrentChat] = useState({
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
-          {/* <Sidebar user={session.user} update={updates} /> */}
+          <Sidebar user={session.user} />
           <Contacts contacts={contacts} changeChat={handleChatChange} />
           {/* {currentChat === undefined ? (
             <Welcome />
@@ -119,6 +121,7 @@ const [currentChat, setCurrentChat] = useState({
             <ChatContainer currentChat={currentChat} socket={socket} />
           )} */}
           <ChatContainer currentChat={currentChat}/>
+          <Widgets user={session.user.userId} profile={props.id} />
         </main>
       </>
     );
