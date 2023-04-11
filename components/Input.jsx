@@ -15,8 +15,8 @@ export default function Input() {
     setTweetData(TweetData);
   }, []);
 
-  return (
-    <div className="h-[200vh] bg-white"> 
+  return ( 
+    <div className="h-[200vh] bg-white w-full"> 
       <div className="pt-4 pb-4 px-3">
         <TweetInput />
       </div>
