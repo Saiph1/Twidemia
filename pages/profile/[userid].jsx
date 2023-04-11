@@ -88,20 +88,26 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="'min-h-screen bg-white">
+          <div className="h-full max-w-7xl container mx-auto xl:px-30">
+            <div className="h-full grid grid-cols-4">
+                <Sidebar user={session.user} update={updates} />
+                <div className="col-span-3 lg:col-span-2 border-x-[1px]">
+                  <ProfileContainer
+                    update_parent={updates}
+                    user={userdata}
+                    myprofile={session.user.userId === props.id}
+                    loaded={load}
+                    viewerid={session.user.userId}
+                    followed={follow}
+                    followupdate={follow_update}
+                    editupdate={()=>setedit_update(false)}
+                  />
+                </div>
+                <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
+            </div>
+          </div>
           {/* Sidebar */}
-          <Sidebar user={session.user} update={updates} />
-          <ProfileContainer
-            update_parent={updates}
-            user={userdata}
-            myprofile={session.user.userId === props.id}
-            loaded={load}
-            viewerid={session.user.userId}
-            followed={follow}
-            followupdate={follow_update}
-            editupdate={()=>setedit_update(false)}
-          />
-          <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
         </main>
       </>
     );
@@ -122,4 +128,13 @@ export async function getServerSideProps(context) {
   let id = context.query.userid;
   // Return all post and login status by props.
   return { props: { isDbConnected, id } };
+}
+
+
+Home.getLayout = function HomeLayout(page) {
+  return (
+    <>
+      {page}
+    </>
+  )
 }

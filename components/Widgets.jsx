@@ -69,7 +69,7 @@ export default function Widgets({ user, update_page }) {
 
   if (load) {
     return (
-      <div className="xl:w-[600px] hidden lg:inline ml-3 space-y-5">
+      <div className="w-full xl:w-[360px] hidden lg:inline px-5 space-y-5 bg-white">
         <div className="sticky top-0 bg-white py-1.5 z-50">
           <div className="flex items-center p-3 rounded-full relative">
             <SearchIcon className="h-5 z-50 text-gray-500" />

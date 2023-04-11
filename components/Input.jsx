@@ -34,7 +34,7 @@ export default function Input() {
   }, []);
 
   return (
-    <div>
+    <div className="h-[200vh] bg-white">
       <div className="pt-4 pb-4 px-3">
         <TweetInput />
       </div>
