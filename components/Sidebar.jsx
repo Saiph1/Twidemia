@@ -72,6 +72,7 @@ export default function Sidebar({ user, update = () => {} }) {
               <span className="font-[500] text-primary-black text-lg hidden md:block">Messages</span>
             </div>
           </Link>
+
           <Link href={"/explore"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
               <SparklesIcon className="w-7" />
