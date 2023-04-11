@@ -2,7 +2,7 @@ import { SearchIcon } from "@heroicons/react/outline";
 import Widgets_item from "@/components/Widgets_item";
 import { useState, useEffect } from "react";
 
-export default function Widgets({ user, update_page, profile=""}) {
+export default function Widgets({ user, update_page }) {
   const [alluser, setalluser] = useState();
   const [load, setload] = useState(false);
 
@@ -27,8 +27,8 @@ export default function Widgets({ user, update_page, profile=""}) {
       .then((data) => {
         setSearchUserList(data.data);
         console.log("fetched all user for search list.");
-        // console.log(data.data);
-        // console.log(searchUserList);
+        console.log(data.data);
+        console.log(searchUserList);
       });
   }, [focus]);
 
@@ -107,7 +107,7 @@ export default function Widgets({ user, update_page, profile=""}) {
         <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
           <h4 className="font-bold text-xl px-4">Who to follow</h4>
           {alluser.map((file, index) =>
-            (alluser[index].userId != user)&&(alluser[index].userId != profile) ? (
+            alluser[index].userId != user ? (
               <Widgets_item
                 key={index}
                 update_page={update_page}
