@@ -103,3 +103,8 @@
   visibility: visible;
   opacity: 1;
 }
+
+
+.css-pwngrv-MuiPaper-root-MuiCard-root {
+    border-radius: 0 !important;
+}
