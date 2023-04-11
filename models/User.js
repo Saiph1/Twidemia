@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true,
+    // required: true,
   },
   userId: {
     type: String,
@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
   },
   year: {
     type: Number,
-    required: true,
+    // required: true,
   },
   createdDate: {
     type: Date,

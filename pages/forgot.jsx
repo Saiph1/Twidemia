@@ -1,40 +1,58 @@
 import Head from "next/head";
 import dbConnect from "../lib/dbConnect";
 import mongoose from "mongoose";
-import { getCsrfToken, getProviders } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 // https://flowbite.com/blocks/marketing/login/
 
-export default function Login({ csrfToken, error, providers }) {
+export default function Login() {
   // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const [Dark, setDark] = useState(true);
 
-  const handleclick = () => {
-    fetch("api/user", { method: "POST" }).then(() => console.log("success."));
-  };
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-  if (!providers.credentials) throw new Error("provider not supported");
-
-  function handleSubmit(event) {
+    const sid = event.target.email_uid.value;
+    const email = sid+"@link.cuhk.edu.hk"
+    let isnum = /\d{10}/.test(sid);
+    if (!isnum) {
+      setMessage("Please enter a valid student ID.");
+      setError(true);
+      return;
+    } 
     console.log("email verification. ");
+    const endpoint = '/api/token';
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        type: 'forgot',
+      }),
+    };
+
+    setMessage(`An email has been sent to ${email}.`);
+    setError(false);
+  const response = await fetch(endpoint, options);
+  const result = await response.json();
+    if (!result.success) {
+      setMessage("Something went wrong...");
+      setError(true);
+  }
   }
 
   function handledark() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-  // set error message
-  useEffect(() => {
-    if (error === "CredentialsSignin") {
-      setErrorMessage("Please check your email or password");
-    }
-  }, []);
 
   if (status === "loading") {
     return <></>;
@@ -118,11 +136,6 @@ export default function Login({ csrfToken, error, providers }) {
                     action="/api/auth/callback/credentials"
                     onSubmit={handleSubmit}
                   >
-                    <input
-                      name="csrfToken"
-                      type="hidden"
-                      defaultValue={csrfToken}
-                    />
                     <br />
                     <div>
                       <label
@@ -148,6 +161,14 @@ export default function Login({ csrfToken, error, providers }) {
                       Send
                     </button>
                   </form>
+                    {message ? (
+                      <div className={error ? "text-red-500" : "text-gray-900"}>
+                        {" "}
+                        {message}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                 </div>
               </div>
             </div>
@@ -177,9 +198,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       isDbConnected,
-      csrfToken: await getCsrfToken(context),
-      providers: await getProviders(context),
-      error: context.query.error || null,
     },
   };
 }

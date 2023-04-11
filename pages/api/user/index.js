@@ -21,11 +21,11 @@ export default async function handler(req, res) {
       try {
         // This is used for testing purpose for now.
         const user = new User({
-          username: "Apr5_test",
-          email: "Apr5_test@gmail.com",
-          userId: "test",
-          password: "test",
-          admin: false,
+          username: "skytest",
+          email: "1155144438@link.cuhk.edu.hk",
+          userId: "skytest",
+          password: "skytest",
+          admin: true,
           faculty: "Faculty of Engineering",
           year: 2,
         });

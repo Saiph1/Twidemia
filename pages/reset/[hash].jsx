@@ -1,48 +1,29 @@
 import Head from "next/head";
-import dbConnect from "../lib/dbConnect";
-import mongoose from "mongoose";
-import { getCsrfToken, getProviders } from "next-auth/react";
+import dbConnect from "../../lib/dbConnect";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-// https://flowbite.com/blocks/marketing/login/
+import User from "@/models/User";
+import Token from "@/models/Token";
 
-export default function Login({ csrfToken, error, providers }) {
+export default function Reset({ dbConnect, user}) {
   // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
   const [errorMessage, setErrorMessage] = useState("");
   const [Dark, setDark] = useState(true);
 
-  const handleclick = () => {
-    fetch("api/user", { method: "POST" }).then(() => console.log("success."));
-  };
-
-  if (!providers.credentials) throw new Error("provider not supported");
-
-  function handleSubmit(event) {
-    const data = {
-      email_uid: event.target.email_uid.value,
-      password: event.target.password.value,
-    };
-    // front end checking can be done here. currently there is no checking
-    if (data.email_uid === "catch it") {
-      event.preventDefault();
-      setErrorMessage("catch some problem in email / uid");
-    }
+  console.log(user)
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const data = {}
   }
+
 
   function handledark() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-  // set error message
-  useEffect(() => {
-    if (error === "CredentialsSignin") {
-      setErrorMessage("Please check your email or password");
-    }
-  }, []);
 
   if (status === "loading") {
     return <></>;
@@ -52,7 +33,7 @@ export default function Login({ csrfToken, error, providers }) {
     return (
       <>
         <Head>
-          <title>Twidemia Login</title>
+          <title>Twidemia Reset</title>
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
@@ -123,11 +104,6 @@ export default function Login({ csrfToken, error, providers }) {
                     action="/api/auth/callback/credentials"
                     onSubmit={handleSubmit}
                   >
-                    <input
-                      name="csrfToken"
-                      type="hidden"
-                      defaultValue={csrfToken}
-                    />
                     <br />
                     <div>
                       <label
@@ -137,9 +113,9 @@ export default function Login({ csrfToken, error, providers }) {
                         New password
                       </label>
                       <input
-                        type="text"
-                        name="email_uid"
-                        id="email_uid"
+                        type="password"
+                        name="password"
+                        id="password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="••••••••"
                         required
@@ -154,8 +130,8 @@ export default function Login({ csrfToken, error, providers }) {
                       </label>
                       <input
                         type="password"
-                        name="password"
-                        id="password"
+                        name="password_confirm"
+                        id="password_confirm"
                         placeholder="••••••••"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
@@ -198,16 +174,24 @@ export async function getServerSideProps(context) {
     console.error(e);
   }
 
-  // Show the mongoose connection status in back end.
-  console.log(mongoose.connection.readyState);
+  let hash = context.query.hash;
+  console.log(hash);
+  let user = null;
+  const token = await Token.findOne({hash:hash});
+  if (!token || token.type != "forgot") {
+    console.log("something is wrong");
+  } else {
+    console.log(token.email);
+    user = await User.findOne({email: token.email});
+    console.log(user);
+  }
+
 
   // Return all post and login status by props.
   return {
     props: {
       isDbConnected,
-      csrfToken: await getCsrfToken(context),
-      providers: await getProviders(context),
-      error: context.query.error || null,
+      user: JSON.parse(JSON.stringify(user)),
     },
   };
 }
