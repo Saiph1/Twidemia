@@ -31,7 +31,7 @@ export default function Admin({ users }) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
+        <main className="flex justify-center min-h-screen max-w-7xl mx-auto gap-12">
           <Sidebar user={session.user} />
           <Users users={users} />
           {/* <Widgets /> */}
