@@ -16,7 +16,8 @@ export default async function handler(req, res) {
       try {
         const user1 = await User.findOne({userId: req.query.ids[0]})
         const user2 = await User.findOne({userId: req.query.ids[1]})
-        const chat = await Chat.findOne({ sender: user1._id, receiver: user2._id }).populate("message");
+        // const chat = await Chat.findOne({ sender: user1._id, receiver: user2._id }).populate("message").populate([{path: 'message', populate: {path: 'sender'}}]);
+        const chat = await Chat.findOne({ sender: user1._id, receiver: user2._id }).populate([{path: 'message', populate: {path: 'sender'}}]);
         res.status(201).json({ success: true, data: !chat?{message:[]}:chat});
       } catch (error) {
         res.status(400).json({ success: false , data: {message: []}});

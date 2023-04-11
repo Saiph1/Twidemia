@@ -44,7 +44,7 @@ export default function ChatContainer({ currentChat, viewer=""}) {
       console.log("data",data);
       setMessages([]);
         for (let i=0; i<data.data.message.length; i++)
-          setMessages((prevMessages)=>[...prevMessages, data.data.message[i].content]);
+          setMessages((prevMessages)=>[...prevMessages, data.data.message[i].content+"(from ID=@"+data.data.message[i].sender.userId+")"]);
     }).then(()=>setload(true));
   }, [currentChat])
 
