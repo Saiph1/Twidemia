@@ -44,7 +44,7 @@ export default function Widgets({ user, update_page }) {
     updatedList = updatedList.filter((item) => {
       // console.log("this is tiem", item.username);
       return (
-        item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+        ((item.username.toLowerCase().indexOf(query.toLowerCase()) !== -1) || (item.userId.toLowerCase().indexOf(query.toLowerCase()) !== -1)) &&
         query.toLowerCase()
       );
     });
