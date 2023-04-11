@@ -8,8 +8,16 @@ import Widgets from "@/components/Widgets";
 import ExploreContainer from "@/components/Explore/ExploreContainer";
 import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
+import Layout from "@/components/Layout";
+
+Explore.getLayout = function getLayout(page) {
+  return (
+      <Layout title={"Favourite"}>{page}</Layout>
+  )
+}
 
 export default function Explore() {
+
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -17,6 +25,7 @@ export default function Explore() {
     },
   });
 
+  
   return (
     <>
       <Head>

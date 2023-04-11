@@ -131,10 +131,10 @@ export async function getServerSideProps(context) {
 }
 
 
-Home.getLayout = function HomeLayout(page) {
-  return (
-    <>
-      {page}
-    </>
-  )
-}
+// Home.getLayout = function HomeLayout(page) {
+//   return (
+//     <>
+//       {page}
+//     </>
+//   )
+// }
