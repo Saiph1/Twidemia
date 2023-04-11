@@ -29,7 +29,7 @@ export default function Users({ users }) {
   return (
     <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-7xl">
       <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-        <h2 className="text-lg sm:text-xl font-bold cursor-pointer py-2">Users</h2>
+        <h2 className="text-lg sm:text-xl font-bold cursor-pointer py-2">Admin Panel</h2>
       </div>
       <Dialog
         open={open}
@@ -55,18 +55,28 @@ export default function Users({ users }) {
         </DialogActions>
       </Dialog>
 
-      <div className="flex flex-col items-center mt-8 [&>*:nth-child(odd)]:bg-gray-100 bg-black rounded-2xl overflow-hidden w-[90%] mx-auto">
-        <div className="border bg-white flex w-full gap-4 py-6 px-3 hover:bg-gray-200">
-            <div className="w-full items-center">
-                <div className="grid grid-cols-[1fr_3fr_2fr_2fr_2fr] gap-2 items-center justify-center">
-                    <h5 className="font-[800] text-lg text-center">Delete</h5>
-                    <h5 className="font-[800] text-lg text-center">User ID</h5>
-                    <h5 className="font-[800] text-lg text-center truncate">User Name</h5>
-                    <h5 className="font-[800] text-lg text-center truncate">User Email</h5>
-                    <h5 className="font-[800] text-lg text-center truncate">Created Date</h5>
+        <div className="flex mx-auto w-[90%] rounded-2xl overflow-hidden border-2 mt-8">
+            <span className="bg-gray-100 py-4 px-6 flex gap-1 items-center">
+                <span className="hidden lg:block">Search</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" className="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </span>
+            <input type="text" placeholder="User ID.." className="py-4 px-6 focus:outline-none text-lg w-full"/>
+        </div>
+
+        <div className="flex flex-col items-center mt-8 [&>*:nth-child(odd)]:bg-gray-100 rounded-2xl overflow-hidden w-[90%] mx-auto">
+            <div className="border bg-white flex w-full gap-4 py-6 px-3 hover:bg-gray-200">
+                <div className="w-full items-center">
+                    <div className="grid grid-cols-[1fr_3fr_2fr_2fr_2fr] gap-2 items-center justify-center">
+                        <h5 className="font-[800] text-lg text-center">Delete</h5>
+                        <h5 className="font-[800] text-lg text-center">User ID</h5>
+                        <h5 className="font-[800] text-lg text-center truncate">User Name</h5>
+                        <h5 className="font-[800] text-lg text-center truncate">User Email</h5>
+                        <h5 className="font-[800] text-lg text-center truncate">Created Date</h5>
+                    </div>
                 </div>
             </div>
-        </div>
         {users
           .filter((user) => !user.admin && user.userId != "1234")
           .map((user) => {

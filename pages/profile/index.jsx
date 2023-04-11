@@ -46,11 +46,8 @@ export default function Home() {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
-          {/* Sidebar */}
-          <Sidebar user={session.user} />
+        <main className="flex min-h-screen max-w-7xl w-full mx-auto">
           <ProfileContainer user={userdata} />
-          <Widgets user={session.user.userId} />
         </main>
       </>
     );

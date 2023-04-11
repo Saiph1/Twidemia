@@ -27,14 +27,14 @@ export default function Explore() {
       </Head>
 
       <div className="flex min-h-screen max-w-7xl w-full mx-auto">
-        <Sidebar user={session.user}/>
+        {/* <Sidebar user={session?.user}/> */}
 
         {/*ExploreContainer ?*/}
-        <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
+        <div className="border-gray-200 flex-grow w-full">
           <ExploreHeader />
 
           {/* delete later !! all comments */}
-          <div className="my-8 flex flex-col items-center gap-4">
+          <div className="py-8 flex flex-col items-center gap-4 bg-white">
             <ExploreTweet
               imageURL={
                 "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/FUNG-Ping-Fu.jpg"
@@ -107,7 +107,7 @@ export default function Explore() {
           </div>
         </div>
 
-        <Widgets user={session.user.userId}/>
+        {/* <Widgets user={session?.user.userId}/> */}
       </div>
     </>
   );

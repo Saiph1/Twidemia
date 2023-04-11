@@ -30,13 +30,13 @@ export default function Home() {
 
         <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
-          <Sidebar user={session.user} />
+          {/* <Sidebar user={session.user} /> */}
 
           {/* Feed */}
           <Feed />
 
           {/* Widgets */}
-          <Widgets user={session.user.userId} />
+          {/* <Widgets user={session.user.userId} /> */}
 
           {/* Model */}
         </main>

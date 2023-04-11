@@ -148,7 +148,7 @@ export default function ProfileContainer({
   }
   if (loaded) {
     return (
-      <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl mr-12">
+      <div className="w-full min-h-screen">
         <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
           <h4 className="sm:text-xl font-semibold cursor-pointer">
             Profile
@@ -361,11 +361,11 @@ export default function ProfileContainer({
     );
   } else {
     return (
-      <div className="xl:ml-[300px] border-l border-r border-gray-200 xl:min-w-[700px] sm:ml-[73px] flex-grow max-w-xl">
-        <div className="flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-          <h2 className="text-lg sm:text-xl font-bold cursor-pointer">
+      <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl mr-12">
+        <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+          <h4 className="sm:text-xl font-semibold cursor-pointer">
             Profile
-          </h2>
+          </h4>
         </div>
         <div role="status" className="flex justify-center py-20">
           <svg
@@ -390,3 +390,5 @@ export default function ProfileContainer({
     );
   }
 }
+
+
