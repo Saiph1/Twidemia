@@ -59,7 +59,7 @@ export default function Sidebar({ user, update = () => {} }) {
           <Link href={"/profile/"+user.userId}>
             <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
           </Link>
-          <Link href={"/chatv2"}>
+          <Link href={"/messages"}>
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
           </Link>
           <Link href={"/explore"}>
