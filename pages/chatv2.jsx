@@ -19,7 +19,7 @@ export default function Chat(props) {
   const [load, setload] = useState(false); 
 //   const [currentChat, setCurrentChat] = useState(undefined); 
 const [currentChat, setCurrentChat] = useState({
-    username: "Rendering...",
+    username: "Please select a user to start the conversation.",
     email: "Rendering...",
     userId: "Rendering...",
     password: "Rendering...",
@@ -114,13 +114,13 @@ const [currentChat, setCurrentChat] = useState({
         <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
           {/* Sidebar */}
           <Sidebar user={session.user} />
-          <Contacts contacts={contacts} changeChat={handleChatChange} />
+          <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId}/>
           {/* {currentChat === undefined ? (
             <Welcome />
           ) : (
             <ChatContainer currentChat={currentChat} socket={socket} />
           )} */}
-          <ChatContainer currentChat={currentChat}/>
+          <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
           <Widgets user={session.user.userId} profile={props.id} />
         </main>
       </>

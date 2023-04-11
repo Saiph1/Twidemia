@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Contact_item from "@/components/Contact_item"
 // import Logo from "../assets/logo.svg";
 
-export default function Contacts({ contacts, changeChat }) {
+export default function Contacts({ contacts, changeChat, viewerid }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
 //   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -17,7 +17,7 @@ export default function Contacts({ contacts, changeChat }) {
 //     setCurrentUserImage(data.avatarImage);
 //   }, []);
 
-  console.log("contact in contacts.jsx", contacts);  
+  // console.log("contact in contacts.jsx", contacts);  
   async function changeCurrentChat(index, contact) {
     const newContact = contact;
     
@@ -40,7 +40,7 @@ export default function Contacts({ contacts, changeChat }) {
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
-              return (
+              return contacts[index].userId!=viewerid?(
                 <div className="flex items-center px-4 py-2 hover:bg-gray-200" onClick={() => changeCurrentChat(index, contact)}>
                   <img className="rounded-full" width="40" src={"/default.png"} alt="img" />
                   <div className="truncate ml-4 leading-5">
@@ -70,7 +70,7 @@ export default function Contacts({ contacts, changeChat }) {
                 //     <h3>{contact.username}</h3>
                 //   </div>
                 //   </div>
-              );
+              ):(<></>);
             })}
           </div>
             
