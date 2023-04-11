@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 // import styled from "styled-components";
-import Contact_item from "@/components/Contact_item"
 // import Logo from "../assets/logo.svg";
 
 export default function Contacts({ contacts, changeChat, viewerid }) {
