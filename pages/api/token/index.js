@@ -27,7 +27,6 @@ export default async function handler(req, res) {
         }
         */
         const hash = await bcrypt.genSalt(10);
-        console.log(hash)
         const token = new Token({
           email: email,
           type: type,

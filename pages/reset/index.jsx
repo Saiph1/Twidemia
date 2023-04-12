@@ -1,3 +1,4 @@
+
 import Head from "next/head";
 import dbConnect from "../../lib/dbConnect";
 import { useState, useEffect } from "react";
@@ -5,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 // import User from "@/models/User";
 // import Token from "@/models/Token";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"
 
 export default function Reset({ dbConnect, user, token}) {
   return <></>
@@ -20,8 +21,8 @@ export async function getServerSideProps(context) {
     // If it cannot connect to DB, output log to console by using error flag.
     console.error(e);
   }
-  return {props: {}}
-
+  return {props: {}};
+ 
   /*
   let hash = context.query.hash;
   console.log(hash);
