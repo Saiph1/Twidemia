@@ -401,7 +401,7 @@ export default function ProfileContainer({
               </Tooltip>
               
               <DialogContent>Upload background image </DialogContent>
-              <label htmlFor="file-upload" className="custom-file-upload"> 
+              <label htmlFor="file-upload-bg" className="custom-file-upload"> 
                 <img src={user.background.length? 
                 postBgImage.myBgFile || user.background[0].content:
                 postBgImage.myBgFile || "../test_background.avif"
@@ -413,7 +413,7 @@ export default function ProfileContainer({
                   type="file"
                   label="Image"
                   name="myFile"
-                  id="file-upload"
+                  id="file-upload-bg"
                   accept='.jpeg, .png, .jpg'
 
                   onChange={(e) => handleBgFileUpload(e)}
