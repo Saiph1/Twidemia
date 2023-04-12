@@ -72,9 +72,15 @@ export default function Home(props) {
   function updates() {
     setload(false);
   }
+
+  function updates_true(){
+    setload(true); 
+  }
+
   function follow_update() {
     // setload(false);
     // setfollowupdate(!followupdate);
+    setedit_update(false);
     setfollow(!follow);
   }
 
@@ -103,6 +109,7 @@ export default function Home(props) {
                     followed={follow}
                     followupdate={follow_update}
                     editupdate={()=>setedit_update(false)}
+                    updates_true={()=>updates_true()}
                   />
                 </div>
                 <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
