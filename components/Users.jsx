@@ -83,7 +83,7 @@ export default function Users({ users }) {
             return (
               <div
                 key={user.userId}
-                className="border bg-white flex w-full gap-4 py-6 px-3 hover:bg-gray-200"
+                className="border bg-white flex w-full gap-4 py-4 px-2 hover:bg-gray-200"
               >
                 {/* <div className="max-w-[3rem]">
                   <img

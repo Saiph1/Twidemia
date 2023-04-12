@@ -151,7 +151,7 @@ export default function ProfileContainer({
   if (load) {
     return (
       <div className="w-full min-h-screen">
-        <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="flex py-4 px-3 sticky top-0 z-20 bg-white border-b border-gray-200">
           <h4 className="sm:text-xl font-semibold cursor-pointer">
             Profile
           </h4>
@@ -232,7 +232,7 @@ export default function ProfileContainer({
               >
                 {user.followerlist.length} follower
               </Link>
-
+              
               <Link
                 component="button"
                 onClick={() => {

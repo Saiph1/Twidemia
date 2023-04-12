@@ -10,11 +10,8 @@ export default function ExploreHeader() {
         <>
             <div
                 href={"/"}
-                className="flex items-center gap-1 border-b-[1px] py-4 px-3 bg-white header-shadow-bottom"
+                className="flex sticky top-0 z-20 items-center gap-1 border-b-[1px] py-4 px-3 bg-white header-shadow-bottom"
             >
-            {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                </svg> */}
             <h4 className="sm:text-xl font-semibold cursor-pointer">Explore</h4>
           </div>
           <div className="border-b flex bg-white justify-evenly">

@@ -120,22 +120,19 @@ const [currentChat, setCurrentChat] = useState({
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex h-screen max-w-6xl mx-auto w-full">
-
+        <main className="flex max-h-screen h-full max-w-6xl mx-auto w-full gap-0 md:gap-12 overflow-y-hidden">
           <Sidebar user={session.user} />
 
-          <div className="bg-green-200 w-full h-full">
-            <div className="bg-white flex my-8 mx-12 rounded-md  max-h-[90%] h-full">
-                <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId}/>
-                {/* {currentChat === undefined ? (
-                  <Welcome />
-                ) : (
-                  <ChatContainer currentChat={currentChat} socket={socket} />
-                )} */}
-                <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
-                {/* <Widgets user={session.user.userId} profile={props.id} /> */}
+          <div className="w-full grid grid-cols-7 my-auto mr-4 md:mx-12 rounded-md max-h-[90vh] bg-gray-100">
+            <div className="col-span-2 h-[90vh]">
+              <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId} currentChat={currentChat} />
+            </div>
+
+            <div className="col-span-5 h-[90vh]">
+              <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
             </div>
           </div>
+
         </main>
       </>
     );

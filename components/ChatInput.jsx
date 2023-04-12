@@ -27,20 +27,20 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <div className="p-6">
+    <div className="py-2 md:py-4 px-4  border-t border-neutral-100">
       <div className="button-container">
         {/* <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div> */}
       </div>
-      <form className="input-container border py-2 px-4 rounded-full w-full flex items-center justify-between" onSubmit={((event) => sendChat(event))}>
+      <form className="input-container border border-neutral-400 py-2 px-4 rounded-full w-full flex items-center justify-between" onSubmit={((event) => sendChat(event))}>
         <input
           type="text"
           placeholder="Type your message here.."
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          className="focus:outline-none bg-transparent pl-2"
+          className="focus:outline-none bg-transparent pl-2 w-full"
         />
 
         <button type="submit" className="text-primary-blue font-semibold hover:bg-blue-200 rounded-lg px-2 py-1">
