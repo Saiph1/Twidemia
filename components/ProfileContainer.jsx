@@ -53,6 +53,7 @@ export default function ProfileContainer({
   const [background, setbackground] = React.useState("");
   
   const [postImage, setPostImage] = React.useState( { myFile : ""})
+  const [postBgImage, setPostBgImage] = React.useState( { myBgFile : ""})
   // const inputFile = useRef(null) 
 
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
@@ -171,6 +172,7 @@ export default function ProfileContainer({
   // .then(()=>updates_true())
   }
 
+  // post profile image
   const createPost = async (newImage) => {
     try{
       await axios.post(url, newImage)
@@ -179,12 +181,15 @@ export default function ProfileContainer({
     }
   }
 
-  // incorporate into handleDoneClose()
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   createPost(postImage)
-  //   console.log("Uploaded")
-  // }
+  // post background image
+  const createBgPost = async (newImage) => {
+    try{
+      await axios.post(url, newImage)
+    }catch(error){
+      console.log(error)
+    }
+  }
+
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -194,6 +199,22 @@ export default function ProfileContainer({
     setavatar(base64);
     setPostImage({ ...postImage, myFile : base64 })
     // console.log("postimage", postImage.myFile);
+  }
+
+  const handleBgFileUpload = async (e) => {
+    const file = e.target.files[0];
+    // console.log("file", file)
+    const base64 = await convertToBase64(file);
+    console.log(base64)
+    setPostBgImage({ ...postBgImage, myBgFile : base64 })
+    // console.log("postimage", postImage.myFile);
+  }
+
+
+  const handleBgFileSubmit = (e) => {
+    e.preventDefault();
+    createBgPost(postBgImage)
+    console.log("Uploaded bg image")
   }
 
 
@@ -249,13 +270,13 @@ export default function ProfileContainer({
             sx={{ minWidth: 275 }}
             style={{ border: "none", boxShadow: "none" }}
           >
-            <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 200 }}>
+            <CardMedia image={postBgImage.myBgFile || "../test_background.avif"} style={{height: 200 }}>   
               <Avatar
               alt="Remy Sharp"
               src={user.avatar.length?user.avatar[0].content:"/Avatar_test.png"}
-              sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:100, margin:1 , border: "3px solid lightgrey"}}
+              sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:140, margin:1 , border: "3px solid lightgrey"}}
               />
-            </CardActions>
+            </CardMedia>
 
             <CardContent>
               <CardActions
@@ -377,11 +398,12 @@ export default function ProfileContainer({
        
               </Tooltip>
               
-              {/* <label htmlFor="file-upload" className="custom-file-upload"> 
-                <img src={postImage.myFile || "/Avatar_test.png"} alt="" />
+              <DialogContent>Upload background image </DialogContent>
+              <label htmlFor="file-upload" className="custom-file-upload"> 
+                <img src={postBgImage.myBgFile || "/Avatar_test.png"} alt="" />
               </label> 
               
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleBgFileSubmit}>
                 <input 
                   type="file"
                   label="Image"
@@ -389,10 +411,11 @@ export default function ProfileContainer({
                   id="file-upload"
                   accept='.jpeg, .png, .jpg'
 
-                  onChange={(e) => handleFileUpload(e)}
+                  onChange={(e) => handleBgFileUpload(e)}
                   /> 
                   <button>Submit</button>
-              </form> */}
+              </form>
+
 
               <TextField
                 autoFocus
