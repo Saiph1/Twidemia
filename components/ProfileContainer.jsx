@@ -38,6 +38,7 @@ export default function ProfileContainer({
 }) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
+  const [following, setFollowingOpen] = React.useState(false);
   // For user information.
   const [load, setload] = React.useState(true)
   const [username, setUsername] = React.useState('');
@@ -102,6 +103,15 @@ export default function ProfileContainer({
     setFollowerOpen(false);
   };
   // console.log("myprofile", myprofile)
+
+  const handleFollowingOpen = () => {
+    setFollowingOpen(true);
+  };
+
+  const handleFollowingClose = () => {
+    setFollowingOpen(false);
+  };
+
 
   const handle_follow = () => {
     setload(false);
@@ -228,18 +238,16 @@ export default function ProfileContainer({
                 // sx={{ mb: 1.5 }} color="text.secondary"
                 variant="subtitle1"
               >
-                {user.followerlist.length} follower
+                {user.followerlist.length} Follower
               </Link>
 
               <Link
                 component="button"
-                onClick={() => {
-                  // ...process something
-                }}
+                onClick={handleFollowingOpen}
                 // sx={{ mb: 1.5 }} color="text.secondary"
                 variant="subtitle1"
               >
-                {user.followinglist.length}following
+                {user.followinglist.length}Following
               </Link>
 
               {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -332,13 +340,7 @@ export default function ProfileContainer({
             {/* mapping followers */}
             {user.followerlist.map((file, index) => (
               <List key={user.followerlist[index].username}>
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" onClick={handleFollowerClose}>
-                      Follow
-                    </IconButton>
-                  }
-                >
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>{/* <FolderIcon /> */}</Avatar>
                   </ListItemAvatar>
@@ -353,6 +355,29 @@ export default function ProfileContainer({
 
             <DialogActions>
               <Button onClick={handleFollowerClose}>Close</Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* for following list */}
+          <Dialog open={following} onClose={handleFollowingClose} fullWidth>
+            {/* mapping followers */}
+            {user.followinglist.map((file, index) => (
+              <List key={user.followinglist[index].username}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar>{/* <FolderIcon /> */}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    class="px-5"
+                    primary={user.followinglist[index].username}
+                    secondary={"@" + user.followinglist[index].userId}
+                  />
+                </ListItem>
+              </List>
+            ))}
+
+            <DialogActions>
+              <Button onClick={handleFollowingClose}>Close</Button>
             </DialogActions>
           </Dialog>
         </div>
