@@ -42,6 +42,7 @@ export default async function handler(req, res) {
           // Update user
           // Update the event information.
           if (updateUser.username) user.username = updateUser.username;
+          if (updateUser.year) user.year = updateUser.year;
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
 

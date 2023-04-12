@@ -44,6 +44,7 @@ export default function ProfileContainer({
   const [following, setFollowingOpen] = React.useState(false);
   // For user information.
   const [username, setUsername] = React.useState('');
+  const [year, setYear] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [facultyValue, setFacultyValue] = React.useState('');
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
@@ -160,6 +161,7 @@ export default function ProfileContainer({
   function updateUser() {
     let requestBody = {
       username,
+      year,
       description,
       facultyValue,
     };
@@ -316,6 +318,20 @@ export default function ProfileContainer({
                 variant="standard"
                 onChange={() =>
                   setUsername(document.getElementById("name").value)
+                }
+                required
+              />
+
+              <TextField
+                autoFocus
+                margin="dense"
+                id="year"
+                label="Year"
+                type="string"
+                fullWidth
+                variant="standard"
+                onChange={() =>
+                  setYear(document.getElementById("year").value)
                 }
                 required
               />
