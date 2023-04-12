@@ -14,6 +14,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
+        console.log(req.body)
         const { email, userId, type } = req.body;
         let user = null;
         if (email) user = await User.findOne({ email: email });

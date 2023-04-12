@@ -8,9 +8,13 @@ import Widgets from "@/components/Widgets";
 import ExploreContainer from "@/components/Explore/ExploreContainer";
 import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
+import Layout from "@/components/Layout";
+
+Explore.getLayout = function getLayout(page) {
+  return <Layout title={"Favourite"}>{page}</Layout>;
+};
 
 export default function Explore() {
-  const { status, data: session } = useSession();
 
   return (
     <>
@@ -21,15 +25,15 @@ export default function Explore() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <div className="flex min-h-screen max-w-7xl w-full mx-auto">
-        <Sidebar />
+      <div className="flex min-h-screen max-w-6xl w-full mx-auto">
+        {/* <Sidebar user={session?.user}/> */}
 
         {/*ExploreContainer ?*/}
-        <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
+        <div className="border-gray-200 flex-grow w-full">
           <ExploreHeader />
 
           {/* delete later !! all comments */}
-          <div className="my-8 flex flex-col items-center gap-4">
+          <div className="py-8 flex flex-col items-center gap-4 bg-white">
             <ExploreTweet
               imageURL={
                 "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/FUNG-Ping-Fu.jpg"
@@ -102,7 +106,7 @@ export default function Explore() {
           </div>
         </div>
 
-        <Widgets />
+        {/* <Widgets user={session?.user.userId}/> */}
       </div>
     </>
   );

@@ -41,32 +41,51 @@ export default function Sidebar({ user, update = () => {} }) {
     };
   }
   return (
-    <div className="flex flex-col inline-block justify-between items-start h-full pr-20">
+    <div className="sticky top-0 z-50 flex flex-col justify-between items-start h-screen px-3 bg-white">
       <div>
         {/* Twidemia Logo */}
         <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
           {/* <Image width="50" height="50" src="/Twidemia-logo.png"> </Image> */}
           <img
             src={"/Twidemia-logo.png"}
-            style={{ height: "4em", width: "auto" }}
+            // style={{ height: "4em", width: "auto" }}
+            className="aspect-square max-h-[4rem] w-auto"
           ></img>
         </div>
 
         {/* Menu */}
-        <div className="mt-4 mb-2.5 xl-items-start">
-          <Link href={"/"}>
-            <SidebarMenuItem text="Home" Icon={HomeIcon} active />{" "}
+        <div className="mt-4 mb-2.5 justify-center lg:justify-start items-start">
+          <Link href={"/"} active>
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <HomeIcon className="w-7" />
+              <span className="font-[600] text-primary-black text-lg hidden md:block">
+                Home
+              </span>
+            </div>
           </Link>
-          <Link href={"/profile"}>
-            <SidebarMenuItem text="Profile" Icon={UserIcon} />{" "}
+          <Link href={"/profile/" + user.userId}>
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <UserIcon className="w-7" />
+              <span className="font-[500] text-primary-black text-lg hidden md:block">
+                Profile
+              </span>
+            </div>
           </Link>
-          <SidebarMenuItem text="Messages" Icon={InboxIcon} />
-          <SidebarMenuItem text="Delete User" Icon={UserRemoveIcon} />
+          <Link href={"/messages"}>
+            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+              <InboxIcon className="w-7" />
+              <span className="font-[500] text-primary-black text-lg hidden md:block">
+                Messages
+              </span>
+            </div>
+          </Link>
+
           <Link href={"/explore"}>
-            {/* <SidebarMenuItem text="Explore" Icon={SparklesIcon} /> */}
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
               <SparklesIcon className="w-7" />
-              <span className="shining_word font-[700] text-lg">Explore</span>
+              <span className="shining_word font-[700] text-lg hidden md:block">
+                Explore
+              </span>
             </div>
           </Link>
         </div>
@@ -74,9 +93,23 @@ export default function Sidebar({ user, update = () => {} }) {
         {/* Button */}
         <button
           onClick={() => setOpen(true)}
-          className="bg-primary-blue text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+          className="bg-primary-blue text-white rounded-full w-12 md:w-44 h-12 font-bold shadow-md hover:brightness-95 text-lg flex justify-center items-center"
         >
-          Tweet
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 block md:hidden"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
+            />
+          </svg>
+          <span className="hidden md:block">Tweet</span>
         </button>
       </div>
 
@@ -86,7 +119,7 @@ export default function Sidebar({ user, update = () => {} }) {
           open ? "visible opacity-100" : "hidden opacity-0"
         }`}
       >
-        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 max-w-[30%] mx-auto mt-20 relative">
+        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[40%] mx-auto mt-20 relative">
           <span
             className="text-[32px] font-[300] text-gray-600 cursor-pointer"
             onClick={() => setOpen(false)}

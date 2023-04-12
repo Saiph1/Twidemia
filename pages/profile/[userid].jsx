@@ -19,6 +19,7 @@ export default function Home(props) {
   const [load, setload] = useState(false);
   const [follow, setfollow] = useState();
   const [followupdate, setfollowupdate] = useState(true);
+  const [edit_update, setedit_update] = useState(true);
   // const [id, setid] = useState(props.id);
   const [userdata, setUserdata] = useState({
     username: "Rendering...",
@@ -51,6 +52,28 @@ export default function Home(props) {
       .then(() => setload(true));
   }, [session, props]);
   // item.userId === session.user.UserId
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+  useEffect(() => {
+    if (!session) return;
+    console.log(props.id);
+    fetch("/api/user/" + props.id)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserdata(data.data);
+        console.log(userdata);
+        setfollow(
+          data.data.followerlist
+            .map((item) => item.userId === session.user.userId)
+            .includes(true)
+        );
+        reloadSession();
+      })
+      .then(() => setedit_update(true));
+  }, [edit_update]);
+
   function updates() {
     setload(false);
   }
@@ -70,19 +93,31 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl mx-auto">
+        <main className="'min-h-screen bg-white">
+          <div className="h-full max-w-6xl container mx-auto xl:px-30">
+            <div className="h-full grid grid-cols-5">
+              <Sidebar user={session.user} update={updates} />
+              <div className="col-span-4 lg:col-span-3 border-x-[1px]">
+                <ProfileContainer
+                  update_parent={updates}
+                  user={userdata}
+                  myprofile={session.user.userId === props.id}
+                  loaded={load}
+                  viewerid={session.user.userId}
+                  followed={follow}
+                  followupdate={follow_update}
+                  editupdate={() => setedit_update(false)}
+                />
+              </div>
+              <Widgets
+                update_page={updates}
+                user={session.user.userId}
+                profile={props.id}
+              />
+            </div>
+          </div>
+
           {/* Sidebar */}
-          <Sidebar user={session.user} update={updates} />
-          <ProfileContainer
-            update_parent={updates}
-            user={userdata}
-            myprofile={session.user.userId === props.id}
-            loaded={load}
-            viewerid={session.user.userId}
-            followed={follow}
-            followupdate={follow_update}
-          />
-          <Widgets update_page={updates} user={session.user.userId} />
         </main>
       </>
     );

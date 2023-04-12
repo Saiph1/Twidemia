@@ -7,11 +7,12 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const getLayout = Component.getLayout || ((page) => page);
   if (Component.admin) {
     return (
       <SessionProvider session={session}>
         <Admin>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </Admin>
       </SessionProvider>
     );
@@ -19,7 +20,7 @@ export default function App({
     return (
       <SessionProvider session={session}>
         <Verify>
-          <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
         </Verify>
       </SessionProvider>
     );
@@ -27,7 +28,7 @@ export default function App({
     return (
       <SessionProvider session={session}>
         <Login>
-          <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
         </Login>
       </SessionProvider>
     );
@@ -35,27 +36,32 @@ export default function App({
     return (
       <SessionProvider session={session}>
         <NoLogin>
-          <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
         </NoLogin>
       </SessionProvider>
     );
   } else {
     return (
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
     );
   }
 }
 
 function Login({ children }) {
-  const { status } = useSession({
+  const router = useRouter();
+  const { status, data:session } = useSession({
     required: true,
     onUnauthenticated() {
       signIn();
     },
   });
   if (status === "loading") {
+    return <></>;
+  }
+  if (session.verified) {
+    router.push("/");
     return <></>;
   }
   return children;

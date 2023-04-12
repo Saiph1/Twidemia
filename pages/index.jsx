@@ -7,10 +7,15 @@ import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import Slider from "@mui/material/Slider";
+import Layout from "@/components/Layout";
 // import '../styles/Index.mudule.css'
 
+Home.getLayout = function getLayout(page) {
+  return <Layout title={"Favourite"}>{page}</Layout>;
+};
+
 export default function Home() {
-  const { data: session } = useSession();
+  const { status, data: session } = useSession()
   return (
     <>
       <Head>
@@ -23,13 +28,13 @@ export default function Home() {
 
       <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
         {/* Sidebar */}
-        <Sidebar user={session.user} />
+        {/* <Sidebar user={session.user} /> */}
 
         {/* Feed */}
         <Feed />
 
         {/* Widgets */}
-        <Widgets user={session.user.userId} />
+        {/* <Widgets user={session.user.userId} /> */}
 
         {/* Model */}
       </main>

@@ -18,6 +18,7 @@ export default function Forgot() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    /*
     const sid = event.target.email_uid.value;
     const email = sid + "@link.cuhk.edu.hk";
     let isnum = /\d{10}/.test(sid);
@@ -26,6 +27,8 @@ export default function Forgot() {
       setError(true);
       return;
     }
+    */
+    const email = sid;
     console.log("email verification. ");
     const endpoint = "/api/token";
     const options = {

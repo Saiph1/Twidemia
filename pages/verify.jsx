@@ -60,6 +60,7 @@ export default function Verify({ qtoken }) {
         });
         if (responseVerify.ok) {
           setVerified(true);
+          router.push('/');
           return;
         } else {
           setMessage("Token valid but cant verify");
@@ -210,8 +211,9 @@ export default function Verify({ qtoken }) {
                         onClick={() => signOut()}
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
                       >
-                        Currently login as {session.user.username}. Click to
-                        change account.
+                        Currently login as {session.user.username}. 
+                        <br/>
+                        Click to change account.
                       </button>
                     </div>
                     <button
@@ -301,7 +303,7 @@ export default function Verify({ qtoken }) {
                     Email verification
                   </h1>
                   <div class="flex items-center justify-center">
-                    <p class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center">
+                    <p class="text-sm font-medium text-primary-600 dark:text-primary-800 dark:text-white text-center">
                       Your account has been verified !
                       <br />
                       Redirecting to login page ...

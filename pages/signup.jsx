@@ -17,6 +17,7 @@ async function createUser(data) {
   const resultUser = await responseUser.json();
 
   if (resultUser.user) {
+    console.log(resultUser.user)
     const endpointToken = "/api/token";
     const optionsToken = {
       method: "POST",
@@ -25,7 +26,6 @@ async function createUser(data) {
       },
       body: JSON.stringify({
         email: data.email,
-        userId: data.userId,
         type: "verify",
       }),
     };
@@ -34,11 +34,9 @@ async function createUser(data) {
     const resultToken = await responseToken.json();
 
     if (!resultToken.token) {
-      console.log(resultToken.message);
       throw new Error(resultToken.message || "Something went wrong!");
     }
   } else {
-    console.log(resultUser.message);
     throw new Error(resultUser.message || "Something went wrong!");
   }
 }
@@ -53,16 +51,17 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(message);
     let errorTmp = false;
     let messageTmp = "";
     const data = {
       email: event.target.email.value,
       password: event.target.password.value,
+      userId: event.target.email.value,
+      username: "tmp user name",
       password_confirm: event.target.password_confirm.value,
     };
-    console.log(data.email);
-    let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
+    // let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
+    let emailFormat = true
     if (!emailFormat) {
       // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
@@ -78,7 +77,6 @@ export default function Signup() {
       messageTmp = "Passwords are not same\n";
       errorTmp = true;
     }
-    console.log(errorTmp);
     setMessage(messageTmp);
     setError(errorTmp);
     if (errorTmp) return;

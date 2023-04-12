@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import checkCredentials from "../../../lib/signin";
+import User from "@/models/User"
 
 export const authOptions = {
   secret: process.env.AUTH_SECRET,
@@ -38,6 +39,7 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        console.log("jwt callback")
         token.userId = user.userId;
         token.username = user.username;
         token.email = user.email;
@@ -47,11 +49,13 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log('session callback')
       session.user.userId = token.userId;
-      session.user.username = token.username;
-      session.user.email = token.email;
-      session.admin = token.admin;
-      session.verified = token.verified;
+      const user_new = await User.findOne({userId: token.userId});
+      token.username = user_new.username;
+      token.email = user_new.email;
+      token.admin = user_new.admin;
+      token.verified = user_new.verified;
 
       return session;
     },
