@@ -82,6 +82,7 @@ export default function ProfileContainer({
 
   const handleEditClose = () => {
     setPostImage({myFile:""});
+    setPostBgImage({myFile:""});
     setOpen(false);
   };
 
@@ -206,6 +207,7 @@ export default function ProfileContainer({
     // console.log("file", file)
     const base64 = await convertToBase64(file);
     console.log(base64)
+    setbackground(base64);
     setPostBgImage({ ...postBgImage, myBgFile : base64 })
     // console.log("postimage", postImage.myFile);
   }
@@ -270,7 +272,7 @@ export default function ProfileContainer({
             sx={{ minWidth: 275 }}
             style={{ border: "none", boxShadow: "none" }}
           >
-            <CardMedia image={postBgImage.myBgFile || "../test_background.avif"} style={{height: 200 }}>   
+            <CardMedia image={user.background.length?user.background[0].content:"../test_background.avif"} style={{height: 200 }}>   
               <Avatar
               alt="Remy Sharp"
               src={user.avatar.length?user.avatar[0].content:"/Avatar_test.png"}
@@ -380,7 +382,7 @@ export default function ProfileContainer({
                   <Avatar
                     alt="Remy Sharp"
                     src={
-                    user.avatar.length? postImage.myFile || user.avatar[0].content || "/Avatar_test.png":
+                    user.avatar.length? postImage.myFile || user.avatar[0].content:
                     postImage.myFile || "/Avatar_test.png"
                     }
                     sx={{ width: 80, height: 80 }}
@@ -400,7 +402,10 @@ export default function ProfileContainer({
               
               <DialogContent>Upload background image </DialogContent>
               <label htmlFor="file-upload" className="custom-file-upload"> 
-                <img src={postBgImage.myBgFile || "/Avatar_test.png"} alt="" />
+                <img src={user.background.length? 
+                postBgImage.myBgFile || user.background[0].content:
+                postBgImage.myBgFile || "../test_background.avif"
+                } alt="" />
               </label> 
               
               <form onSubmit={handleBgFileSubmit}>
