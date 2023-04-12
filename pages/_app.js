@@ -57,10 +57,14 @@ function Login({ children }) {
       signIn();
     },
   });
+  console.log('session')
+  console.log(session)
+  console.log(status)
   if (status === "loading") {
     return <></>;
   }
   if (session.verified) {
+    console.log('nani')
     router.push("/");
     return <></>;
   }

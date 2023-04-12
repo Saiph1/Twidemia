@@ -39,7 +39,6 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        console.log("jwt callback")
         token.userId = user.userId;
         token.username = user.username;
         token.email = user.email;
@@ -49,14 +48,16 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log('session callback')
       session.user.userId = token.userId;
       const user_new = await User.findOne({userId: token.userId});
       token.username = user_new.username;
       token.email = user_new.email;
       token.admin = user_new.admin;
       token.verified = user_new.verified;
-
+      session.user.username = user_new.username;
+      session.email = user_new.email;
+      session.admin = user_new.admin;
+      session.verified = user_new.verified;
       return session;
     },
   },

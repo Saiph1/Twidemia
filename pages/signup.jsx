@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 
 async function createUser(data) {
@@ -55,9 +55,9 @@ export default function Signup() {
     let messageTmp = "";
     const data = {
       email: event.target.email.value,
+      username: event.target.username.value,
+      userId: event.target.userId.value,
       password: event.target.password.value,
-      userId: event.target.email.value,
-      username: "tmp user name",
       password_confirm: event.target.password_confirm.value,
     };
     // let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
@@ -88,6 +88,11 @@ export default function Signup() {
         setMessage(
           "Success! Please check your email to verify your account.\n"
         );
+        signIn('credentials', {
+          redirect: false,
+          password: data.password,
+          email_uid: data.email,
+        })
         setError(false);
         setTimeout(10000);
         // router.push("verify");
@@ -174,11 +179,43 @@ export default function Signup() {
                       Your Email
                     </label>
                     <input
-                      type="email"
+                      type="text"
                       name="email"
                       id="email"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="StudentID@link.cuhk.edu.hk"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="username"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your username
+                    </label>
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="username"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="userId"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your userId
+                    </label>
+                    <input
+                      type="userId"
+                      name="userId"
+                      id="userId"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="userId"
                       required
                     />
                   </div>
