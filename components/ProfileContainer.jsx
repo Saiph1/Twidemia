@@ -49,6 +49,8 @@ export default function ProfileContainer({
   const [year, setYear] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [facultyValue, setFacultyValue] = React.useState('');
+  const [avatar, setavatar] = React.useState("");
+  const [background, setbackground] = React.useState("");
   
   const [postImage, setPostImage] = React.useState( { myFile : ""})
   // const inputFile = useRef(null) 
@@ -78,6 +80,7 @@ export default function ProfileContainer({
   };
 
   const handleEditClose = () => {
+    setPostImage({myFile:""});
     setOpen(false);
   };
 
@@ -188,6 +191,7 @@ export default function ProfileContainer({
     // console.log("file", file)
     const base64 = await convertToBase64(file);
     console.log(base64)
+    setavatar(base64);
     setPostImage({ ...postImage, myFile : base64 })
     // console.log("postimage", postImage.myFile);
   }
@@ -213,6 +217,8 @@ export default function ProfileContainer({
       year,
       description,
       facultyValue,
+      avatar, 
+      background, 
     };
 
     try {
@@ -246,7 +252,7 @@ export default function ProfileContainer({
             <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 200 }}>
               <Avatar
               alt="Remy Sharp"
-              src={"/Avatar_test.png"}
+              src={user.avatar.length?user.avatar[0].content:"/Avatar_test.png"}
               sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:100, margin:1 , border: "3px solid lightgrey"}}
               />
             </CardActions>
@@ -352,7 +358,10 @@ export default function ProfileContainer({
                 <IconButton variant="contained" component="label" htmlFor="file-upload" className="custom-file-upload">
                   <Avatar
                     alt="Remy Sharp"
-                    src={postImage.myFile || "/Avatar_test.png"}
+                    src={
+                    user.avatar.length? postImage.myFile || user.avatar[0].content || "/Avatar_test.png":
+                    postImage.myFile || "/Avatar_test.png"
+                    }
                     sx={{ width: 80, height: 80 }}
                   />
                   <input
@@ -384,7 +393,6 @@ export default function ProfileContainer({
                   /> 
                   <button>Submit</button>
               </form> */}
-
 
               <TextField
                 autoFocus

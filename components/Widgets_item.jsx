@@ -51,7 +51,9 @@ export default function Widgets_item({
 
   return (
     <div className="flex items-center px-4 py-2 hover:bg-gray-200">
-      <img className="rounded-full" width="40" src={"/default.png"} alt="img" />
+      <img className="rounded-full" width="40" 
+      src={!single_userdata.avatar.length?"/default.png":single_userdata.avatar[0].content} 
+      alt="img" />
       <div className="truncate ml-4 leading-5">
         <Link href={"/profile/" + single_userdata.userId}>
           <h4

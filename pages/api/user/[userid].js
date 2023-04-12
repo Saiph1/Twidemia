@@ -12,9 +12,10 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const users = await User.findOne({ userId: req.query.userid }).populate(
-          "followerlist"
-        ).populate("followinglist").populate("blocklist");
+        const users = await User.findOne({ userId: req.query.userid })
+        .populate("followerlist").populate("followinglist")
+        .populate("blocklist").populate("avatar")
+        .populate("background");
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -52,7 +53,8 @@ export default async function handler(req, res) {
               user: user._id,
             })
             image_new.save();
-            user.avatar = updateUser.avatar; 
+            user.avatar = []; 
+            user.avatar.addToSet(image_new); 
           };
           if (updateUser.background){
             const image_new = new Image({
@@ -60,12 +62,13 @@ export default async function handler(req, res) {
               user: user._id,
             })
             image_new.save();
-            user.background = updateUser.background; 
+            user.background = []; 
+            user.background.addToSet(image_new); 
           }
           // Save and return.
           await user.save();
-          res.status(200).json(user);
-        } else res.status(404).json({ error: "User not found." });
+          res.status(200).json({ success: true, data: user });
+        } else res.status(404).json({ error: error.toString() });
       } catch (error) {
         //Return 500 if unsuccessful.
         console.log(error);

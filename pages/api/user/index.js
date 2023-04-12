@@ -1,6 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
-
+import Image from "../../../models/Image";
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
 export default async function handler(req, res) {
@@ -11,7 +11,8 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const users = await User.find({}).populate("followerlist").populate("blocklist");
+        const users = await User.find({}).populate("followerlist").populate("blocklist")
+        .populate("avatar");
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -21,15 +22,19 @@ export default async function handler(req, res) {
       try {
         // This is used for testing purpose for now.
         const user = new User({
-          username: "Apr5_test",
-          email: "Apr5_test@gmail.com",
-          userId: "test",
-          password: "test",
+          username: "newuser",
+          email: "newuser@gmail.com",
+          userId: "newuser",
+          password: "newuser",
           admin: false,
           faculty: "Faculty of Engineering",
           year: 2,
         });
         user.save();
+        // const img = new Image({
+        //   content:"",
+        // })
+        // img.save(); 
         res.status(201).json({ success: true, data: user });
       } catch (error) {
         res.status(400).json({ success: false });
