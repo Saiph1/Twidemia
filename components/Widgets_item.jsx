@@ -17,7 +17,7 @@ export default function Widgets_item({
     .then((res) => res.json())
     .then((data) => {
       setfollow(
-        data.data.followerlist
+        data.data?.followerlist
           .map((item) => item.userId === viewerid)
           .includes(true)
       );

@@ -46,7 +46,7 @@ export default function Home() {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex min-h-screen max-w-7xl w-full mx-auto">
+        <main className="flex min-h-screen max-w-6xl w-full mx-auto">
           <ProfileContainer user={userdata} />
         </main>
       </>

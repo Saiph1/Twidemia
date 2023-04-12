@@ -58,7 +58,7 @@ export default function Login({ csrfToken, error, providers }) {
         </Head>
 
         <main class="" id="login_container">
-          <section class="bg-gray-50 dark:bg-gray-900">
+          <section class="bg-gray-50 dark:bg-gray-900 min-h-[100vh]">
             <button
               onClick={() => {
                 setDark(!Dark);
@@ -100,7 +100,7 @@ export default function Login({ csrfToken, error, providers }) {
                 </svg>
               )}
             </button>
-            <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="flex flex-col items-center justify-start md:justify-start px-6 mx-auto py-12 lg:py-0">
               <a
                 href="#"
                 class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"

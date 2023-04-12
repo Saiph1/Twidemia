@@ -146,7 +146,7 @@ export default function ProfileContainer({
       console.log(error);
     }
   }
-  if (loaded) {
+  if (load) {
     return (
       <div className="w-full min-h-screen">
         <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -361,8 +361,8 @@ export default function ProfileContainer({
     );
   } else {
     return (
-      <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl mr-12">
-        <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="min-h-screen">
+        <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200 header-shadow-bottom">
           <h4 className="sm:text-xl font-semibold cursor-pointer">
             Profile
           </h4>
