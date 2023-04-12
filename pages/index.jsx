@@ -11,10 +11,8 @@ import Layout from "@/components/Layout";
 // import '../styles/Index.mudule.css'
 
 Home.getLayout = function getLayout(page) {
-  return (
-      <Layout title={"Favourite"}>{page}</Layout>
-  )
-}
+  return <Layout title={"Favourite"}>{page}</Layout>;
+};
 
 export default function Home() {
   const { status, data: session } = useSession({

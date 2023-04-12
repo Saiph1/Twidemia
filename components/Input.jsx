@@ -20,7 +20,7 @@ export default function Input() {
         setTweetData(data.data);
         console.log("fetched all tweets.");
         console.log(data.data);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -30,11 +30,11 @@ export default function Input() {
         setalluser(data.data);
         console.log("fetched all user.");
         console.log(data.data);
-      })
+      });
   }, []);
 
-  return ( 
-    <div className="min-h-[100vh] bg-white w-full pb-8"> 
+  return (
+    <div className="min-h-[100vh] bg-white w-full pb-8">
       <div className="pt-4 pb-4 px-3">
         <TweetInput />
       </div>
@@ -43,12 +43,12 @@ export default function Input() {
 
       <div className="flex flex-col items-center gap-8 mt-8">
         {tweetData?.map((tweet) => {
-          var uid = tweet.userID
-          var creator = { iconURL: "", username: "", userId: 0 }
-          for (var i in alluser){
+          var uid = tweet.userID;
+          var creator = { iconURL: "", username: "", userId: 0 };
+          for (var i in alluser) {
             if (alluser[i]._id == uid) {
-              creator = alluser[i]
-              break
+              creator = alluser[i];
+              break;
             }
           }
           //tweet.iconURL = creator.iconURL;

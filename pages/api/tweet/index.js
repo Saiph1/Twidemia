@@ -10,8 +10,8 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      try { 
-        const tweets = await Tweet.find({})//.populate("followerlist");
+      try {
+        const tweets = await Tweet.find({}); //.populate("followerlist");
         res.status(200).json({ success: true, data: tweets });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
           tweet_ID: 10,
           content: "test",
           date: 123,
-          visibility: "self"
+          visibility: "self",
         });
         tweet.save();
         res.status(201).json({ success: true, data: tweet });
