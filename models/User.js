@@ -60,6 +60,14 @@ const UserSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  avatar: {
+    type: Schema.Types.ObjectId,
+    ref: "Image",
+  },
+  background: {
+    type: Schema.Types.ObjectId,
+    ref: "Image",
+  }
 });
 
 // hash password if password is changed

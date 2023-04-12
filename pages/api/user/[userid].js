@@ -1,5 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
+import Image from "../../../models/Image"
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
@@ -45,7 +46,22 @@ export default async function handler(req, res) {
           if (updateUser.year) user.year = updateUser.year;
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
-
+          if (updateUser.avatar){
+            const image_new = new Image({
+              content: updateUser.avatar,
+              user: user._id,
+            })
+            image_new.save();
+            user.avatar = updateUser.avatar; 
+          };
+          if (updateUser.background){
+            const image_new = new Image({
+              content: updateUser.background,
+              user: user._id,
+            })
+            image_new.save();
+            user.background = updateUser.background; 
+          }
           // Save and return.
           await user.save();
           res.status(200).json(user);
