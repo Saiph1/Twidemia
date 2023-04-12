@@ -14,12 +14,12 @@ const TweetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  postdate: {
-    type: String,
+  date: {
+    type: Date,
     required: true,
   },
   visibility: {
-    type: String,
+    type: Number,
     required: true,
   },
   likers: [
