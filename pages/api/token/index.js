@@ -1,7 +1,7 @@
 import dbConnect from "../../../lib/dbConnect";
 import sendToken from "../../../lib/email";
 import Token from "../../../models/Token";
-import User from "../../../models/Token";
+import User from "../../../models/User";
 import crypto from "crypto"
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
@@ -14,9 +14,13 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const {userId, type} = req.body;
-        const existUser = await User.exists({userId: userId});
-        if (!existUser) {
+        const {email, userId, type} = req.body;
+        let user = null;
+        if (email)
+          user = await User.findOne({email: email});
+        else
+          user = await User.findOne({userId: userId});
+        if (!user) {
           res.status(200).json({
             success: false,
             message: "User does not exists",
@@ -25,7 +29,8 @@ export default async function handler(req, res) {
         }
         const hash = crypto.randomBytes(16).toString('hex');
         const token = new Token({
-          userId: userId,
+          userId: user.userId,
+          email: user.email,
           type: type,
           hash: hash
         });

@@ -10,8 +10,6 @@ import Link from "next/link";
 
 export default function Login({ csrfToken, error, providers }) {
   // Just a simple example for testing backend
-  const router = useRouter();
-  const { status, data: session } = useSession();
   const [errorMessage, setErrorMessage] = useState("");
   const [Dark, setDark] = useState(false); // Default white theme, used in rendering the toggle button.
 
@@ -45,11 +43,6 @@ export default function Login({ csrfToken, error, providers }) {
     }
   }, [error]);
 
-  if (status === "loading") {
-    return <></>;
-  } else if (status === "authenticated") {
-    router.push("/");
-  } else
     return (
       <>
         <Head>
@@ -190,7 +183,7 @@ export default function Login({ csrfToken, error, providers }) {
                         </div>
                       </div>
                       <a
-                        href="reset"
+                        href="forgot"
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white"
                       >
                         Forgot password?
@@ -262,3 +255,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+Login.noLogin = true;

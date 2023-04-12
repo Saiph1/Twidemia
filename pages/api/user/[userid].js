@@ -26,14 +26,10 @@ export default async function handler(req, res) {
 
     case "PUT":
       let updateUser = req.body;
-      console.log(updateUser);
       try {
         const user = await User.findOne({ userId: req.query.userid });
         // When user exist, update user info
         if (user) {
-           console.log(user);
-           console.log(updateUser);
-
           // // Find the user in the user database first.
           // let user = await User.findOne({_id: req.query.userid});
           // if (!user) {
@@ -46,7 +42,7 @@ export default async function handler(req, res) {
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
           if (updateUser.password) user.password = updateUser.password;
-          console.log(user)
+          if (updateUser.verified) user.verified = updateUser.verified;
 
           // Save and return.
           const r = await user.save();

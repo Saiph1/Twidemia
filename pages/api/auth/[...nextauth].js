@@ -40,14 +40,18 @@ export const authOptions = {
       if (user) {
         token.userId = user.userId;
         token.username = user.username;
+        token.email = user.email;
         token.admin = user.admin;
+        token.verified = user.verified;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.userId = token.userId;
       session.user.username = token.username;
-      session.user.admin = token.admin;
+      session.user.email = token.email;
+      session.admin = token.admin;
+      session.verified = token.verified;
 
       return session;
     },

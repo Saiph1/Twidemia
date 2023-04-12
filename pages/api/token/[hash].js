@@ -1,7 +1,5 @@
 import dbConnect from "../../../lib/dbConnect";
 import Token from "../../../models/Token";
-import User from "../../../models/Token";
-import bcrypt from "bcrypt"
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 

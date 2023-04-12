@@ -1,19 +1,47 @@
 import Head from "next/head";
 import dbConnect from "../lib/dbConnect";
 import mongoose from "mongoose";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 // https://flowbite.com/blocks/marketing/login/
 
 
-export default function Login({ token }) {
+export default function Verify({ qtoken }) {
   // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const [verified, setVerified] = useState(false);
   const [Dark, setDark] = useState(true);
+
+  async function resentToken() {
+    const endpointToken = '/api/token';
+    const optionsToken = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        userId: session.user.userId,
+        type: 'verify',
+      }),
+    };
+
+    const responseToken = await fetch(endpointToken, optionsToken);
+    const resultToken = await responseToken.json();
+
+    if (!resultToken.Token) {
+      setMessage("Something is wrong... ")
+      setError(true);
+      throw new Error(resultToken.message || "Something went wrong!");
+    } else {
+      setMessage("A token has been sent to your email.")
+      setError(false);
+    }
+  }
 
   async function checkToken(hash) {
     try {
@@ -21,7 +49,7 @@ export default function Login({ token }) {
       const responseToken = await fetch(endpointToken, {
         method: "GET"
       })
-      const resultToken = responseToken.json();
+      const resultToken = await responseToken.json();
       if (resultToken.success) {
         const token = resultToken.token;
         const responseVerify = await fetch(`/api/user/${token.userId}` , {
@@ -34,13 +62,18 @@ export default function Login({ token }) {
         if (responseVerify.ok) {
           setVerified(true);
           return;
-      }
+        } else {
+          setMessage("Token valid but cant verify")
+          setError(true);
+        }
       } else {
-        setErrorMessage("The token is invalid")
+        setMessage("The token is invalid")
+        setError(true);
       }
     } catch (error) {
       console.error(error.message);
-      setErrorMessage("Something is wrong ...")
+      setMessage("Something is wrong ...");
+      setError(true);
       return false;
     }
   }
@@ -56,11 +89,14 @@ export default function Login({ token }) {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-  if (status === "loading") {
-    return <></>;
-  } else if (status === "authenticated") {
-    router.push("/");
-  } else if (!verified) {
+  useEffect(()=>{
+  if (qtoken) {
+    checkToken(qtoken);
+    setMessage("Loading...")
+    setError(false)
+    }
+  }, [])
+  if (!verified) {
     return (
       <>
         <Head>
@@ -131,8 +167,6 @@ export default function Login({ token }) {
                   </h1>
                   <form
                     class="space-y-4 md:space-y-6"
-                    method="post"
-                    action="/api/auth/callback/credentials"
                     onSubmit={handleSubmit}
                   >
                     <br />
@@ -154,19 +188,32 @@ export default function Login({ token }) {
                       />
                     </div>
                     <div class="flex items-center justify-center">
-                    {errorMessage ? (
-                      <a class="text-sm font-medium text-primary-600 hover:underline text-red-500">
-                        {errorMessage}
-                      </a>
-                    ) : ("")}
+                    {message ? (
+                      <div className={error ? "text-red-500" : "text-gray-900"}>
+                        {" "}
+                        {message}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     </div>
-                    <div class="flex items-center justify-center">
-                      <a
-                        href="#"
+                    <div class="flex items-center justify-center flex-col">
+                      <button
+                        type='button'
+                        formNoValidate
+                        onClick={()=>resentToken()}
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
                       >
-                        Did not receive? Click to resent token
-                      </a>
+                        Did not receive? Click to resend token
+                      </button>
+                      <button
+                        type='button'
+                        formNoValidate
+                        onClick={()=>signOut()}
+                        class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
+                      >
+                        Currently login as {session.user.username}. Click to change account.
+                      </button>
                     </div>
                     <button
                       type="submit"
@@ -295,7 +342,9 @@ export async function getServerSideProps(context) {
   return {
     props: {
       isDbConnected,
-      token
+      qtoken: token
     },
   };
 }
+
+Verify.login = true;

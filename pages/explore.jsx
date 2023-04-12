@@ -10,12 +10,7 @@ import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 
 export default function Explore() {
-  const { status, data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      signIn();
-    },
-  });
+  const { status, data: session } = useSession()
 
   return (
     <>
@@ -112,3 +107,5 @@ export default function Explore() {
     </>
   );
 }
+
+Explore.verify = true;

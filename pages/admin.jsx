@@ -9,18 +9,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function Admin({ users }) {
-  const { status, data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      signIn();
-    },
-  });
-  const router = useRouter();
-  if (status === "loading") {
-    return <></>;
-  } else if (!session.user.admin) {
-    router.push("/");
-  } else
+  const {data:session, status} = useSession();
     return (
       <>
         <Head>
@@ -48,8 +37,6 @@ export async function getStaticProps() {
     await dbConnect();
     const users = await User.find({});
     return {
-      props: { users: users },
-
       props: { users: JSON.parse(JSON.stringify(users)) },
     };
   } catch (e) {
@@ -57,3 +44,5 @@ export async function getStaticProps() {
     console.error(e);
   }
 }
+
+Admin.admin = true;

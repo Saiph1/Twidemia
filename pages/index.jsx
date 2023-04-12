@@ -37,4 +37,4 @@ export default function Home() {
   );
 }
 
-Home.login = true;
+Home.verify = true;

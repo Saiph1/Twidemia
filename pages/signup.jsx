@@ -46,8 +46,6 @@ async function createUser(data) {
 export default function Signup() {
   const router = useRouter();
 
-  const { status, data: session } = useSession();
-
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [Dark, setDark] = useState(true);
@@ -103,11 +101,6 @@ export default function Signup() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-  if (status === "loading") {
-    return <></>;
-  } else if (status === "authenticated") {
-    router.push("/");
-  } else
     return (
       <>
         <Head>
@@ -246,3 +239,5 @@ export default function Signup() {
       </>
     );
 }
+
+Signup.noLogin = true;

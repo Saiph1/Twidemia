@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 // https://flowbite.com/blocks/marketing/login/
 
-export default function Login() {
+export default function Forgot() {
   // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
@@ -39,26 +39,21 @@ export default function Login() {
       }),
     };
 
-    setMessage(`An email has been sent to ${email}.`);
-    setError(false);
   const response = await fetch(endpoint, options);
   const result = await response.json();
     if (!result.success) {
-      setMessage("Something went wrong...");
+      setMessage("Account not registered.");
       setError(true);
-  }
+    } else {
+      setMessage(`An email has been sent to ${email}.`);
+      setError(false);
+    }
   }
 
   function handledark() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-
-  if (status === "loading") {
-    return <></>;
-  } else if (status === "authenticated") {
-    router.push("/");
-  } else
     return (
       <>
         <Head>
@@ -201,3 +196,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+Forgot.noLogin = true;
