@@ -33,8 +33,8 @@ export default function Input() {
       })
   }, []);
 
-  return (
-    <div className="h-[200vh] bg-white">
+  return ( 
+    <div className="min-h-[100vh] bg-white w-full pb-8"> 
       <div className="pt-4 pb-4 px-3">
         <TweetInput />
       </div>

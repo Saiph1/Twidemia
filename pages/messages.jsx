@@ -11,6 +11,15 @@ import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 // import Welcome from "../components/Welcome";
 import dbConnect from "../lib/dbConnect";
+import Layout from "@/components/Layout";
+
+
+// Chat.getLayout = function getLayout(page) {
+//   return (
+//       <Layout title={"Favourite"}>{page}</Layout>
+//   )
+// }
+
 
 export default function Chat(props) {
 //   const navigate = useNavigate();
@@ -111,17 +120,22 @@ const [currentChat, setCurrentChat] = useState({
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
-          {/* Sidebar */}
+        <main className="flex h-screen max-w-6xl mx-auto w-full">
+
           <Sidebar user={session.user} />
-          <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId}/>
-          {/* {currentChat === undefined ? (
-            <Welcome />
-          ) : (
-            <ChatContainer currentChat={currentChat} socket={socket} />
-          )} */}
-          <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
-          <Widgets user={session.user.userId} profile={props.id} />
+
+          <div className="bg-green-200 w-full h-full">
+            <div className="bg-white flex my-8 mx-12 rounded-md  max-h-[90%] h-full">
+                <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId}/>
+                {/* {currentChat === undefined ? (
+                  <Welcome />
+                ) : (
+                  <ChatContainer currentChat={currentChat} socket={socket} />
+                )} */}
+                <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
+                {/* <Widgets user={session.user.userId} profile={props.id} /> */}
+            </div>
+          </div>
         </main>
       </>
     );

@@ -90,10 +90,10 @@ export default function Home(props) {
 
 
         <main className="'min-h-screen bg-white">
-          <div className="h-full max-w-7xl container mx-auto xl:px-30">
-            <div className="h-full grid grid-cols-4">
+          <div className="h-full max-w-6xl container mx-auto xl:px-30">
+            <div className="h-full grid grid-cols-5">
                 <Sidebar user={session.user} update={updates} />
-                <div className="col-span-3 lg:col-span-2 border-x-[1px]">
+                <div className="col-span-4 lg:col-span-3 border-x-[1px]">
                   <ProfileContainer
                     update_parent={updates}
                     user={userdata}
@@ -130,13 +130,4 @@ export async function getServerSideProps(context) {
   let id = context.query.userid;
   // Return all post and login status by props.
   return { props: { isDbConnected, id } };
-}
-
-
-Home.getLayout = function HomeLayout(page) {
-  return (
-    <>
-      {page}
-    </>
-  )
 }

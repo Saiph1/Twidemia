@@ -8,8 +8,16 @@ import Widgets from "@/components/Widgets";
 import ExploreContainer from "@/components/Explore/ExploreContainer";
 import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
+import Layout from "@/components/Layout";
+
+Explore.getLayout = function getLayout(page) {
+  return (
+      <Layout title={"Favourite"}>{page}</Layout>
+  )
+}
 
 export default function Explore() {
+
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -17,6 +25,7 @@ export default function Explore() {
     },
   });
 
+  
   return (
     <>
       <Head>
@@ -26,7 +35,7 @@ export default function Explore() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <div className="flex min-h-screen max-w-7xl w-full mx-auto">
+      <div className="flex min-h-screen max-w-6xl w-full mx-auto">
         {/* <Sidebar user={session?.user}/> */}
 
         {/*ExploreContainer ?*/}
