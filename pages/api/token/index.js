@@ -2,7 +2,7 @@ import dbConnect from "../../../lib/dbConnect";
 import sendToken from "../../../lib/email";
 import Token from "../../../models/Token";
 import User from "../../../models/Token";
-import bcrypt from "bcrypt"
+import crypto from "crypto"
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
@@ -14,28 +14,25 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const {email, type} = req.body;
-      if (type == "forgot") {
-        const existUser = await User.exists({email: email});
-        /*
+        const {userId, type} = req.body;
+        const existUser = await User.exists({userId: userId});
         if (!existUser) {
           res.status(200).json({
             success: false,
-            message: "User not registered",
+            message: "User does not exists",
           });
           return;
         }
-        */
-        const hash = await bcrypt.genSalt(10);
+        const hash = crypto.randomBytes(16).toString('hex');
         const token = new Token({
-          email: email,
+          userId: userId,
           type: type,
           hash: hash
         });
+        console.log(hash)
         token.save()
         await sendToken({token})
-        res.status(201).json({success:true});
-      }
+        res.status(201).json({success:true, token: token});
 
       } catch (error) {
         console.error(error.message)

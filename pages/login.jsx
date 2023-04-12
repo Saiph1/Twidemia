@@ -190,7 +190,7 @@ export default function Login({ csrfToken, error, providers }) {
                         </div>
                       </div>
                       <a
-                        href="forgot"
+                        href="reset"
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white"
                       >
                         Forgot password?

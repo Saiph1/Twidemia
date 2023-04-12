@@ -1,5 +1,4 @@
 import dbConnect from "../../../lib/dbConnect";
-import sendToken from "../../../lib/email";
 import Token from "../../../models/Token";
 import User from "../../../models/Token";
 import bcrypt from "bcrypt"
@@ -20,11 +19,11 @@ export default async function handler(req, res) {
           res.status(200).json({
             success: false, 
           })
+          return;
         };
         const token = await Token.findOne({hash:hash});
         console.log(token)
-        res.status(200).json({success:true})
-
+        res.status(200).json({success:true, token: token})
       }
       catch (error){
         console.error(error.message)

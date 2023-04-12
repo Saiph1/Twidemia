@@ -4,8 +4,8 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 async function createUser(data) {
-  const endpoint = "/api/auth/signup";
-  const options = {
+  const endpointUser = "/api/auth/signup";
+  const optionsUser = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,12 +13,31 @@ async function createUser(data) {
     body: JSON.stringify(data),
   };
 
-  const response = await fetch(endpoint, options);
-  const result = await response.json();
+  const responseUser = await fetch(endpointUser, optionsUser);
+  const resultUser = await responseUser.json();
 
-  if (!result.user) {
-    console.log(result.message);
-    throw new Error(result.message || "Something went wrong!");
+  const endpointToken = '/api/token';
+  const optionsToken = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: data.email,
+      userId: data.userId,
+      type: 'verify',
+    }),
+  };
+
+  const responseToken = await fetch(endpointToken, optionsToken);
+  const resultToken = await responseToken.json();
+
+  if (!resultUser.user) {
+    console.log(resultUser.message);
+    throw new Error(resultUser.message || "Something went wrong!");
+  } else if (!resultToken.Token) {
+    console.log(resultToken.message);
+    throw new Error(resultToken.message || "Something went wrong!");
   }
   return result;
 }
@@ -35,31 +54,44 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(message)
+    let errorTmp = false;
+    let messageTmp = "";
     const data = {
       email: event.target.email.value,
       password: event.target.password.value,
       password_confirm: event.target.password_confirm.value,
     };
+    let emailFormat = /^\d{10}@link.cuhk.edu.hk&/.test(data.email);
+    if (!emailFormat) {
+      // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
+      messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
+      errorTmp = true;
+    }
     if (data.password.length < 4) {
-      setMessage("Password length should be at least 4");
-      setError(true);
-      return;
+      // messageTmp += "Password length should be at least 4\n";
+      messageTmp = "Password length should be at least 4\n";
+      errorTmp = true;
     }
     if (data.password != data.password_confirm) {
-      console.log(data.password);
-      console.log(data.password_confirm);
-      setMessage("Password are not same");
-      setError(true);
-      return;
+      // messageTmp += "Passwords are not same\n";
+      messageTmp = "Passwords are not same\n";
+      errorTmp = true;
     }
+    console.log(errorTmp);
+    setMessage(messageTmp);
+    setError(errorTmp);
+    if (errorTmp)
+      return;
+    else
     try {
-      const result = await createUser(data);
+      await createUser(data);
       setMessage(
-        `Success! please go to home page to login.\nRedirecting in ${5} seconds ...`
+        'Success! Please check your email to verify your account.\n'
       );
       setError(false);
-      setTimeout(5000);
-      router.push("/");
+      setTimeout(10000);
+      router.push("verify");
     } catch (error) {
       setMessage(error.message);
       setError(true);
