@@ -1,5 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import Tweet from "../../../models/Tweet";
+import User from "../../../models/User";
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
@@ -19,12 +20,17 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        // This is used for testing purpose for now.
+        var body = JSON.parse(req.body)
+        var creator = await User.findOne({ userId: body.creator })
+        var tweets = await Tweet.find({})
         const tweet = new Tweet({
-          tweet_ID: 10,
-          content: "test",
-          date: 123,
-          visibility: "self"
+          "content": body.content,
+          "date": Date.now(),
+          "visibility": body.vis,
+          "tweetID": tweets.length+1,
+          "userID": creator._id,
+          "likers": [],
+          "comments": []
         });
         tweet.save();
         res.status(201).json({ success: true, data: tweet });

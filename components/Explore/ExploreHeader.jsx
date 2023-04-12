@@ -89,7 +89,7 @@ export default function ExploreHeader() {
             <p className="font-[400] py-1 px-3 rounded-full bg-white border">
               Rewarding
             </p>
-            <div className="font-[400] py-1 px-3 rounded-2xl bg-white border flex gap-1 items-center">
+            <div className="font-[400] py-1 px-3 rounded-full bg-white border flex gap-2 items-center">
               <span className="hidden xl:block">Search</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ export default function ExploreHeader() {
                 />
               </svg>
               <div>
-                <input className="w-[120px] border rounded-md" />
+                <input className="w-[120px] rounded-md focus:outline-0 placeholder:text-sm font-[400]" placeholder="Tag.."/>
               </div>
             </div>
           </div>
