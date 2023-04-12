@@ -26,6 +26,8 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
+// import avatar from "./Avatar_test.png"
+
 export default function ProfileContainer({
   user,
   myprofile,
@@ -47,6 +49,10 @@ export default function ProfileContainer({
   const [year, setYear] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [facultyValue, setFacultyValue] = React.useState('');
+  
+  const [postImage, setPostImage] = React.useState( { myFile : ""})
+  // const inputFile = useRef(null) 
+
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
     {
@@ -158,6 +164,47 @@ export default function ProfileContainer({
   // .then(()=>updates_true())
   }
 
+  const createPost = async (newImage) => {
+    try{
+      await axios.post(url, newImage)
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createPost(postImage)
+    console.log("Uploaded")
+  }
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    // console.log("file", file)
+    const base64 = await convertToBase64(file);
+    console.log(base64)
+    setPostImage({ ...postImage, myFile : base64 })
+    // console.log("postimage", postImage.myFile);
+  }
+
+
+  function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
+
+
+
+
+
   function updateUser() {
     let requestBody = {
       username,
@@ -197,7 +244,7 @@ export default function ProfileContainer({
             <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 200 }}>
               <Avatar
               alt="Remy Sharp"
-              src="/Avatar_test.png"
+              src={postImage.myFile || "/Avatar_test.png"}
               sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:100, margin:1 , border: "3px solid lightgrey"}}
               />
             </CardActions>
@@ -303,11 +350,37 @@ export default function ProfileContainer({
                 <IconButton>
                   <Avatar
                     alt="Remy Sharp"
-                    src="/Avatar_test.png"
+                    src={postImage.myFile || "/Avatar_test.png"}
                     sx={{ width: 80, height: 80 }}
+                    
                   />
                 </IconButton>
               </Tooltip>
+              
+              <label htmlFor="file-upload" className="custom-file-upload"> 
+                <img src={postImage.myFile || "/Avatar_test.png"} alt="" />
+              </label> 
+              
+              <form onSubmit={handleSubmit}>
+                <input 
+                  type="file"
+                  label="Image"
+                  name="myFile"
+                  id="file-upload"
+                  accept='.jpeg, .png, .jpg'
+
+                  onChange={(e) => handleFileUpload(e)}
+                  /> 
+                  <button>Submit</button>
+              </form>
+
+
+
+
+
+
+
+
               <TextField
                 autoFocus
                 margin="dense"
@@ -455,5 +528,21 @@ export default function ProfileContainer({
     );
   }
 }
+
+
+// function convertToBase64(file){
+//   return new Promise((resolve, reject) => {
+//     const fileReader = new FileReader();
+//     fileReader.readAsDataURL(file);
+//     fileReader.onload = () => {
+//       resolve(fileReader.result)
+//     };
+//     fileReader.onerror = (error) => {
+//       reject(error)
+//     }
+//   })
+// }
+
+
 
 
