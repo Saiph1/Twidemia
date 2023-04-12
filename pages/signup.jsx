@@ -16,30 +16,31 @@ async function createUser(data) {
   const responseUser = await fetch(endpointUser, optionsUser);
   const resultUser = await responseUser.json();
 
-  const endpointToken = '/api/token';
-  const optionsToken = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: data.email,
-      userId: data.userId,
-      type: 'verify',
-    }),
-  };
+  if (resultUser.user) {
+    const endpointToken = '/api/token';
+    const optionsToken = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.email,
+        userId: data.userId,
+        type: 'verify',
+      }),
+    };
 
-  const responseToken = await fetch(endpointToken, optionsToken);
-  const resultToken = await responseToken.json();
+    const responseToken = await fetch(endpointToken, optionsToken);
+    const resultToken = await responseToken.json();
 
-  if (!resultUser.user) {
+    if (!resultToken.token) {
+      console.log(resultToken.message);
+      throw new Error(resultToken.message || "Something went wrong!");
+    }
+  } else {
     console.log(resultUser.message);
     throw new Error(resultUser.message || "Something went wrong!");
-  } else if (!resultToken.Token) {
-    console.log(resultToken.message);
-    throw new Error(resultToken.message || "Something went wrong!");
   }
-  return result;
 }
 
 // https://flowbite.com/blocks/marketing/login/
@@ -60,7 +61,8 @@ export default function Signup() {
       password: event.target.password.value,
       password_confirm: event.target.password_confirm.value,
     };
-    let emailFormat = /^\d{10}@link.cuhk.edu.hk&/.test(data.email);
+    console.log(data.email)
+    let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
     if (!emailFormat) {
       // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
@@ -83,13 +85,15 @@ export default function Signup() {
       return;
     else
     try {
+      setMessage("Loading...");
+      setError(false);
       await createUser(data);
       setMessage(
         'Success! Please check your email to verify your account.\n'
       );
       setError(false);
       setTimeout(10000);
-      router.push("verify");
+      // router.push("verify");
     } catch (error) {
       setMessage(error.message);
       setError(true);

@@ -20,6 +20,16 @@ async function handler(req, res) {
       });
       return;
     }
+    /*
+    existUser = await User.exists({ userId: userId });
+    if (existUser) {
+      res.status(200).json({
+        user: null,
+        message: `Email registered already!`,
+      });
+      return;
+    }
+    */
     const user = new User({
       email: email,
       password: password,
