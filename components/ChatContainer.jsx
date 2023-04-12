@@ -43,8 +43,13 @@ export default function ChatContainer({ currentChat, viewer=""}) {
     .then((data)=>{
       console.log("data",data);
       setMessages([]);
-        for (let i=0; i<data.data.message.length; i++)
-          setMessages((prevMessages)=>[...prevMessages, data.data.message[i].content+"(from ID=@"+data.data.message[i].sender.userId+")"]);
+        for (let i=0; i<data.data.message.length; i++){
+          let tmp;
+          if (data.data.message[i].sender.userId === viewer) tmp = {content: data.data.message[i].content, from_me: true}; 
+          else tmp = {content: data.data.message[i].content, from_me: false};;
+          setMessages((prevMessages)=>[...prevMessages, tmp]);
+        }
+          
     }).then(()=>setload(true));
   }, [currentChat])
 
@@ -136,11 +141,11 @@ export default function ChatContainer({ currentChat, viewer=""}) {
                 <span class="sr-only">Loading...</span>
             </div>
           :<div className="chat-messages px-6 overflow-y-scroll h-full bg-gray-400">
-              {messages.map((message) => {
+              {messages.map((message, index) => {
               return (
-                  <div key={message}>
+                  <div key={index}>
                       <div className="content h-[200px]">
-                          <p>{message}</p>
+                          <p>{messages[index].content}{messages[index].from_me?"(you)":""}</p>
                       </div>
                   </div>
                 );
