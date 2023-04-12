@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 // https://flowbite.com/blocks/marketing/login/
 
-
 export default function Verify({ qtoken }) {
   // Just a simple example for testing backend
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function Verify({ qtoken }) {
   const [Dark, setDark] = useState(true);
 
   async function resentToken() {
-    const endpointToken = '/api/token';
+    const endpointToken = "/api/token";
     const optionsToken = {
       method: "POST",
       headers: {
@@ -26,7 +25,7 @@ export default function Verify({ qtoken }) {
       body: JSON.stringify({
         email: session.user.email,
         userId: session.user.userId,
-        type: 'verify',
+        type: "verify",
       }),
     };
 
@@ -34,11 +33,11 @@ export default function Verify({ qtoken }) {
     const resultToken = await responseToken.json();
 
     if (!resultToken.Token) {
-      setMessage("Something is wrong... ")
+      setMessage("Something is wrong... ");
       setError(true);
       throw new Error(resultToken.message || "Something went wrong!");
     } else {
-      setMessage("A token has been sent to your email.")
+      setMessage("A token has been sent to your email.");
       setError(false);
     }
   }
@@ -47,27 +46,27 @@ export default function Verify({ qtoken }) {
     try {
       const endpointToken = `/api/token/${hash}`;
       const responseToken = await fetch(endpointToken, {
-        method: "GET"
-      })
+        method: "GET",
+      });
       const resultToken = await responseToken.json();
       if (resultToken.success) {
         const token = resultToken.token;
-        const responseVerify = await fetch(`/api/user/${token.userId}` , {
+        const responseVerify = await fetch(`/api/user/${token.userId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             verified: true,
           }),
-        })
+        });
         if (responseVerify.ok) {
           setVerified(true);
           return;
         } else {
-          setMessage("Token valid but cant verify")
+          setMessage("Token valid but cant verify");
           setError(true);
         }
       } else {
-        setMessage("The token is invalid")
+        setMessage("The token is invalid");
         setError(true);
       }
     } catch (error) {
@@ -81,21 +80,21 @@ export default function Verify({ qtoken }) {
   function handleSubmit(event) {
     event.preventDefault();
     const hash = event.target.token.value;
-    console.log(hash)
-    checkToken(hash)
+    console.log(hash);
+    checkToken(hash);
   }
 
   function handledark() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-  useEffect(()=>{
-  if (qtoken) {
-    checkToken(qtoken);
-    setMessage("Loading...")
-    setError(false)
+  useEffect(() => {
+    if (qtoken) {
+      checkToken(qtoken);
+      setMessage("Loading...");
+      setError(false);
     }
-  }, [])
+  }, []);
   if (!verified) {
     return (
       <>
@@ -165,10 +164,7 @@ export default function Verify({ qtoken }) {
                   >
                     Email verification
                   </h1>
-                  <form
-                    class="space-y-4 md:space-y-6"
-                    onSubmit={handleSubmit}
-                  >
+                  <form class="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                     <br />
                     <div>
                       <label
@@ -188,31 +184,34 @@ export default function Verify({ qtoken }) {
                       />
                     </div>
                     <div class="flex items-center justify-center">
-                    {message ? (
-                      <div className={error ? "text-red-500" : "text-gray-900"}>
-                        {" "}
-                        {message}
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                      {message ? (
+                        <div
+                          className={error ? "text-red-500" : "text-gray-900"}
+                        >
+                          {" "}
+                          {message}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div class="flex items-center justify-center flex-col">
                       <button
-                        type='button'
+                        type="button"
                         formNoValidate
-                        onClick={()=>resentToken()}
+                        onClick={() => resentToken()}
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
                       >
                         Did not receive? Click to resend token
                       </button>
                       <button
-                        type='button'
+                        type="button"
                         formNoValidate
-                        onClick={()=>signOut()}
+                        onClick={() => signOut()}
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
                       >
-                        Currently login as {session.user.username}. Click to change account.
+                        Currently login as {session.user.username}. Click to
+                        change account.
                       </button>
                     </div>
                     <button
@@ -231,9 +230,8 @@ export default function Verify({ qtoken }) {
           {/* Model */}
         </main>
       </>
-    )
-  }
-  else {
+    );
+  } else {
     return (
       <>
         <Head>
@@ -302,15 +300,13 @@ export default function Verify({ qtoken }) {
                   >
                     Email verification
                   </h1>
-                    <div class="flex items-center justify-center">
-                      <p
-                        class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
-                      >
-                        Your account has been verified !
-                    <br/ >
-                        Redirecting to login page ...
-                      </p>
-                    </div>
+                  <div class="flex items-center justify-center">
+                    <p class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center">
+                      Your account has been verified !
+                      <br />
+                      Redirecting to login page ...
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -336,13 +332,12 @@ export async function getServerSideProps(context) {
 
   const query = context.query;
   let token = query.token;
-  if (!token)
-    token = null;
+  if (!token) token = null;
   // Return all post and login status by props.
   return {
     props: {
       isDbConnected,
-      qtoken: token
+      qtoken: token,
     },
   };
 }

@@ -19,15 +19,15 @@ export default function Forgot() {
     event.preventDefault();
 
     const sid = event.target.email_uid.value;
-    const email = sid+"@link.cuhk.edu.hk"
+    const email = sid + "@link.cuhk.edu.hk";
     let isnum = /\d{10}/.test(sid);
     if (!isnum) {
       setMessage("Please enter a valid student ID.");
       setError(true);
       return;
-    } 
+    }
     console.log("email verification. ");
-    const endpoint = '/api/token';
+    const endpoint = "/api/token";
     const options = {
       method: "POST",
       headers: {
@@ -35,12 +35,12 @@ export default function Forgot() {
       },
       body: JSON.stringify({
         email: email,
-        type: 'forgot',
+        type: "forgot",
       }),
     };
 
-  const response = await fetch(endpoint, options);
-  const result = await response.json();
+    const response = await fetch(endpoint, options);
+    const result = await response.json();
     if (!result.success) {
       setMessage("Account not registered.");
       setError(true);
@@ -54,126 +54,126 @@ export default function Forgot() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
-    return (
-      <>
-        <Head>
-          <title>Twidemia Login</title>
-          <link rel="icon" href="/Twidemia-logo.png" />
-        </Head>
+  return (
+    <>
+      <Head>
+        <title>Twidemia Login</title>
+        <link rel="icon" href="/Twidemia-logo.png" />
+      </Head>
 
-        <main class="" id="container">
-          <section class="bg-gray-50 dark:bg-gray-900">
-            <button
-              onClick={() => {
-                setDark(!Dark);
-                handledark();
-              }}
-            >
-              {Dark && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="black"
-                  className="w-6 h-6"
-                  style={{ margin: "20px" }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-                  />
-                </svg>
-              )}
-              {!Dark && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="white"
-                  className="w-6 h-6"
-                  style={{ margin: "20px" }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                  />
-                </svg>
-              )}
-            </button>
-            <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-              <a
-                href="#"
-                class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-              ></a>
+      <main class="" id="container">
+        <section class="bg-gray-50 dark:bg-gray-900">
+          <button
+            onClick={() => {
+              setDark(!Dark);
+              handledark();
+            }}
+          >
+            {Dark && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="black"
+                className="w-6 h-6"
+                style={{ margin: "20px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                />
+              </svg>
+            )}
+            {!Dark && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="white"
+                className="w-6 h-6"
+                style={{ margin: "20px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                />
+              </svg>
+            )}
+          </button>
+          <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <a
+              href="#"
+              class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+            ></a>
 
-              <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <div class="p-6 space-y-4 md:space-y-3 sm:p-8">
-                  <h1
-                    class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    Reset password
-                  </h1>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm text-center">
-                    A 6 digits token will be send to your CUHK email.
-                  </p>
-                  <form
-                    class="space-y-4 md:space-y-6"
-                    method="post"
-                    action="/api/auth/callback/credentials"
-                    onSubmit={handleSubmit}
-                  >
-                    <br />
-                    <div>
-                      <label
-                        for="email_uid"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        {" "}
-                        Input your student ID :
-                      </label>
-                      <input
-                        type="text"
-                        name="email_uid"
-                        id="email_uid"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Your Student ID"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+              <div class="p-6 space-y-4 md:space-y-3 sm:p-8">
+                <h1
+                  class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  Reset password
+                </h1>
+                <p class="text-gray-500 dark:text-gray-400 text-sm text-center">
+                  A 6 digits token will be send to your CUHK email.
+                </p>
+                <form
+                  class="space-y-4 md:space-y-6"
+                  method="post"
+                  action="/api/auth/callback/credentials"
+                  onSubmit={handleSubmit}
+                >
+                  <br />
+                  <div>
+                    <label
+                      for="email_uid"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Send
-                    </button>
-                  </form>
-                    {message ? (
-                      <div className={error ? "text-red-500" : "text-gray-900"}>
-                        {" "}
-                        {message}
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                </div>
+                      {" "}
+                      Input your student ID :
+                    </label>
+                    <input
+                      type="text"
+                      name="email_uid"
+                      id="email_uid"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Your Student ID"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"
+                  >
+                    Send
+                  </button>
+                </form>
+                {message ? (
+                  <div className={error ? "text-red-500" : "text-gray-900"}>
+                    {" "}
+                    {message}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
-          </section>
-          {/* Sidebar */}
+          </div>
+        </section>
+        {/* Sidebar */}
 
-          {/* Model */}
-        </main>
-      </>
-    );
+        {/* Model */}
+      </main>
+    </>
+  );
 }
 
 export async function getServerSideProps(context) {

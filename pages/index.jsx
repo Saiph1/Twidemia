@@ -10,7 +10,7 @@ import Slider from "@mui/material/Slider";
 // import '../styles/Index.mudule.css'
 
 export default function Home() {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   return (
     <>
       <Head>

@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 export default function App({
   Component,
@@ -49,12 +49,12 @@ export default function App({
 }
 
 function Login({ children }) {
-  const { status } = useSession({ 
+  const { status } = useSession({
     required: true,
     onUnauthenticated() {
       signIn();
-    }
-  })
+    },
+  });
   if (status === "loading") {
     return <></>;
   }
@@ -63,42 +63,42 @@ function Login({ children }) {
 
 function Verify({ children }) {
   const router = useRouter();
-  const { status, data:session} = useSession({ 
+  const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
       signIn();
-    }
-  })
+    },
+  });
   if (status === "loading") {
     return <></>;
   }
   if (!session.verified) {
-    router.push('/verify');
-    return <></>
+    router.push("/verify");
+    return <></>;
   }
   return children;
 }
 
 function NoLogin({ children }) {
-  const { status } = useSession()
+  const { status } = useSession();
   const router = useRouter();
   if (status === "loading") {
-    return <></>
+    return <></>;
   } else if (status === "authenticated") {
     router.push("/");
-    return <></>
+    return <></>;
   }
   return children;
 }
 
 function Admin({ children }) {
-  const { data:session, status } = useSession()
+  const { data: session, status } = useSession();
   const router = useRouter();
   if (status === "loading") {
-    return <></>
+    return <></>;
   } else if (!session.user.admin) {
     router.push("/");
-    return <></>
+    return <></>;
   }
   return children;
 }

@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import User from "@/models/User";
 import Token from "@/models/Token";
 
-export default function Reset({ isDbConnected, user, token}) {
+export default function Reset({ isDbConnected, user, token }) {
   // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
@@ -18,33 +18,33 @@ export default function Reset({ isDbConnected, user, token}) {
     event.preventDefault();
     const data = {
       password: event.target.password.value,
-      password_confirm: event.target.password_confirm.value
+      password_confirm: event.target.password_confirm.value,
     };
     if (data.password.length < 4) {
       setMessage("Password length should be at least 4");
       setError(true);
       return;
-    }
-    else if (data.password != data.password_confirm) {
+    } else if (data.password != data.password_confirm) {
       setMessage("Password are not same");
       setError(true);
       return;
     }
     try {
-      const response = await fetch(`/api/user/${user.userId}` , {
+      const response = await fetch(`/api/user/${user.userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({password: data.password,
-        }),
-      })
-      const result = await response.json()
+        body: JSON.stringify({ password: data.password }),
+      });
+      const result = await response.json();
       if (response.ok) {
-        setMessage("Password changed, please go to home page to login\nRedirecting ...");
+        setMessage(
+          "Password changed, please go to home page to login\nRedirecting ..."
+        );
         setError(false);
         setTimeout(5000);
         await fetch(`/api/token/${token._id}`, {
           method: "DELETE",
-        })
+        });
         router.push("/");
       } else {
         setMessage(result.message);
@@ -53,15 +53,13 @@ export default function Reset({ isDbConnected, user, token}) {
     } catch (error) {
       setMessage(error.message);
       setError(true);
-      console.error(error.message)
+      console.error(error.message);
     }
   }
-
 
   function handledark() {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
-
 
   if (status === "loading") {
     return <></>;
@@ -211,20 +209,20 @@ export async function getServerSideProps(context) {
 
   let hash = context.query.hash;
   let user = null;
-  const token = await Token.findOne({hash:hash});
+  const token = await Token.findOne({ hash: hash });
   if (!token || token.type != "forgot") {
     console.log("something is wrong");
   } else {
-    user = await User.findOne({email: token.email});
+    user = await User.findOne({ email: token.email });
   }
 
   if (!token || !user) {
     return {
       redirect: {
-        destination: '/forgot',
+        destination: "/forgot",
         permanent: false,
       },
-    }
+    };
   } else {
     return {
       props: {
@@ -234,7 +232,6 @@ export async function getServerSideProps(context) {
         token: JSON.parse(JSON.stringify(token)),
         user: JSON.parse(JSON.stringify(user)),
       },
-
-    }
-  };
+    };
+  }
 }

@@ -10,7 +10,7 @@ import React from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 
 export default function Explore() {
-  const { status, data: session } = useSession()
+  const { status, data: session } = useSession();
 
   return (
     <>

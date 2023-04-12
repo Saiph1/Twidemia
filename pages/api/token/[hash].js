@@ -11,33 +11,31 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const {hash} = req.query;
-        const existToken = await Token.exists({hash: hash});
+        const { hash } = req.query;
+        const existToken = await Token.exists({ hash: hash });
         if (!existToken) {
           res.status(200).json({
-            success: false, 
-          })
+            success: false,
+          });
           return;
-        };
-        const token = await Token.findOne({hash:hash});
-        console.log(token)
-        res.status(200).json({success:true, token: token})
-      }
-      catch (error){
-        console.error(error.message)
-        res.status(400).json({success: false, message:error.message});
+        }
+        const token = await Token.findOne({ hash: hash });
+        console.log(token);
+        res.status(200).json({ success: true, token: token });
+      } catch (error) {
+        console.error(error.message);
+        res.status(400).json({ success: false, message: error.message });
       }
       break;
     case "DELETE":
-      const {hash} = req.query;
+      const { hash } = req.query;
       try {
-        await Token.deleteOne({_id: hash})
-        res.status(200).json({success: true})
-
-      }catch (error) {
-        res.status(400).json({success:false, message:error.message});
+        await Token.deleteOne({ _id: hash });
+        res.status(200).json({ success: true });
+      } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
       }
-    break;
+      break;
 
     default:
       res.status(400).json({ success: false });

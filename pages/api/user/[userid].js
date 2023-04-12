@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
           // Save and return.
           const r = await user.save();
-          console.log(r)
+          console.log(r);
           res.status(200).json(user);
         } else res.status(404).json({ error: "User not found." });
       } catch (error) {
