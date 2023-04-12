@@ -35,7 +35,7 @@ export default function Explore() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <div className="flex min-h-screen max-w-7xl w-full mx-auto">
+      <div className="flex min-h-screen max-w-6xl w-full mx-auto">
         {/* <Sidebar user={session?.user}/> */}
 
         {/*ExploreContainer ?*/}

@@ -53,7 +53,7 @@ export default function Sidebar({ user, update = () => {} }) {
         </div>
 
         {/* Menu */}
-        <div className="mt-4 mb-2.5 xl-items-start">
+        <div className="mt-4 mb-2.5 justify-center lg:justify-start items-start">
           <Link href={"/"} active>
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
               <HomeIcon className="w-7" />
@@ -72,6 +72,7 @@ export default function Sidebar({ user, update = () => {} }) {
               <span className="font-[500] text-primary-black text-lg hidden md:block">Messages</span>
             </div>
           </Link>
+
           <Link href={"/explore"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
               <SparklesIcon className="w-7" />
