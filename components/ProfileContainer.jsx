@@ -88,6 +88,10 @@ export default function ProfileContainer({
     // console.log(facultyValue);
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
+    
+    createPost(postImage) // for image upload
+    console.log("Uploaded")
+
     updateUser();
     editupdate();
     setOpen(false);
@@ -172,11 +176,12 @@ export default function ProfileContainer({
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createPost(postImage)
-    console.log("Uploaded")
-  }
+  // incorporate into handleDoneClose()
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   createPost(postImage)
+  //   console.log("Uploaded")
+  // }
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -200,9 +205,6 @@ export default function ProfileContainer({
       }
     })
   }
-
-
-
 
 
   function updateUser() {
@@ -244,7 +246,7 @@ export default function ProfileContainer({
             <CardActions style={{backgroundImage: `url("../test_background.avif")`,  height: 200 }}>
               <Avatar
               alt="Remy Sharp"
-              src={postImage.myFile || "/Avatar_test.png"}
+              src={"/Avatar_test.png"}
               sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:100, margin:1 , border: "3px solid lightgrey"}}
               />
             </CardActions>
@@ -347,17 +349,26 @@ export default function ProfileContainer({
                         </DialogContentText> */}
 
               <Tooltip title="Change your avatar">
-                <IconButton>
+                <IconButton variant="contained" component="label" htmlFor="file-upload" className="custom-file-upload">
                   <Avatar
                     alt="Remy Sharp"
                     src={postImage.myFile || "/Avatar_test.png"}
                     sx={{ width: 80, height: 80 }}
-                    
                   />
+                  <input
+                    type="file"
+                    label="Image"
+                    name="myFile"
+                    id="file-upload"
+                    accept='.jpeg, .png, .jpg'
+                    hidden
+                    onChange={(e) => handleFileUpload(e)}
+                />
                 </IconButton>
+       
               </Tooltip>
               
-              <label htmlFor="file-upload" className="custom-file-upload"> 
+              {/* <label htmlFor="file-upload" className="custom-file-upload"> 
                 <img src={postImage.myFile || "/Avatar_test.png"} alt="" />
               </label> 
               
@@ -372,13 +383,7 @@ export default function ProfileContainer({
                   onChange={(e) => handleFileUpload(e)}
                   /> 
                   <button>Submit</button>
-              </form>
-
-
-
-
-
-
+              </form> */}
 
 
               <TextField
