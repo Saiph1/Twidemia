@@ -18,6 +18,7 @@ export default function Home(props) {
   });
   const [load, setload] = useState(false);
   const [follow, setfollow] = useState();
+  const [block, setblock] = useState(); 
   const [followupdate, setfollowupdate] = useState(true);
   const [edit_update, setedit_update] = useState(true);
   // const [id, setid] = useState(props.id);
@@ -48,6 +49,12 @@ export default function Home(props) {
             .map((item) => item.userId === session.user.userId)
             .includes(true)
         );
+        setblock(
+          data.data.blocklist
+            .map((item) => item.userId === session.user.userId)
+            .includes(true)
+        );
+        console.log(block);
       })
       .then(() => setload(true));
   }, [session, props]);
@@ -62,6 +69,11 @@ export default function Home(props) {
         console.log(userdata);
         setfollow(
           data.data.followerlist
+            .map((item) => item.userId === session.user.userId)
+            .includes(true)
+        );
+        setblock(
+          data.data.blocklist
             .map((item) => item.userId === session.user.userId)
             .includes(true)
         );
@@ -82,6 +94,13 @@ export default function Home(props) {
     // setfollowupdate(!followupdate);
     setedit_update(false);
     setfollow(!follow);
+  }
+
+  function block_update() {
+    // setload(false);
+    // setfollowupdate(!followupdate);
+    setedit_update(false);
+    setblock(!block);
   }
 
   if (session) {
@@ -107,9 +126,11 @@ export default function Home(props) {
                     loaded={load}
                     viewerid={session.user.userId}
                     followed={follow}
+                    blocked={block}
                     followupdate={follow_update}
                     editupdate={()=>setedit_update(false)}
                     updates_true={()=>updates_true()}
+                    block_update={block_update}
                   />
                 </div>
                 <Widgets update_page={updates} user={session.user.userId} profile={props.id} />

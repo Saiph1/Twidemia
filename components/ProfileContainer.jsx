@@ -33,9 +33,11 @@ export default function ProfileContainer({
   update_parent,
   viewerid = "",
   followed = false,
+  blocked = false,
   followupdate = () => {},
   editupdate,
   updates_true,
+  block_update=()=>{},
 }) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
@@ -135,6 +137,26 @@ export default function ProfileContainer({
   .then(()=>updates_true())
   }
 
+  const handle_block = () => {
+    // update_parent();
+    fetch('/api/block/'+viewerid+"/"+user.userId, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+  }).then(()=>console.log("block done"))
+  .then(()=>block_update())
+  // .then(()=>updates_true())
+  }
+
+  const handle_unblock = () => {
+    // update_parent(); 
+    fetch('/api/block/'+viewerid+"/"+user.userId, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+  }).then(()=>console.log("unblock done"))
+  .then(()=>block_update())
+  // .then(()=>updates_true())
+  }
+
   function updateUser() {
     let requestBody = {
       username,
@@ -155,7 +177,7 @@ export default function ProfileContainer({
       console.log(error);
     }
   }
-  // this loaded is used from the parent state "load".
+  // this loaded is used from the parent state "load"
   if (loaded) {
     return (
       <div className="w-full min-h-screen">
@@ -191,10 +213,11 @@ export default function ProfileContainer({
               disableRipple
               class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" 
               size="small" 
+              onClick={()=>{if(!blocked) handle_block(); else handle_unblock();}}
               >
-                Block
+                {!blocked? "Block": "unblock"}
               </Button>}
-              {(!myprofile) && <Button
+              {(!myprofile&&!blocked) && <Button
               disableRipple 
               class={!followed?
                 "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -223,7 +246,7 @@ export default function ProfileContainer({
                 Edit profile
               </Button>}
               </CardActions>
-
+              
               {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
               <Typography variant="h5" component="div">
                 {user.username}
@@ -232,34 +255,35 @@ export default function ProfileContainer({
                 @{user.userId}
               </Typography>
 
-              <Link
+              {!blocked?<Link
                 component="button"
                 onClick={handleFollowerOpen}
                 // sx={{ mb: 1.5 }} color="text.secondary"
                 variant="subtitle1"
               >
                 {user.followerlist.length} Follower
-              </Link>
+              </Link>:<></>}
 
-              <Link
+              {(!blocked)?<Link
                 component="button"
                 onClick={handleFollowingOpen}
                 // sx={{ mb: 1.5 }} color="text.secondary"
                 variant="subtitle1"
               >
                 {user.followinglist.length}Following
-              </Link>
+              </Link>:<></>}
 
               {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {user.followinglist.length} following {user.followerlist.length} follower
               </Typography> */}
-              <Typography variant="body2">
+              {!blocked?<Typography variant="body2">
                 Year {user.year}.
                 <br />
                 {user.faculty}
                 <br />
                 {user.Description}
               </Typography>
+            :<></>}
             </CardContent>
             {/* <CardActions>
                 <Button size="small">Learn More</Button>
