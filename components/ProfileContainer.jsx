@@ -25,6 +25,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import FollowerListItem from "./Profile/FollowerListItem";
 
 export default function ProfileContainer({
   user,
@@ -38,6 +39,7 @@ export default function ProfileContainer({
 }) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
+  const [followingListOpen, setFollowingListOpen] = React.useState(false);
   // For user information.
   const [load, setload] = React.useState(true)
   const [username, setUsername] = React.useState('');
@@ -235,6 +237,7 @@ export default function ProfileContainer({
                 component="button"
                 onClick={() => {
                   // ...process something
+                  setFollowingListOpen(true)
                 }}
                 // sx={{ mb: 1.5 }} color="text.secondary"
                 variant="subtitle1"
@@ -328,35 +331,58 @@ export default function ProfileContainer({
             </DialogActions>
           </Dialog>
 
-          <Dialog open={follower} onClose={handleFollowerClose} fullWidth>
-            {/* mapping followers */}
-            {user.followerlist.map((file, index) => (
-              <List key={user.followerlist[index].username}>
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" onClick={handleFollowerClose}>
-                      Follow
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>{/* <FolderIcon /> */}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    class="px-5"
-                    primary={user.followerlist[index].username}
-                    secondary={"@" + user.followerlist[index].userId}
-                  />
-                </ListItem>
-              </List>
-            ))}
 
-            <DialogActions>
-              <Button onClick={handleFollowerClose}>Close</Button>
-            </DialogActions>
-          </Dialog>
+          <div>
+            <div className={`tweetOverlay ${follower? 'visible opacity-100': 'hidden opacity-0'}`}>
+                <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[40%] mx-auto mt-20 relative">
+                    <div className="relative border-b-[1px] border-neutral-300 flex justify-center">
+                      <p className="py-3 text-lg font-[500]">Follower</p>
+                      <span className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer " onClick={() => setFollowerOpen(false)}>&times;</span>
+                    </div>
+                    <div className="mt-4">
+
+                      {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
+                      <FollowerListItem followed={false}/>
+                      <FollowerListItem followed={true}/> 
+
+                      {/* {user.followerlist.map((file, index) => (
+                          <div key={user.followerlist[index].userId}>
+                              <div>
+                                  <img src="123" alt="user-icon" />
+                              </div>
+                              <div>
+                                <span>
+                                  {user.followerlist[index].username}
+                                </span>
+                                <span>
+                                  {"@" + user.followerlist[index].userId}
+                                </span>
+                              </div>
+                          </div>
+                      ))} */}
+                    </div>
+                </div>
+            </div>
+
+            <div className={`tweetOverlay ${followingListOpen? 'visible opacity-100': 'hidden opacity-0'}`}>
+              <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[40%] mx-auto mt-20 relative">
+                <div className="relative border-b-[1px] border-neutral-300 flex justify-center">
+                  <p className="py-3 text-lg font-[500]">Following</p>
+                  <span className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer " onClick={() => setFollowingListOpen(false)}>&times;</span>
+                </div>
+                <div className="mt-4">
+
+                  {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
+                  <FollowerListItem followed={false}/>
+                  <FollowerListItem followed={true}/> 
+                </div>
+               </div> 
+            </div>
+
+          </div>
+
+
         </div>
-        
       </div>
     );
   } else {
