@@ -106,7 +106,7 @@ function Admin({ children }) {
   const router = useRouter();
   if (status === "loading") {
     return <></>;
-  } else if (!session.user.admin) {
+  } else if (!session.admin) {
     router.push("/");
     return <></>;
   }
