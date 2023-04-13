@@ -51,7 +51,7 @@ export default function Contacts({
             return contacts[index].userId != viewerid ? (
               <div
                 className={`flex items-center px-4 py-2 ${
-                  contact.username === currentChat.username
+                  contact.username === currentChat?.username
                     ? "bg-gray-300 scale-120 border-l-[4px] border-primary-blue"
                     : "hover:bg-gray-200 "
                 }`}
