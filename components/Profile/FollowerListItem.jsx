@@ -20,7 +20,7 @@ const FollowerListItem = (props) => {
           </div>
         </div>
         {/* Follow/Unfollow button */}
-        <button className="hover:opacity-80 rounded-xl bg-primary-blue text-white w-[100px] py-2 font-[600] md:py-3">
+        <button className={`${props.followed? 'bg-black text-white border-black hover:bg-gray-400 hover:text-black hover:border-gray-400' : 'hover:bg-gray-400 hover:border-gray-400 border-gray-300'} border-2 rounded-full w-[100px] py-2 font-[600]`}>
           {props.followed ? "Unfollow" : "Follow"}
         </button>
       </div>
