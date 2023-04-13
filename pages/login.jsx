@@ -33,7 +33,7 @@ export default function Login({ csrfToken, error, providers }) {
 
   // handle function for the button click event, setting the class of the container to dark, tailwind uses this to determine the dark scheme.
   function handledark() {
-    document.getElementById("login_container").className = !Dark ? "dark" : "";
+    document.getElementById("login_container").className = Dark ? "" : "dark";
   }
 
   // set error message
@@ -51,14 +51,14 @@ export default function Login({ csrfToken, error, providers }) {
       </Head>
 
       <main class="" id="login_container">
-        <section class="bg-gray-50 dark:bg-gray-900 min-h-[100vh]">
+        <section className={`${Dark? 'dark-fancy-background' : 'light-fancy-background'} min-h-[100vh]`}>
           <button
             onClick={() => {
               setDark(!Dark);
               handledark();
             }}
           >
-            {!Dark && (
+            {Dark && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -75,7 +75,7 @@ export default function Login({ csrfToken, error, providers }) {
                 />
               </svg>
             )}
-            {Dark && (
+            {!Dark && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

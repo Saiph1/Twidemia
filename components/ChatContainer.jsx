@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 // import io from 'Socket.IO-client'
 import { io } from "socket.io-client";
 
-export default function ChatContainer({ currentChat, viewer=""}) {
+export default function ChatContainer({ currentChat, viewer="", session }) {
   const [messages, setMessages] = useState([]);
   // const scrollRef = useRef();
   // const [input, setInput] = useState('')
@@ -18,12 +18,14 @@ export default function ChatContainer({ currentChat, viewer=""}) {
 
   let socket=io();
   useEffect(() => {
+    
     socketInitializer();
     // setupdate_done(true);
   }, [])
   
   const socketInitializer = async () => {
     await fetch('/api/socket');
+    setMessages([]);
     console.log(viewer);
     console.log(currentChat.userId);
     socket.on('connect', () => {
@@ -31,21 +33,23 @@ export default function ChatContainer({ currentChat, viewer=""}) {
     })
 
     socket.on('update-input', msg => {
-      setMessages((prevMessages)=>[...prevMessages, msg]);
       console.log(messages);
     })
   }
 
   useEffect(()=>{
-    setload(false);
+    // setload(false);
+    // setMessages([]);
     fetch("/api/Chat/"+viewer+"/"+currentChat.userId)
     .then((res)=>res.json())
     .then((data)=>{
       console.log("data",data);
       setMessages([]);
-        for (let i=0; i<data.data.message.length; i++)
-          setMessages((prevMessages)=>[...prevMessages, data.data.message[i].content+"(from ID=@"+data.data.message[i].sender.userId+")"]);
-    }).then(()=>setload(true));
+      return data;
+    }).then((data2)=>{
+      for (let i=0; i<data2.data.message.length; i++)
+        setMessages((prevMessages)=>[...prevMessages, data2.data.message[i].content+"(from ID=@"+data2.data.message[i].sender.userId+")"]);})
+    .then(()=>setload(true));
   }, [currentChat])
 
 //   useEffect(async () => {
@@ -78,7 +82,8 @@ export default function ChatContainer({ currentChat, viewer=""}) {
         body: JSON.stringify({content: msg})
     }).then((obj)=>obj.json())
     .then((data)=>{console.log("post done."); console.log(data);})
-      socket.emit('input-change', msg);
+      setMessages((prevMessages)=>[...prevMessages, msg+"(from ID=@"+session.user.userId+")"]);
+      socket.emit('input-change', msg+"(from ID=@"+session.user.userId+")");
     };
 //   const handleSendMsg = async (msg) => {
 //     const data = await JSON.parse(
@@ -139,11 +144,13 @@ export default function ChatContainer({ currentChat, viewer=""}) {
                 </svg>
                 <span class="sr-only left-4">Loading...</span>
             </div>
-          :<div className="chat-messages px-4 overflow-y-scroll h-full flex flex-col gap-2">
+          :<div className="chat-messages px-4 overflow-y-scroll h-full flex flex-col gap-2 ">
               {messages.map((message) => {
               return (
-                      <div className="content bg-gray-200 rounded-2xl p-3 w-fit" key={message}>
-                          <p>{message}</p>
+                      <div className={`content w-full flex`} key={message}>
+                            <p className={`w-full p-3 rounded-2xl ${message.includes(session.user.userId)? 'text-end' : 'text-start'}`}>
+                              <span className={`w-full h-full p-3 rounded-2xl ${message.includes(session.user.userId)? 'bg-primary-blue' : 'bg-gray-200'}`}>{message}</span>
+                            </p>
                       </div>
                 );
               })}

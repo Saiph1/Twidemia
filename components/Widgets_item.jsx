@@ -6,6 +6,7 @@ export default function Widgets_item({
   single_userdata,
   update_page = () => {},
   viewerid = "",
+  button = true,
 }) {
   const router = useRouter();
   const [follow, setfollow] = useState();
@@ -77,7 +78,7 @@ export default function Widgets_item({
           @{single_userdata.userId}
         </h5>
       </div>
-      {!loading && (
+      {(!loading&&button) && (
         <button
           className={
             !follow
@@ -92,7 +93,7 @@ export default function Widgets_item({
           {!follow ? "Follow" : "Unfollow"}
         </button>
       )}
-      {loading && (
+      {loading&&button && (
         <button
           disabled
           type="button"

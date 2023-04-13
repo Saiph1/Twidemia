@@ -1,10 +1,14 @@
 import Link from "next/link";
-import React from "react";
 import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 
-const Tweet_profile = ({ tweet, viewer}) => {
-
+const Tweet_profile = ({ tweet, viewerid}) => {
+  // const [viewer, setviewer] = useState({tweetlist:[]}); 
+  // const [retweet, setretweet] = useState(false);
+  const [like, setlike] = useState(tweet.likers.includes(viewerid)); 
+  
   function calculatePostedTime(time) {
+    console.log("tweet = ", tweet);
     const postTime = new Date(time).getTime() / 1000
     const currentTime = new Date().getTime() / 1000
     const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
@@ -22,9 +26,8 @@ const Tweet_profile = ({ tweet, viewer}) => {
   }
 
   async function giveLike() {
-    var uid = session.user.userId
-    console.log("ok")
     console.log(tweet.tweetID)
+    var uid = viewerid;
     await fetch("/api/tweet/" + tweet.tweetID, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -32,7 +35,19 @@ const Tweet_profile = ({ tweet, viewer}) => {
         tweetID: tweet.tweetID,
         liker: uid
       }),
-    });
+    }).then(()=>{console.log("like done"); setlike(true)});
+  }
+
+  async function revokeLike() {
+    var uid = viewerid;
+    await fetch("/api/tweet/" + tweet.tweetID, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tweetID: tweet.tweetID,
+        liker: uid
+      }),
+    }).then(()=>{console.log("revoke like done"); setlike(false)});
   }
   // function handle_retweet(){
   //   console.log(retweet);
@@ -61,7 +76,7 @@ const Tweet_profile = ({ tweet, viewer}) => {
       <div className="max-w-[3rem]">
         <img
         // this should be render accordingly
-          src={""}
+          src={"/default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />
@@ -73,7 +88,7 @@ const Tweet_profile = ({ tweet, viewer}) => {
           <div className="flex flex-inline gap-4 items-center">
             <h5 className="font-bold">{tweet.userID.username}</h5>
             <small className="text-gray-400">@{tweet.userID.userId}</small>
-            <h5 className="font-bold">{tweet.userID.userId!=viewer? "(Retweeted)": ""}</h5>
+            <h5 className="font-bold">{tweet.userID.userId!=viewerid? "(Retweeted)": ""}</h5>
           </div>
           <p className="text-gray-500 text-[12px]">{calculatePostedTime(tweet.date)}</p>
         </div>
@@ -113,7 +128,7 @@ const Tweet_profile = ({ tweet, viewer}) => {
               viewBox="0 0 24 24"
               stroke-width="1.75"
               stroke="currentColor"
-              onClick={()=>{if (!retweet) handle_retweet(); else handle_unretweet();}}
+              // onClick={()=>{if (!retweet) handle_retweet(); else handle_unretweet();}}
               class={"w-5 h-5 hover:text-green-500"+(retweet?" text-green-400":" text-gray-400")}
             >
               <path
@@ -127,9 +142,9 @@ const Tweet_profile = ({ tweet, viewer}) => {
           <label className="cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="#FE8E86"
+              fill={`${like ? '#FE8E86' : 'none'}`}
               viewBox="0 0 24 24"
-              stroke-width="0"
+              stroke-width={`${like ? '0' : '1.75'}`}
               stroke="currentColor"
               class="w-5 h-5 "
             >
@@ -139,7 +154,7 @@ const Tweet_profile = ({ tweet, viewer}) => {
                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
               />
             </svg>
-            <button onClick={giveLike} className="text-[14px] ">{tweet.likers.length}</button>
+            <button onClick={()=>{if(!like) giveLike(); else revokeLike();}} className="text-[14px] ">{tweet.likers.length}</button>
           </label>
         </div>
       </div>

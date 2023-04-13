@@ -26,6 +26,7 @@ import Tweet from "./Tweet/Tweet";
 import Input from "./Input";
 import TweetInput from "./Tweet/TweetInput";
 import OverlayTweetInput from "./Tweet/OverlayTweetInput";
+import { PresentationChartBarIcon } from "@heroicons/react/outline";
 
 export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
@@ -78,7 +79,7 @@ export default function Sidebar({ user, update = () => {} }) {
           {user.userId == "adminid" ? (
             <Link href={"/admin"}>
               <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
-                <UserRemoveIcon className="w-7" />
+                <PresentationChartBarIcon className="w-7" />
                 <span className="font-[500] text-primary-black text-lg hidden md:block">Admin Panel</span>
               </div>
             </Link>
@@ -86,7 +87,7 @@ export default function Sidebar({ user, update = () => {} }) {
 
           <Link href={"/explore"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
-              <SparklesIcon className="w-7" />
+              <SparklesIcon className="w-7 font-[800]" />
               <span className="shining_word font-[700] text-lg hidden md:block">Explore</span>
             </div>
           </Link>

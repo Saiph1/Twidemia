@@ -132,7 +132,7 @@ export default function Home(props) {
                 />
                 <div className="py-8 flex flex-col items-center gap-4 bg-white">
                   {userdata.tweetlist?.map((item)=><Tweet_profile key={item?.userId} tweet={item} 
-                    viewer={props.id}
+                    viewerid={props.id}
                   />)}
                 </div>
               </div>

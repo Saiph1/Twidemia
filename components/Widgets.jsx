@@ -102,6 +102,7 @@ export default function Widgets({ user, update_page }) {
                 single_userdata={filteredList[index]}
                 load={load}
                 viewerid={user}
+                button={false}
               />
             ))}
             {/* {true? <div id="item-list">

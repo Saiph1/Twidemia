@@ -41,9 +41,13 @@ export default function Admin({ users: usersProp }) {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <main className="flex justify-center min-h-screen max-w-7xl mx-auto gap-12">
-        <Sidebar user={session.user} />
-        <Users users={users} />
+      <main className="grid grid-cols-5 min-h-screen max-w-7xl mx-auto gap-12">
+        <div className="col-span-1">
+          <Sidebar user={session.user} />
+        </div>
+        <div className="col-span-4">
+          <Users users={users} />
+        </div>
         {/* <Widgets /> */}
 
         {/* Model */}

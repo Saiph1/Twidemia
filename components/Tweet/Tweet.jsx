@@ -1,17 +1,21 @@
 import Link from "next/link";
 import React from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
-const Tweet = ({ tweet, viewer}) => {
+const Tweet = ({ tweet, viewer }) => {
   const [retweet, setretweet] = React.useState(viewer.tweetlist.map((item) => {return item.tweetID === tweet.tweetID})
             .includes(true));
-  const { status, data: session } = useSession();
+  const  { status, data: session } = useSession();
+  const router = useRouter()
 
   function calculatePostedTime(time) {
     const postTime = new Date(time).getTime() / 1000
     const currentTime = new Date().getTime() / 1000
     const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
-    if(timeDifferenceInMinute > (60*24*30)) { // month
+    if(timeDifferenceInMinute > (60*24*30*12)) { // year
+      return Math.round(timeDifferenceInMinute/60/24/30/12) + "yr"
+    } else if(timeDifferenceInMinute > (60*24*30)) { // month
       return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
     } else if (timeDifferenceInMinute > (60*24)) { // day
       return Math.round(timeDifferenceInMinute/60/24) + "day"
@@ -26,7 +30,6 @@ const Tweet = ({ tweet, viewer}) => {
 
   async function giveLike() {
     var uid = session.user.userId
-    console.log("ok")
     console.log(tweet.tweetID)
     await fetch("/api/tweet/" + tweet.tweetID, {
       method: "PUT",
@@ -35,8 +38,11 @@ const Tweet = ({ tweet, viewer}) => {
         tweetID: tweet.tweetID,
         liker: uid
       }),
-    });
+    }).then(() => {
+      router.replace(router.asPath)
+    })
   }
+
   function handle_retweet(){
     console.log(retweet);
     fetch("/api/tweet/"+tweet.tweetID,{
@@ -63,7 +69,7 @@ const Tweet = ({ tweet, viewer}) => {
     >
       <div className="max-w-[3rem]">
         <img
-          src={tweet.iconURL}
+          src={"./default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />
@@ -128,9 +134,9 @@ const Tweet = ({ tweet, viewer}) => {
           <label className="cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="#FE8E86"
+              fill={tweet.likers?.includes(session.user.userId)? '#FE8E86' : 'none'}
               viewBox="0 0 24 24"
-              stroke-width="0"
+              stroke-width={tweet.likers?.includes(session.user.userId)? '0' : '1.75'}
               stroke="currentColor"
               class="w-5 h-5 "
             >
