@@ -1,6 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
-import Image from "../../../models/Image"
+import Image from "../../../models/Image";
 
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
@@ -13,9 +13,11 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const users = await User.findOne({ userId: req.query.userid })
-        .populate("followerlist").populate("followinglist")
-        .populate("blocklist").populate("avatar")
-        .populate("background");
+          .populate("followerlist")
+          .populate("followinglist")
+          .populate("blocklist")
+          .populate("avatar")
+          .populate("background");
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -47,23 +49,23 @@ export default async function handler(req, res) {
           if (updateUser.year) user.year = updateUser.year;
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
-          if (updateUser.avatar){
+          if (updateUser.avatar) {
             const image_new = new Image({
               content: updateUser.avatar,
               user: user._id,
-            })
+            });
             image_new.save();
-            user.avatar = []; 
-            user.avatar.addToSet(image_new); 
-          };
-          if (updateUser.background){
+            user.avatar = [];
+            user.avatar.addToSet(image_new);
+          }
+          if (updateUser.background) {
             const image_new = new Image({
               content: updateUser.background,
               user: user._id,
-            })
+            });
             image_new.save();
-            user.background = []; 
-            user.background.addToSet(image_new); 
+            user.background = [];
+            user.background.addToSet(image_new);
           }
           // Save and return.
           await user.save();

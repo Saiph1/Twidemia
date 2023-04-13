@@ -18,7 +18,7 @@ export default function Home(props) {
   });
   const [load, setload] = useState(false);
   const [follow, setfollow] = useState();
-  const [block, setblock] = useState(); 
+  const [block, setblock] = useState();
   const [followupdate, setfollowupdate] = useState(true);
   const [edit_update, setedit_update] = useState(true);
   // const [id, setid] = useState(props.id);
@@ -85,8 +85,8 @@ export default function Home(props) {
     setload(false);
   }
 
-  function updates_true(){
-    setload(true); 
+  function updates_true() {
+    setload(true);
   }
 
   function follow_update() {
@@ -113,27 +113,30 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-
         <main className="'min-h-screen bg-white">
           <div className="h-full max-w-6xl container mx-auto xl:px-30">
             <div className="h-full grid grid-cols-5">
-                <Sidebar user={session.user} update={updates} />
-                <div className="col-span-4 lg:col-span-3 border-x-[1px]">
-                  <ProfileContainer
-                    update_parent={updates}
-                    user={userdata}
-                    myprofile={session.user.userId === props.id}
-                    loaded={load}
-                    viewerid={session.user.userId}
-                    followed={follow}
-                    blocked={block}
-                    followupdate={follow_update}
-                    editupdate={()=>setedit_update(false)}
-                    updates_true={()=>updates_true()}
-                    block_update={block_update}
-                  />
-                </div>
-                <Widgets update_page={updates} user={session.user.userId} profile={props.id} />
+              <Sidebar user={session.user} update={updates} />
+              <div className="col-span-4 lg:col-span-3 border-x-[1px]">
+                <ProfileContainer
+                  update_parent={updates}
+                  user={userdata}
+                  myprofile={session.user.userId === props.id}
+                  loaded={load}
+                  viewerid={session.user.userId}
+                  followed={follow}
+                  blocked={block}
+                  followupdate={follow_update}
+                  editupdate={() => setedit_update(false)}
+                  updates_true={() => updates_true()}
+                  block_update={block_update}
+                />
+              </div>
+              <Widgets
+                update_page={updates}
+                user={session.user.userId}
+                profile={props.id}
+              />
             </div>
           </div>
 

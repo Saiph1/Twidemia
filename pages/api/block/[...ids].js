@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         user2.blocklist.addToSet(user1._id);
         user1.save();
         user2.save();
-        res.status(201).json({ success: true, data: [user1,user2]});
+        res.status(201).json({ success: true, data: [user1, user2] });
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -34,12 +34,12 @@ export default async function handler(req, res) {
         user2.blocklist.pull(user1._id);
         user1.save();
         user2.save();
-        res.status(201).json({ success: true, data: [user1,user2]});
+        res.status(201).json({ success: true, data: [user1, user2] });
       } catch (error) {
         res.status(400).json({ success: false });
       }
       break;
-      
+
     default:
       res.status(400).json({ success: false });
       break;

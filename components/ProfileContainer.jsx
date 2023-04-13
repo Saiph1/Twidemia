@@ -39,22 +39,22 @@ export default function ProfileContainer({
   followupdate = () => {},
   editupdate,
   updates_true,
-  block_update=()=>{},
+  block_update = () => {},
 }) {
   const [open, setOpen] = React.useState(false);
   const [follower, setFollowerOpen] = React.useState(false);
   const [following, setFollowingOpen] = React.useState(false);
   // For user information.
-  const [username, setUsername] = React.useState('');
-  const [year, setYear] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [facultyValue, setFacultyValue] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [year, setYear] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [facultyValue, setFacultyValue] = React.useState("");
   const [avatar, setavatar] = React.useState("");
   const [background, setbackground] = React.useState("");
-  
-  const [postImage, setPostImage] = React.useState( { myFile : ""})
-  const [postBgImage, setPostBgImage] = React.useState( { myBgFile : ""})
-  // const inputFile = useRef(null) 
+
+  const [postImage, setPostImage] = React.useState({ myFile: "" });
+  const [postBgImage, setPostBgImage] = React.useState({ myBgFile: "" });
+  // const inputFile = useRef(null)
 
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
@@ -81,8 +81,8 @@ export default function ProfileContainer({
   };
 
   const handleEditClose = () => {
-    setPostImage({myFile:""});
-    setPostBgImage({myFile:""});
+    setPostImage({ myFile: "" });
+    setPostBgImage({ myFile: "" });
     setOpen(false);
   };
 
@@ -93,9 +93,9 @@ export default function ProfileContainer({
     // console.log(facultyValue);
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
-    
-    createPost(postImage) // for image upload
-    console.log("Uploaded")
+
+    createPost(postImage); // for image upload
+    console.log("Uploaded");
 
     updateUser();
     editupdate();
@@ -130,109 +130,108 @@ export default function ProfileContainer({
     setFollowingOpen(false);
   };
 
-
   const handle_follow = () => {
     update_parent();
-    fetch('/api/follow/'+viewerid, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+    fetch("/api/follow/" + viewerid, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
-  }).then(()=>console.log("follow done"))
-  .then(()=>followupdate())
-  .then(()=>updates_true())
-  }
+    })
+      .then(() => console.log("follow done"))
+      .then(() => followupdate())
+      .then(() => updates_true());
+  };
 
   const handle_unfollow = () => {
-    update_parent(); 
-    fetch('/api/follow/'+viewerid, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+    update_parent();
+    fetch("/api/follow/" + viewerid, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
-  }).then(()=>console.log("unfollow done"))
-  .then(()=>followupdate())
-  .then(()=>updates_true())
-  }
+    })
+      .then(() => console.log("unfollow done"))
+      .then(() => followupdate())
+      .then(() => updates_true());
+  };
 
   const handle_block = () => {
     // update_parent();
-    fetch('/api/block/'+viewerid+"/"+user.userId, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-  }).then(()=>console.log("block done"))
-  .then(()=>block_update())
-  // .then(()=>updates_true())
-  }
+    fetch("/api/block/" + viewerid + "/" + user.userId, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(() => console.log("block done"))
+      .then(() => block_update());
+    // .then(()=>updates_true())
+  };
 
   const handle_unblock = () => {
-    // update_parent(); 
-    fetch('/api/block/'+viewerid+"/"+user.userId, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-  }).then(()=>console.log("unblock done"))
-  .then(()=>block_update())
-  // .then(()=>updates_true())
-  }
+    // update_parent();
+    fetch("/api/block/" + viewerid + "/" + user.userId, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(() => console.log("unblock done"))
+      .then(() => block_update());
+    // .then(()=>updates_true())
+  };
 
   // post profile image
   const createPost = async (newImage) => {
-    try{
-      await axios.post(url, newImage)
-    }catch(error){
-      console.log(error)
+    try {
+      await axios.post(url, newImage);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   // post background image
   const createBgPost = async (newImage) => {
-    try{
-      await axios.post(url, newImage)
-    }catch(error){
-      console.log(error)
+    try {
+      await axios.post(url, newImage);
+    } catch (error) {
+      console.log(error);
     }
-  }
-
+  };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     // console.log("file", file)
     const base64 = await convertToBase64(file);
-    console.log(base64)
+    console.log(base64);
     setavatar(base64);
-    setPostImage({ ...postImage, myFile : base64 })
+    setPostImage({ ...postImage, myFile: base64 });
     // console.log("postimage", postImage.myFile);
-  }
+  };
 
   const handleBgFileUpload = async (e) => {
     const file = e.target.files[0];
     // console.log("file", file)
     const base64 = await convertToBase64(file);
-    console.log(base64)
+    console.log(base64);
     setbackground(base64);
-    setPostBgImage({ ...postBgImage, myBgFile : base64 })
+    setPostBgImage({ ...postBgImage, myBgFile: base64 });
     // console.log("postimage", postImage.myFile);
-  }
-
+  };
 
   const handleBgFileSubmit = (e) => {
     e.preventDefault();
-    createBgPost(postBgImage)
-    console.log("Uploaded bg image")
-  }
+    createBgPost(postBgImage);
+    console.log("Uploaded bg image");
+  };
 
-
-  function convertToBase64(file){
+  function convertToBase64(file) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = () => {
-        resolve(fileReader.result)
+        resolve(fileReader.result);
       };
       fileReader.onerror = (error) => {
         reject(error);
-      }
-    })
+      };
+    });
   }
-
 
   function updateUser() {
     let requestBody = {
@@ -240,8 +239,8 @@ export default function ProfileContainer({
       year,
       description,
       facultyValue,
-      avatar, 
-      background, 
+      avatar,
+      background,
     };
 
     try {
@@ -262,9 +261,7 @@ export default function ProfileContainer({
     return (
       <div className="w-full min-h-screen">
         <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-          <h4 className="sm:text-xl font-semibold cursor-pointer">
-            Profile
-          </h4>
+          <h4 className="sm:text-xl font-semibold cursor-pointer">Profile</h4>
         </div>
 
         <div>
@@ -272,11 +269,31 @@ export default function ProfileContainer({
             sx={{ minWidth: 275 }}
             style={{ border: "none", boxShadow: "none" }}
           >
-            <CardMedia image={user.background.length?user.background[0].content:"../test_background.avif"} style={{height: 200 }}>   
+            <CardMedia
+              image={
+                user.background.length
+                  ? user.background[0].content
+                  : "../test_background.avif"
+              }
+              style={{ height: 200 }}
+            >
               <Avatar
-              alt="Remy Sharp"
-              src={user.avatar.length?user.avatar[0].content:"/Avatar_test.png"}
-              sx={{ width: 110, height: 110 , display: "flex", justifyContent: "flex-start", position: "relative", top:140, margin:1 , border: "3px solid lightgrey"}}
+                alt="Remy Sharp"
+                src={
+                  user.avatar.length
+                    ? user.avatar[0].content
+                    : "/Avatar_test.png"
+                }
+                sx={{
+                  width: 110,
+                  height: 110,
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  position: "relative",
+                  top: 140,
+                  margin: 1,
+                  border: "3px solid lightgrey",
+                }}
               />
             </CardMedia>
 
@@ -289,44 +306,56 @@ export default function ProfileContainer({
                   alignItems: "flex-start",
                 }}
               >
-              {(!myprofile) && <Button 
-              disableRipple
-              class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" 
-              size="small" 
-              onClick={()=>{if(!blocked) handle_block(); else handle_unblock();}}
-              >
-                {!blocked? "Block": "unblock"}
-              </Button>}
-              {(!myprofile&&!blocked) && <Button
-              disableRipple 
-              class={!followed?
-                "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                :"bg-black hover:bg-gray-300 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-200 focus:outline-none bg-black rounded-full border border-gray-200 hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
-              size="small"
-              onClick={()=>{
-                if (!followed) handle_follow(); else handle_unfollow();
-              }}
-              >
-                {!followed?"Follow":"Unfolllow"}
-              </Button>}
+                {!myprofile && (
+                  <Button
+                    disableRipple
+                    class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    size="small"
+                    onClick={() => {
+                      if (!blocked) handle_block();
+                      else handle_unblock();
+                    }}
+                  >
+                    {!blocked ? "Block" : "unblock"}
+                  </Button>
+                )}
+                {!myprofile && !blocked && (
+                  <Button
+                    disableRipple
+                    class={
+                      !followed
+                        ? "bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        : "bg-black hover:bg-gray-300 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-200 focus:outline-none bg-black rounded-full border border-gray-200 hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    }
+                    size="small"
+                    onClick={() => {
+                      if (!followed) handle_follow();
+                      else handle_unfollow();
+                    }}
+                  >
+                    {!followed ? "Follow" : "Unfolllow"}
+                  </Button>
+                )}
 
-              {/* {(!myprofile) && <button disabled type="button" class="ml-auto bg-white text-black border-2 rounded-full text-sm px-6 py-1.5 font-bold px-5">
+                {/* {(!myprofile) && <button disabled type="button" class="ml-auto bg-white text-black border-2 rounded-full text-sm px-6 py-1.5 font-bold px-5">
                 <svg aria-hidden="true" role="status" class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
                 </svg>
               </button>} */}
-    
-              {(myprofile)&&<Button 
-              disableRipple
-              class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" 
-              size="small" 
-              onClick={handleEditOpen}
-              >
-                Edit profile
-              </Button>}
+
+                {myprofile && (
+                  <Button
+                    disableRipple
+                    class="bg-white hover:bg-gray-100 text-blue-500 py-2 px-4 border border-gray-300 rounded shadowpy-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    size="small"
+                    onClick={handleEditOpen}
+                  >
+                    Edit profile
+                  </Button>
+                )}
               </CardActions>
-              
+
               {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Word of the Day </Typography> */}
               <Typography variant="h5" component="div">
                 {user.username}
@@ -335,35 +364,46 @@ export default function ProfileContainer({
                 @{user.userId}
               </Typography>
 
-              {!blocked?<Link
-                component="button"
-                onClick={handleFollowerOpen}
-                // sx={{ mb: 1.5 }} color="text.secondary"
-                variant="subtitle1"
-              >
-                {user.followerlist.length} Follower
-              </Link>:<></>}
+              {!blocked ? (
+                <Link
+                  component="button"
+                  onClick={handleFollowerOpen}
+                  // sx={{ mb: 1.5 }} color="text.secondary"
+                  variant="subtitle1"
+                >
+                  {user.followerlist.length} Follower
+                </Link>
+              ) : (
+                <></>
+              )}
 
-              {(!blocked)?<Link
-                component="button"
-                onClick={handleFollowingOpen}
-                // sx={{ mb: 1.5 }} color="text.secondary"
-                variant="subtitle1"
-              >
-                {user.followinglist.length}Following
-              </Link>:<></>}
+              {!blocked ? (
+                <Link
+                  component="button"
+                  onClick={handleFollowingOpen}
+                  // sx={{ mb: 1.5 }} color="text.secondary"
+                  variant="subtitle1"
+                >
+                  {user.followinglist.length}Following
+                </Link>
+              ) : (
+                <></>
+              )}
 
               {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {user.followinglist.length} following {user.followerlist.length} follower
               </Typography> */}
-              {!blocked?<Typography variant="body2">
-                Year {user.year}.
-                <br />
-                {user.faculty}
-                <br />
-                {user.Description}
-              </Typography>
-            :<></>}
+              {!blocked ? (
+                <Typography variant="body2">
+                  Year {user.year}.
+                  <br />
+                  {user.faculty}
+                  <br />
+                  {user.Description}
+                </Typography>
+              ) : (
+                <></>
+              )}
             </CardContent>
             {/* <CardActions>
                 <Button size="small">Learn More</Button>
@@ -378,12 +418,18 @@ export default function ProfileContainer({
                         </DialogContentText> */}
 
               <Tooltip title="Change your avatar">
-                <IconButton variant="contained" component="label" htmlFor="file-upload" className="custom-file-upload">
+                <IconButton
+                  variant="contained"
+                  component="label"
+                  htmlFor="file-upload"
+                  className="custom-file-upload"
+                >
                   <Avatar
                     alt="Remy Sharp"
                     src={
-                    user.avatar.length? postImage.myFile || user.avatar[0].content:
-                    postImage.myFile || "/Avatar_test.png"
+                      user.avatar.length
+                        ? postImage.myFile || user.avatar[0].content
+                        : postImage.myFile || "/Avatar_test.png"
                     }
                     sx={{ width: 80, height: 80 }}
                   />
@@ -392,35 +438,36 @@ export default function ProfileContainer({
                     label="Image"
                     name="myFile"
                     id="file-upload"
-                    accept='.jpeg, .png, .jpg'
+                    accept=".jpeg, .png, .jpg"
                     hidden
                     onChange={(e) => handleFileUpload(e)}
-                />
+                  />
                 </IconButton>
-       
               </Tooltip>
-              
+
               <DialogContent>Upload background image </DialogContent>
-              <label htmlFor="file-upload-bg" className="custom-file-upload"> 
-                <img src={user.background.length? 
-                postBgImage.myBgFile || user.background[0].content:
-                postBgImage.myBgFile || "../test_background.avif"
-                } alt="" />
-              </label> 
-              
+              <label htmlFor="file-upload-bg" className="custom-file-upload">
+                <img
+                  src={
+                    user.background.length
+                      ? postBgImage.myBgFile || user.background[0].content
+                      : postBgImage.myBgFile || "../test_background.avif"
+                  }
+                  alt=""
+                />
+              </label>
+
               <form onSubmit={handleBgFileSubmit}>
-                <input 
+                <input
                   type="file"
                   label="Image"
                   name="myFile"
                   id="file-upload-bg"
-                  accept='.jpeg, .png, .jpg'
-
+                  accept=".jpeg, .png, .jpg"
                   onChange={(e) => handleBgFileUpload(e)}
-                  /> 
-                  <button>Submit</button>
+                />
+                <button>Submit</button>
               </form>
-
 
               <TextField
                 autoFocus
@@ -444,9 +491,7 @@ export default function ProfileContainer({
                 type="string"
                 fullWidth
                 variant="standard"
-                onChange={() =>
-                  setYear(document.getElementById("year").value)
-                }
+                onChange={() => setYear(document.getElementById("year").value)}
                 required
               />
 
@@ -535,16 +580,13 @@ export default function ProfileContainer({
             </DialogActions>
           </Dialog>
         </div>
-        
       </div>
     );
   } else {
     return (
       <div className="min-h-screen">
         <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200 header-shadow-bottom">
-          <h4 className="sm:text-xl font-semibold cursor-pointer">
-            Profile
-          </h4>
+          <h4 className="sm:text-xl font-semibold cursor-pointer">Profile</h4>
         </div>
         <div role="status" className="flex justify-center py-20">
           <svg
@@ -570,7 +612,6 @@ export default function ProfileContainer({
   }
 }
 
-
 // function convertToBase64(file){
 //   return new Promise((resolve, reject) => {
 //     const fileReader = new FileReader();
@@ -583,7 +624,3 @@ export default function ProfileContainer({
 //     }
 //   })
 // }
-
-
-
-

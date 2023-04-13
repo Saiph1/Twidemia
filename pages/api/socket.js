@@ -17,11 +17,11 @@ export default function SocketHandler(req, res) {
   // };
 
   // // Define actions inside
-  io.on('connection', socket => {
-    socket.on('input-change', msg => {
-      socket.broadcast.emit('update-input', msg)
-    })
-  })
+  io.on("connection", (socket) => {
+    socket.on("input-change", (msg) => {
+      socket.broadcast.emit("update-input", msg);
+    });
+  });
   // io.on("connection", onConnection);
   res.end();
 }
