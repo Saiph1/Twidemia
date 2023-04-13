@@ -14,17 +14,18 @@ const TweetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
+  postdate: {
+    type: String,
     required: true,
   },
   visibility: {
-    type: Number,
+    type: String,
     required: true,
   },
   likers: [
     {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   ],
   comments: [

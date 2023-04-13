@@ -20,10 +20,10 @@ export default function App({
         <Verify>{getLayout(<Component {...pageProps} />)}</Verify>
       </SessionProvider>
     );
-  } else if (Component.login) {
+  } else if (Component.noVerify) {
     return (
       <SessionProvider session={session}>
-        <Login>{getLayout(<Component {...pageProps} />)}</Login>
+        <NoVerify>{getLayout(<Component {...pageProps} />)}</NoVerify>
       </SessionProvider>
     );
   } else if (Component.noLogin) {
@@ -41,22 +41,13 @@ export default function App({
   }
 }
 
-function Login({ children }) {
+function NoVerify({ children }) {
   const router = useRouter();
-  const { status, data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      signIn();
-    },
-  });
-  console.log("session");
-  console.log(session);
-  console.log(status);
+  const { status, data: session } = useSession();
   if (status === "loading") {
     return <></>;
   }
-  if (session.verified) {
-    console.log("nani");
+  if (session?.verified) {
     router.push("/");
     return <></>;
   }

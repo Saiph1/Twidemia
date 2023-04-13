@@ -5,37 +5,43 @@ export default function TweetInput() {
   const [privacySetting, setPrivacySetting] = useState("Public");
   const [input, setInput] = useState("Public");
   const { status, data: session } = useSession();
-  var a = "";
+  const [content, setContent] = useState("")
+  const [tweetInputWarning, setTweetInputWarning] = useState(false)
 
-  const handleChange = (event) => {
-    a = event.target.value;
-    console.log(event.target.value);
-  };
-
-  function postTweet() {
-    var b;
-    if (privacySetting == "Public") {
-      b = 0;
-    } else if (privacySetting == "Follower") {
-      b = 1;
-    } else if (privacySetting == "Self") {
-      b = 2;
+  async function postTweet(e) {
+    e.preventDefault()
+    if(!content) {
+      setTweetInputWarning(true)
+      setTimeout(() => {
+        setTweetInputWarning(false)
+      }, [4000])
+      return
     }
-    fetch("/api/tweet", {
+    var privacy_num;
+    if (privacySetting == "Public") {
+      privacy_num = 0;
+    } else if (privacySetting == "Follower") {
+      privacy_num = 1;
+    } else if (privacySetting == "Self") {
+      privacy_num = 2;
+    }
+    await fetch("/api/tweet", {
       method: "POST",
       body: JSON.stringify({
-        content: a,
-        vis: b,
+        content: content,
+        vis: privacy_num,
         creator: session.user.userId,
       }),
     });
+
+    setContent("")
+    alert("Success")
   }
 
   function privacyOptionUI(name) {
     switch (name) {
       case "Public":
         return (
-          <>
           <>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,9 +59,9 @@ export default function TweetInput() {
             </svg>
             Public
           </>
-          </>
         );
         break;
+      case "Follower":
         return (
           <>
             <svg
@@ -76,6 +82,7 @@ export default function TweetInput() {
           </>
         );
         break;
+      case "Self":
         return (
           <>
             <svg
@@ -110,6 +117,13 @@ export default function TweetInput() {
         />
       </div>
 
+      {tweetInputWarning && (
+        <div className="border-l-[6px] border-[#b3935d] max-h-[70px] h-full w-[360px] bg-[#ffd48a] rounded-md absolute py-3 px-3 z-[500] flex justify-between items-center left-[50%] transform translate-x-[-50%] top-[16%]">
+          <h3 className="text-lg font-semibold">You forgot to share something..</h3>
+          <span className="text-2xl cursor-pointer" onClick={() => setTweetInputWarning(false)}>&times;</span>
+        </div>
+      )}
+
       <div className="pr-4 w-full relative">
         {/* privacy setting here */}
         <div className="px-2 reletive grid gap-3">
@@ -140,9 +154,10 @@ export default function TweetInput() {
 
         {/* Input tweet content area */}
         <textarea
-          onChange={handleChange}
+          onChange={(e) => setContent(e.target.value)}
           className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm text-xl text-primary-black focus:outline-0 placeholder:text-xl bg-transparent"
           placeholder="What is happening?"
+          value={content}
         />
         <div className="flex justify-between ml-3 items-center border-t pt-3">
           <div className="flex gap-4">
@@ -205,6 +220,7 @@ export default function TweetInput() {
           </div>
           <button
             onClick={postTweet}
+            className="bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl"
           >
             Tweet
           </button>

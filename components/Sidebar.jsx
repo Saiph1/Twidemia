@@ -107,7 +107,8 @@ export default function Sidebar({ user, update = () => {} }) {
       </div>
 
       {/* Overlay part after the Tweet button is clicked */}
-      <OverlayTweetInput open={open} setOpen={setOpen} />
+      <OverlayTweetInput open={open} setOpen={setOpen}/>
+
 
       {/* Mini-Profile */}
       <button

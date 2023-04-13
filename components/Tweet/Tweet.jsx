@@ -1,7 +1,9 @@
 import Link from "next/link";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 const Tweet = ({ tweet }) => {
+  const { status, data: session } = useSession();
 
   function calculatePostedTime(time) {
     const postTime = new Date(time).getTime() / 1000
@@ -18,6 +20,20 @@ const Tweet = ({ tweet }) => {
     } else {
       return timeDifferenceInMinute + "min"
     } 
+  }
+
+  async function giveLike() {
+    var uid = session.user.userId
+    console.log("ok")
+    console.log(tweet.tweetID)
+    await fetch("/api/tweet/" + tweet.tweetID, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tweetID: tweet.tweetID,
+        liker: uid
+      }),
+    });
   }
 
   return (
@@ -103,7 +119,7 @@ const Tweet = ({ tweet }) => {
                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
               />
             </svg>
-            <span className="text-[14px] ">{tweet.numOfLikes}</span>
+            <button onClick={giveLike} className="text-[14px] ">{tweet.numOfLikes}</button>
           </label>
         </div>
       </div>
