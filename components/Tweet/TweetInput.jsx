@@ -211,9 +211,8 @@ export default function TweetInput() {
               />
             </svg>
           </div>
-          <button
-            onClick={postTweet}
-          >
+
+          <button onClick={postTweet} className="bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl">
             Tweet
           </button>
         </div>
