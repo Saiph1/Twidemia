@@ -31,8 +31,9 @@ export default function Verify({ qtoken }) {
 
     const responseToken = await fetch(endpointToken, optionsToken);
     const resultToken = await responseToken.json();
+    console.log(resultToken)
 
-    if (!resultToken.Token) {
+    if (!resultToken.token) {
       setMessage("Something is wrong... ");
       setError(true);
       throw new Error(resultToken.message || "Something went wrong!");
