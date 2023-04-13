@@ -81,7 +81,7 @@ export default function Input({ users, tweets }) {
               tweet.tweetContent = tweet.content;
               tweet.postDateTime = tweet.date;
               tweet.numOfComments = tweet.comments.length;
-              tweet.numOfLikes = tweet.likers.length;
+              tweet.numOfLikes = tweet.likers?.length;
               console.log(tweet.content, creator);
               return <Tweet tweet={tweet} key={tweet.tweetID} />;
             }
