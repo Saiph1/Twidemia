@@ -2,6 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import dbConnect from "../lib/dbConnect";
+import Tweet from "../models/Tweet";
+import User from "../models/User";
 
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
@@ -14,7 +17,7 @@ Home.getLayout = function getLayout(page) {
   return <Layout title={"Favourite"}>{page}</Layout>;
 };
 
-export default function Home() {
+export default function Home({ users, tweets }) {
   const { status, data: session } = useSession();
   return (
     <>
@@ -31,7 +34,7 @@ export default function Home() {
         {/* <Sidebar user={session.user} /> */}
 
         {/* Feed */}
-        <Feed />
+        <Feed tweets={tweets} users={users} />
 
         {/* Widgets */}
         {/* <Widgets user={session.user.userId} /> */}
@@ -40,6 +43,27 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+// export async function getServerSideProps() {
+export async function getStaticProps() {
+  try {
+    // Try to connect the DB.
+    await dbConnect();
+    const tweets = await Tweet.find({}); //.populate("followerlist");
+    const users = await User.find({}); //.populate("followerlist");
+    console.log(tweets);
+    return {
+      props: {
+        test: 123,
+        users: JSON.parse(JSON.stringify(users)),
+        tweets: JSON.parse(JSON.stringify(tweets)),
+      },
+    };
+  } catch (e) {
+    // If it cannot connect to DB, output log to console by using error flag.
+    console.error(e);
+  }
 }
 
 Home.verify = true;

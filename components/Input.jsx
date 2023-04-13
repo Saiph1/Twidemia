@@ -7,16 +7,17 @@ import TweetInput from "./Tweet/TweetInput";
 
 //https://www.youtube.com/watch?v=u5gBoKVukIU  <--  UI design Link
 
-export default function Input() {
+export default function Input({ users, tweets }) {
   // Using .map() to generate each tweet post corresponds to each tweet object in database
-  const [tweetData, setTweetData] = useState();
-  const [alluser, setalluser] = useState();
+  const [tweetData, setTweetData] = useState(tweets);
+  const [alluser, setalluser] = useState(users);
   const { status, data: session } = useSession();
 
   // Simulating get data from backend
 
   var current_user = -1;
 
+  /*
   useEffect(() => {
     fetch("/api/tweet")
       .then((res) => res.json())
@@ -36,6 +37,7 @@ export default function Input() {
         console.log(data.data);
       });
   }, []);
+  */
 
   return (
     <div className="min-h-[100vh] bg-white w-full pb-8">

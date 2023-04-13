@@ -37,8 +37,6 @@ export async function getStaticProps() {
     await dbConnect();
     const users = await User.find({});
     return {
-      props: { users: users },
-
       props: { users: JSON.parse(JSON.stringify(users)) },
     };
   } catch (e) {
