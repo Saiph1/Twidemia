@@ -69,7 +69,7 @@ const Tweet = ({ tweet, viewer }) => {
     >
       <div className="max-w-[3rem]">
         <img
-          src={tweet.iconURL}
+          src={"./default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />

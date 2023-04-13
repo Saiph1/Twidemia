@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        var tweet = await Tweet.findOne({ tweetID: req.query.tweetID }).populate("userID");
+        var tweet = await Tweet.findOne({ tweetID: req.query.tweetID }).populate([{ path: "userID", populate: { path: "avatar" } }]);;
         res.status(201).json({ success: true, data: tweet });
       } catch (error) {
         res.status(400).json({ success: false, error: error.toString()});
