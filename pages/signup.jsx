@@ -104,7 +104,7 @@ export default function Signup() {
   }
 
   function handledark() {
-    document.getElementById("container").className = Dark ? "dark" : "";
+    document.getElementById("signup_container").className = Dark ? "dark" : "";
   }
 
   return (
@@ -114,15 +114,15 @@ export default function Signup() {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <main class="" id="container">
-        <section class="bg-gray-50 dark:bg-gray-900">
+      <main class="" id="signup_container">
+        <section className={`${Dark? 'light-fancy-background' : 'dark-fancy-background'} min-h-[100vh]`}>
           <button
             onClick={() => {
               setDark(!Dark);
               handledark();
             }}
           >
-            {Dark && (
+            {!Dark && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -139,7 +139,7 @@ export default function Signup() {
                 />
               </svg>
             )}
-            {!Dark && (
+            {Dark && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -157,7 +157,7 @@ export default function Signup() {
               </svg>
             )}
           </button>
-          <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <div class="flex flex-col items-center justify-start md:justify-start px-6 mx-auto py-12 lg:py-0">
             <a
               href="#"
               class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -230,8 +230,8 @@ export default function Signup() {
                       type="password"
                       name="password"
                       id="password"
-                      placeholder="••••••••"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Your password •••"
+                      class="placeholder:text-gray-300 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     />
                   </div>
@@ -246,8 +246,8 @@ export default function Signup() {
                       type="password"
                       name="password_confirm"
                       id="password_confirm"
-                      placeholder="••••••••"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Your password •••"
+                      class="placeholder:text-gray-300 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     />
                   </div>

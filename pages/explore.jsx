@@ -7,14 +7,98 @@ import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import ExploreContainer from "@/components/Explore/ExploreContainer";
 import React from "react";
+import { useEffect, useState } from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 import Layout from "@/components/Layout";
+import dbConnect from "@/lib/dbConnect";
+import User from "../models/User"
+import Tweet from "../models/Tweet"
 
 Explore.getLayout = function getLayout(page) {
   return <Layout title={"Favourite"}>{page}</Layout>;
 };
 
-export default function Explore() {
+export async function getServerSideProps() {
+  try {
+    await dbConnect();
+    const tweets = await Tweet.find();
+    const users = await User.find(); 
+    return {
+      props: {
+        tweets: JSON.parse(JSON.stringify(tweets)),
+        users: JSON.parse(JSON.stringify(users)),
+      }
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+function calculatePostedTime(time) {
+    const postTime = new Date(time).getTime() / 1000
+    const currentTime = new Date().getTime() / 1000
+    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
+    if(timeDifferenceInMinute > (60*24*30*12)) { // year
+      return Math.round(timeDifferenceInMinute/60/24/30/12) + "yr"
+    } else if(timeDifferenceInMinute > (60*24*30)) { // month
+      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
+    } else if (timeDifferenceInMinute > (60*24)) { // day
+      return Math.round(timeDifferenceInMinute/60/24) + "day"
+    } else if (timeDifferenceInMinute > 60) { // hour
+      return Math.round(timeDifferenceInMinute/60) + "hr"
+    } else if (timeDifferenceInMinute < 1) {
+      return 'just now'
+    } else {
+      return timeDifferenceInMinute + "min"
+    } 
+  }
+
+export default function Explore({ users, tweets }) {
+  const { status, data: session } = useSession();
+  const [sortBy, setSortBy] = useState("recent"); // recent, topRated, popular
+
+  let current_user = -1;
+
+  if (current_user == -1) {
+    for (var i in users) {
+      if (users[i].userId == session.user.userId) {
+        current_user = users[i];
+        break;
+      }
+    }
+  }
+
+
+  if (sortBy == "topRated"){
+    tweets.sort(function(a,b){
+      if (a.likers.length == b.likers.length){
+        return new Date(b.date) - new Date(a.date);
+      }
+      else{
+        return b.likers.length - a.likers.length;
+      }
+    })
+  }
+  else if (sortBy == "recent"){
+    tweets.sort(function(a,b){
+      return new Date(b.date) - new Date(a.date);
+    })
+  }
+  else if (sortBy == "popular"){
+    let now = Date.now()
+    tweets.sort(function(a,b){
+      let ad = now - new Date(a.date).getTime()
+      let bd = now - new Date(b.date).getTime()
+      if (a.likers.length == 0 && b.likers.length == 0){
+        return ad - bd
+      }
+      else {
+        return (b.likers.length*ad - a.likers.length*bd);
+      }
+    })
+  }
+
+
   return (
     <>
       <Head>
@@ -29,79 +113,39 @@ export default function Explore() {
 
         {/*ExploreContainer ?*/}
         <div className="border-gray-200 flex-grow w-full">
-          <ExploreHeader />
+          <ExploreHeader sortBy={sortBy} setSortBy={setSortBy}/>
 
           {/* delete later !! all comments */}
           <div className="py-8 flex flex-col items-center gap-4 bg-white">
-            <ExploreTweet
-              imageURL={
-                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/FUNG-Ping-Fu.jpg"
-              }
-              name={"Micheal Fung"}
-              userTag={"MF2022"}
-              time={"2m"}
-              content={
-                "CSCI1130 is the most easiest CSCI coures!!! everyone gets A grade in my course :D"
-              }
-              commentNum={"103"}
-              likes={"22"}
-            />
+            {tweets?.map((tweet) => {
 
-            <ExploreTweet
-              imageURL={
-                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/Irwin-King.jpg"
-              }
-              name={"Irwin King"}
-              userTag={"IK-uGG"}
-              time={"54m"}
-              content={
-                "My CSCI2100A class will make you cry, try me! and come try yourself"
-              }
-              commentNum={"23"}
-              likes={"122"}
-            />
+              var uid = tweet.userID;
+              var creator = -1;
 
-            <ExploreTweet
-              imageURL={
-                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people_large/CHAN-Siu-On.jpg"
+              for (var i in users) {
+                if (users[i]._id == uid) {
+                  creator = users[i];
+                  break;
+                }
               }
-              name={"Siu On"}
-              userTag={"siu-on-chan"}
-              time={"57m"}
-              content={
-                "CSCI3130 is just drawing some simple circle and that is it"
-              }
-              commentNum={"18"}
-              likes={"40"}
-            />
 
-            <ExploreTweet
-              imageURL={
-                "https://www.cse.cuhk.edu.hk/wp-content/uploads/people/TAO-Yufei.jpg"
+              if (tweet.visibility == 0 ||
+                  tweet.visibility == 1 &&
+                  current_user.followinglist.includes(creator._id) ||
+                  tweet.visibility >= 1 && session.user.userId == creator.userId) {
+                return <ExploreTweet tweet={tweet} key={tweet.tweetID}
+                  imageURL={
+                    "https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"
+                  }
+                  name={creator.username}
+                  userTag={creator.userId}
+                  time={calculatePostedTime(new Date(tweet.date))}
+                  content={tweet.content}
+                  commentNum={tweet.comments.length}
+                  likes={tweet.likers.length}
+                />                
               }
-              name={"Yufei Tao"}
-              userTag={"@TaoYF"}
-              time={"3h"}
-              content={
-                "Wanna have a faster algorithm? take my CSCI3160 course! It is SIMPLE and sweet"
-              }
-              commentNum={"34"}
-              likes={"75"}
-            />
-
-            <ExploreTweet
-              imageURL={
-                "https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"
-              }
-              name={"Michael Lyu"}
-              userTag={"Lyu-michael"}
-              time={"1d"}
-              content={
-                "CSCI3100 course only have 3 assignments, very EASY right?"
-              }
-              commentNum={"41"}
-              likes={"62"}
-            />
+            })}
           </div>
         </div>
 
@@ -112,3 +156,4 @@ export default function Explore() {
 }
 
 Explore.verify = true;
+
