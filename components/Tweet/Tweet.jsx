@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 const Tweet = ({ tweet, viewer}) => {
   const [retweet, setretweet] = React.useState(viewer.tweetlist.map((item) => {return item.tweetID === tweet.tweetID})
             .includes(true));
+  const { status, data: session } = useSession();
 
   function calculatePostedTime(time) {
     const postTime = new Date(time).getTime() / 1000

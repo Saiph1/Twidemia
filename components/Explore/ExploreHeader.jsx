@@ -1,10 +1,7 @@
 import { useState } from "react";
 
-export default function ExploreHeader() {
+export default function ExploreHeader({ sortBy, setSortBy }) {
   const selectedSortUnderline = "border-b-[#FF1493] border-b-4";
-
-  const [sortBy, setSortBy] = useState("recent"); // recent, topRated, popular
-
   return (
     <>
       <div
@@ -85,40 +82,6 @@ export default function ExploreHeader() {
             />
           </svg>
           <span className="hidden md:block">Popular</span>
-        </div>
-      </div>
-      <div className="bg-gray-100 flex gap-3 py-3 px-5 border-b overflow-x-scroll">
-        <p className="font-[400] py-1 px-3 rounded-full bg-[#252525] text-white border">
-          Difficulty
-        </p>
-        <p className="font-[400] py-1 px-3 rounded-full bg-white border">
-          Grading
-        </p>
-        <p className="font-[400] py-1 px-3 rounded-full bg-white border">
-          Rewarding
-        </p>
-        <div className="font-[400] py-1 px-3 rounded-full bg-white border flex gap-2 items-center">
-          <span className="hidden xl:block">Search</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-          <div>
-            <input
-              className="w-[120px] rounded-md focus:outline-0 placeholder:text-sm font-[400]"
-              placeholder="Tag.."
-            />
-          </div>
         </div>
       </div>
     </>
