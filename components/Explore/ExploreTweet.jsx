@@ -28,7 +28,7 @@ const ExploreTweet = (props) => {
         </div>
 
         {/* This part is the Like, Comment, Share functions */}
-        <div className="w-4/10 flex justify-between ml-[-0.5rem]">
+        <div className="w-[40%] flex justify-between ml-[-0.5rem]">
           <div className="cursor-pointer  inline-flex gap-1 items-center text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-100 py-1 px-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

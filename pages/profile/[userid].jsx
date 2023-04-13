@@ -52,10 +52,6 @@ export default function Home(props) {
       .then(() => setload(true));
   }, [session, props]);
   // item.userId === session.user.UserId
-  const reloadSession = () => {
-    const event = new Event("visibilitychange");
-    document.dispatchEvent(event);
-  };
   useEffect(() => {
     if (!session) return;
     console.log(props.id);
@@ -69,7 +65,6 @@ export default function Home(props) {
             .map((item) => item.userId === session.user.userId)
             .includes(true)
         );
-        reloadSession();
       })
       .then(() => setedit_update(true));
   }, [edit_update]);

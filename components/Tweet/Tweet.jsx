@@ -31,7 +31,7 @@ const Tweet = ({ tweet }) => {
         </div>
 
         {/* This part is the Like, Comment, Share functions */}
-        <div className="w-4/10 flex justify-between ml-[-0.5rem]">
+        <div className="w-[40%] flex justify-between ml-[-0.5rem]">
           <Link
             href={`/posts/${tweet.tweetID}`}
             className="cursor-pointer  inline-flex gap-1 items-center text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-100 py-1 px-2"
