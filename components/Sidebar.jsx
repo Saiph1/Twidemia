@@ -56,26 +56,26 @@ export default function Sidebar({ user, update = () => {} }) {
         {/* Menu */}
         <div className="mt-4 mb-2.5 justify-center lg:justify-start items-start">
           <Link href={"/"} active>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <HomeIcon className="w-7" />
               <span className="font-[600] text-primary-black text-lg hidden md:block">Home</span>
             </div>
           </Link>
           <Link href={"/profile/" + user.userId}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <UserIcon className="w-7" />
               <span className="font-[500] text-primary-black text-lg hidden md:block">Profile</span>
             </div>
           </Link>
           <Link href={"/messages"}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <InboxIcon className="w-7" />
               <span className="font-[500] text-primary-black text-lg hidden md:block">Messages</span>
             </div>
           </Link>
 
           <Link href={"/explore"}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <SparklesIcon className="w-7" />
               <span className="shining_word font-[700] text-lg hidden md:block">Explore</span>
             </div>
@@ -85,7 +85,7 @@ export default function Sidebar({ user, update = () => {} }) {
         {/* Button */}
         <button
           onClick={() => setOpen(true)}
-          className="bg-primary-blue text-white rounded-full w-12 md:w-44 h-12 font-bold shadow-md hover:brightness-95 text-lg flex justify-center items-center"
+          className="bg-primary-blue text-white rounded-full w-12 md:w-[90%] lg:w-full h-12 font-bold shadow-md hover:brightness-95 text-lg flex justify-center items-center"
         >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 block md:hidden">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
