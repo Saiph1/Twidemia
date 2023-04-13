@@ -14,13 +14,18 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const user1 = await User.findOne({userId: req.query.ids[0]})
-        const user2 = await User.findOne({userId: req.query.ids[1]})
+        const user1 = await User.findOne({ userId: req.query.ids[0] });
+        const user2 = await User.findOne({ userId: req.query.ids[1] });
         // const chat = await Chat.findOne({ sender: user1._id, receiver: user2._id }).populate("message").populate([{path: 'message', populate: {path: 'sender'}}]);
-        const chat = await Chat.findOne({ sender: user1._id, receiver: user2._id }).populate([{path: 'message', populate: {path: 'sender'}}]);
-        res.status(201).json({ success: true, data: !chat?{message:[]}:chat});
+        const chat = await Chat.findOne({
+          sender: user1._id,
+          receiver: user2._id,
+        }).populate([{ path: "message", populate: { path: "sender" } }]);
+        res
+          .status(201)
+          .json({ success: true, data: !chat ? { message: [] } : chat });
       } catch (error) {
-        res.status(400).json({ success: false , data: {message: []}});
+        res.status(400).json({ success: false, data: { message: [] } });
       }
       break;
     // case "PUT":
@@ -39,40 +44,45 @@ export default async function handler(req, res) {
 
     case "POST":
       try {
-        const user1 = await User.findOne({userId: req.query.ids[0]});
-        const user2 = await User.findOne({userId: req.query.ids[1]});
-        const existed_chat1 = await Chat.findOne({sender: user1._id, receiver: user2._id});
-        const existed_chat2 = await Chat.findOne({sender: user2._id, receiver: user1._id});
+        const user1 = await User.findOne({ userId: req.query.ids[0] });
+        const user2 = await User.findOne({ userId: req.query.ids[1] });
+        const existed_chat1 = await Chat.findOne({
+          sender: user1._id,
+          receiver: user2._id,
+        });
+        const existed_chat2 = await Chat.findOne({
+          sender: user2._id,
+          receiver: user1._id,
+        });
         const message_new = new Message({
           content: req.body.content,
           sender: user1._id,
           receiver: user2._id,
         });
-        message_new.save(); 
-        if (!existed_chat1){
+        message_new.save();
+        if (!existed_chat1) {
           const chat_new1 = new Chat({
-          sender: user1._id, 
-          receiver: user2._id,
-          message: message_new,
+            sender: user1._id,
+            receiver: user2._id,
+            message: message_new,
           });
-          chat_new1.save(); 
+          chat_new1.save();
           const chat_new2 = new Chat({
-          sender: user2._id, 
-          receiver: user1._id,
-          message: message_new,
+            sender: user2._id,
+            receiver: user1._id,
+            message: message_new,
           });
-          chat_new2.save(); 
-        }
-        else{
-          existed_chat1.message.addToSet(message_new); 
-          existed_chat2.message.addToSet(message_new); 
+          chat_new2.save();
+        } else {
+          existed_chat1.message.addToSet(message_new);
+          existed_chat2.message.addToSet(message_new);
           existed_chat1.save();
           existed_chat2.save();
         }
-        
-        res.status(201).json({ success: true, data: message_new});
+
+        res.status(201).json({ success: true, data: message_new });
       } catch (error) {
-        res.status(400).json({ success: false, error: error.toString()});
+        res.status(400).json({ success: false, error: error.toString() });
       }
       break;
 

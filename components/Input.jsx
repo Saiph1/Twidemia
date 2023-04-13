@@ -15,7 +15,7 @@ export default function Input() {
 
   // Simulating get data from backend
 
-  var current_user = -1
+  var current_user = -1;
 
   useEffect(() => {
     fetch("/api/tweet")
@@ -24,7 +24,7 @@ export default function Input() {
         setTweetData(data.data);
         console.log("fetched all tweets.");
         console.log(data.data);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -34,10 +34,8 @@ export default function Input() {
         setalluser(data.data);
         console.log("fetched all user.");
         console.log(data.data);
-      })
+      });
   }, []);
-
-
 
   return (
     <div className="min-h-[100vh] bg-white w-full pb-8">
@@ -49,29 +47,32 @@ export default function Input() {
 
       <div className="flex flex-col items-center gap-8 mt-8">
         {tweetData?.map((tweet) => {
-          if (current_user == -1){
-            for (var i in alluser){
+          if (current_user == -1) {
+            for (var i in alluser) {
               if (alluser[i].userId == session.user.userId) {
-                current_user = alluser[i]
-                break
+                current_user = alluser[i];
+                break;
               }
             }
           }
 
-          var uid = tweet.userID
-          var creator = -1
+          var uid = tweet.userID;
+          var creator = -1;
 
-          for (var i in alluser){
+          for (var i in alluser) {
             if (alluser[i]._id == uid) {
-              creator = alluser[i]
+              creator = alluser[i];
             }
-            break
+            break;
           }
 
-          if (current_user != -1){
-            if (tweet.visibility == 0 ||
-              tweet.visibility == 1 && current_user.followinglist.includes(creator._id) ||
-              tweet.visibility >= 1 && session.user.userId == creator.userId){
+          if (current_user != -1) {
+            if (
+              tweet.visibility == 0 ||
+              (tweet.visibility == 1 &&
+                current_user.followinglist.includes(creator._id)) ||
+              (tweet.visibility >= 1 && session.user.userId == creator.userId)
+            ) {
               //tweet.iconURL = creator.iconURL;
               tweet.userName = creator.username;
               tweet.userCustomizeID = creator.userId;
@@ -79,11 +80,10 @@ export default function Input() {
               tweet.postDateTime = tweet.date;
               tweet.numOfComments = tweet.comments.length;
               tweet.numOfLikes = tweet.likers.length;
-              console.log(tweet.content,creator)
+              console.log(tweet.content, creator);
               return <Tweet tweet={tweet} key={tweet.tweetID} />;
-            }            
+            }
           }
-
         })}
       </div>
     </div>
