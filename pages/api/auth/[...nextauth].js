@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import checkCredentials from "../../../lib/signin";
-import User from "@/models/User"
+import User from "@/models/User";
 
 export const authOptions = {
   secret: process.env.AUTH_SECRET,
@@ -49,7 +49,7 @@ export const authOptions = {
     },
     async session({ session, token }) {
       session.user.userId = token.userId;
-      const user_new = await User.findOne({userId: token.userId});
+      const user_new = await User.findOne({ userId: token.userId });
       token.username = user_new.username;
       token.email = user_new.email;
       token.admin = user_new.admin;

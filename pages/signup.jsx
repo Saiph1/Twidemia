@@ -17,7 +17,7 @@ async function createUser(data) {
   const resultUser = await responseUser.json();
 
   if (resultUser.user) {
-    console.log(resultUser.user)
+    console.log(resultUser.user);
     const endpointToken = "/api/token";
     const optionsToken = {
       method: "POST",
@@ -61,7 +61,7 @@ export default function Signup() {
       password_confirm: event.target.password_confirm.value,
     };
     // let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
-    let emailFormat = true
+    let emailFormat = true;
     if (!emailFormat) {
       // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
@@ -88,11 +88,11 @@ export default function Signup() {
         setMessage(
           "Success! Please check your email to verify your account.\n"
         );
-        signIn('credentials', {
+        signIn("credentials", {
           redirect: false,
           password: data.password,
           email_uid: data.email,
-        })
+        });
         setError(false);
         setTimeout(10000);
         // router.push("verify");

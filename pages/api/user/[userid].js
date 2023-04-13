@@ -9,12 +9,12 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
-    case 'DELETE':
+    case "DELETE":
       try {
-        await User.deleteOne({userId: req.query.userid});
-        res.status(200).json({success: true});
+        await User.deleteOne({ userId: req.query.userid });
+        res.status(200).json({ success: true });
       } catch (error) {
-        res.status(400).json({success: false});
+        res.status(400).json({ success: false });
       }
 
       break;

@@ -15,7 +15,6 @@ Explore.getLayout = function getLayout(page) {
 };
 
 export default function Explore() {
-
   return (
     <>
       <Head>

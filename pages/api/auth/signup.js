@@ -8,7 +8,7 @@ async function handler(req, res) {
 
   const data = req.body;
 
-  const { email, password, userId, username} = data;
+  const { email, password, userId, username } = data;
 
   await dbConnect();
   try {

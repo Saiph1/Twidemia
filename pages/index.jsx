@@ -15,7 +15,7 @@ Home.getLayout = function getLayout(page) {
 };
 
 export default function Home() {
-  const { status, data: session } = useSession()
+  const { status, data: session } = useSession();
   return (
     <>
       <Head>

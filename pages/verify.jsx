@@ -60,7 +60,7 @@ export default function Verify({ qtoken }) {
         });
         if (responseVerify.ok) {
           setVerified(true);
-          router.push('/');
+          router.push("/");
           return;
         } else {
           setMessage("Token valid but cant verify");
@@ -211,8 +211,8 @@ export default function Verify({ qtoken }) {
                         onClick={() => signOut()}
                         class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
                       >
-                        Currently login as {session.user.username}. 
-                        <br/>
+                        Currently login as {session.user.username}.
+                        <br />
                         Click to change account.
                       </button>
                     </div>
