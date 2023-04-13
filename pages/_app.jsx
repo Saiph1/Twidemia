@@ -11,25 +11,25 @@ export default function App({
   if (Component.admin) {
     return (
       <SessionProvider session={session}>
-        <Admin>{getLayout(<Component {...pageProps} />)}</Admin>
+          <Admin>{getLayout(<Component {...pageProps} />)}</Admin>
       </SessionProvider>
     );
   } else if (Component.verify) {
     return (
       <SessionProvider session={session}>
-        <Verify>{getLayout(<Component {...pageProps} />)}</Verify>
+          <Verify>{getLayout(<Component {...pageProps} />)}</Verify>
       </SessionProvider>
     );
   } else if (Component.noVerify) {
     return (
       <SessionProvider session={session}>
-        <NoVerify>{getLayout(<Component {...pageProps} />)}</NoVerify>
+          <NoVerify>{getLayout(<Component {...pageProps} />)}</NoVerify>
       </SessionProvider>
     );
   } else if (Component.noLogin) {
     return (
       <SessionProvider session={session}>
-        <NoLogin>{getLayout(<Component {...pageProps} />)}</NoLogin>
+          <NoLogin>{getLayout(<Component {...pageProps} />)}</NoLogin>
       </SessionProvider>
     );
   } else {

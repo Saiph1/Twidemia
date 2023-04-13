@@ -11,16 +11,13 @@ import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import Slider from "@mui/material/Slider";
 import Layout from "@/components/Layout";
-import { useEffect, useState } from "react";
-// import '../styles/Index.mudule.css'
-
+ 
 Home.getLayout = function getLayout(page) {
   return <Layout title={"Favourite"}>{page}</Layout>;
 };
 
 export default function Home({ users, tweets }) {
   const { status, data: session } = useSession();
-
 
   return (
     <>
@@ -32,7 +29,7 @@ export default function Home({ users, tweets }) {
         <link rel="icon" href="/Twidemia-logo.png" />
       </Head>
 
-      <main className="flex justify-center min-h-screen max-w-7xl mx-auto">
+      <main className={`flex justify-center min-h-screen max-w-7xl mx-auto`}>
         {/* Sidebar */}
         {/* <Sidebar user={session.user} /> */}
 

@@ -129,7 +129,7 @@ const [currentChat, setCurrentChat] = useState({
             </div>
 
             <div className="col-span-5 h-[90vh]">
-              <ChatContainer currentChat={currentChat} viewer={session.user.userId}/>
+              <ChatContainer currentChat={currentChat} session={session} viewer={session.user.userId}/>
             </div>
           </div>
 
