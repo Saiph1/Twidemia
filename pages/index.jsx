@@ -50,12 +50,10 @@ export async function getStaticProps() {
   try {
     // Try to connect the DB.
     await dbConnect();
-    const tweets = await Tweet.find({}); //.populate("followerlist");
-    const users = await User.find({}); //.populate("followerlist");
-    console.log(tweets);
+    const tweets = await Tweet.find();
+    const users = await User.find();
     return {
       props: {
-        test: 123,
         users: JSON.parse(JSON.stringify(users)),
         tweets: JSON.parse(JSON.stringify(tweets)),
       },
