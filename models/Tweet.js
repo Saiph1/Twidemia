@@ -24,8 +24,7 @@ const TweetSchema = new mongoose.Schema({
   },
   likers: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
     },
   ],
   comments: [
