@@ -165,9 +165,7 @@ export default function Users({ users }) {
                         &#x2715;
                       </button>
                     </div>
-                    <h5 className="font-bold text-center">
-                      {user.userId}
-                    </h5>
+                    <h5 className="font-bold text-center">{user.userId}</h5>
                     <h5 className="font-bold text-center truncate">
                       {user.username}
                     </h5>
