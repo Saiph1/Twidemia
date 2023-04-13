@@ -34,4 +34,3 @@ CSCI3100 project
 ## Developement
 1. Code linting: run `npm run lint` in terminanl
 1. Code formatting: run `npm run format` in terminal
-

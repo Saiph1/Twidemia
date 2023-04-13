@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import TweetInputImage from "./TweetInputImage";
 
 export default function TweetInput() {
   const [privacySetting, setPrivacySetting] = useState("Public");
@@ -144,6 +145,13 @@ export default function TweetInput() {
           className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm text-xl text-primary-black focus:outline-0 placeholder:text-xl bg-transparent"
           placeholder="What is happening?"
         />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-3">
+          <TweetInputImage image={"https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2022-08/220805-domestic-cat-mjf-1540-382ba2.jpg"} />
+          <TweetInputImage image={"https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2022-08/220805-domestic-cat-mjf-1540-382ba2.jpg"} />
+        </div>
+
+        {/* upload media icons */}
         <div className="flex justify-between ml-3 items-center border-t pt-3">
           <div className="flex gap-4">
             <svg

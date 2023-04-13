@@ -64,8 +64,9 @@ export default function Input({ users, tweets }) {
           for (var i in alluser) {
             if (alluser[i]._id == uid) {
               creator = alluser[i];
+              break;
             }
-            break;
+           
           }
 
           if (current_user != -1) {
@@ -81,8 +82,8 @@ export default function Input({ users, tweets }) {
               tweet.tweetContent = tweet.content;
               tweet.postDateTime = tweet.date;
               tweet.numOfComments = tweet.comments.length;
-              tweet.numOfLikes = tweet.likers.length;
-              console.log(tweet.content, creator);
+              tweet.numOfLikes = tweet.likers?.length;
+              console.log(tweet.content,creator)
               return <Tweet tweet={tweet} key={tweet.tweetID} />;
             }
           }

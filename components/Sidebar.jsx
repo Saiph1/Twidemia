@@ -57,7 +57,7 @@ export default function Sidebar({ user, update = () => {} }) {
         {/* Menu */}
         <div className="mt-4 mb-2.5 justify-center lg:justify-start items-start">
           <Link href={"/"} active>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <HomeIcon className="w-7" />
               <span className="font-[600] text-primary-black text-lg hidden md:block">
                 Home
@@ -65,7 +65,7 @@ export default function Sidebar({ user, update = () => {} }) {
             </div>
           </Link>
           <Link href={"/profile/" + user.userId}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <UserIcon className="w-7" />
               <span className="font-[500] text-primary-black text-lg hidden md:block">
                 Profile
@@ -73,7 +73,7 @@ export default function Sidebar({ user, update = () => {} }) {
             </div>
           </Link>
           <Link href={"/messages"}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <InboxIcon className="w-7" />
               <span className="font-[500] text-primary-black text-lg hidden md:block">
                 Messages
@@ -82,7 +82,7 @@ export default function Sidebar({ user, update = () => {} }) {
           </Link>
 
           <Link href={"/explore"}>
-            <div className="flex gap-3 rounded-full p-3 items-center hover:hoverEffect">
+            <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <SparklesIcon className="w-7" />
               <span className="shining_word font-[700] text-lg hidden md:block">
                 Explore
@@ -94,7 +94,7 @@ export default function Sidebar({ user, update = () => {} }) {
         {/* Button */}
         <button
           onClick={() => setOpen(true)}
-          className="bg-primary-blue text-white rounded-full w-12 md:w-44 h-12 font-bold shadow-md hover:brightness-95 text-lg flex justify-center items-center"
+          className="bg-primary-blue text-white rounded-full w-12 md:w-[90%] lg:w-full h-12 font-bold shadow-md hover:brightness-95 text-lg flex justify-center items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,8 @@ export default function Sidebar({ user, update = () => {} }) {
       </div>
 
       {/* Overlay part after the Tweet button is clicked */}
-      <OverlayTweetInput open={open} setOpen={setOpen} />
+      <OverlayTweetInput open={open} setOpen={setOpen}/>
+
 
       {/* Mini-Profile */}
       <button

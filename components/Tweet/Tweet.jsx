@@ -2,6 +2,24 @@ import Link from "next/link";
 import React from "react";
 
 const Tweet = ({ tweet }) => {
+
+  function calculatePostedTime(time) {
+    const postTime = new Date(time).getTime() / 1000
+    const currentTime = new Date().getTime() / 1000
+    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
+    if(timeDifferenceInMinute > (60*24*30)) { // month
+      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
+    } else if (timeDifferenceInMinute > (60*24)) { // day
+      return Math.round(timeDifferenceInMinute/60/24) + "day"
+    } else if (timeDifferenceInMinute > 60) { // hour
+      return Math.round(timeDifferenceInMinute/60) + "hr"
+    } else if (timeDifferenceInMinute < 1) {
+      return 'just now'
+    } else {
+      return timeDifferenceInMinute + "min"
+    } 
+  }
+
   return (
     <div
       key={tweet.userID}
@@ -22,7 +40,7 @@ const Tweet = ({ tweet }) => {
             <h5 className="font-bold">{tweet.userName}</h5>
             <small className="text-gray-400">@{tweet.userCustomizeID}</small>
           </div>
-          <p className="text-gray-500 text-[12px]">{tweet.postDateTime}</p>
+          <p className="text-gray-500 text-[12px]">{calculatePostedTime(tweet.postDateTime)}</p>
         </div>
 
         {/* This part is tweet content */}
