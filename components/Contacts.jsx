@@ -5,30 +5,28 @@ import Typography from "@mui/material/Typography";
 
 export default function Contacts({ contacts, changeChat, viewerid, currentChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
-//   const [currentUserImage, setCurrentUserImage] = useState(undefined);
+  //   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-//   useEffect(async () => {
-//     const data = await JSON.parse(
-//       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-//     );
-//     console.log(data);
-//     setCurrentUserName(data.username);
-//     setCurrentUserImage(data.avatarImage);
-//   }, []);
+  //   useEffect(async () => {
+  //     const data = await JSON.parse(
+  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+  //     );
+  //     console.log(data);
+  //     setCurrentUserName(data.username);
+  //     setCurrentUserImage(data.avatarImage);
+  //   }, []);
 
-  // console.log("contact in contacts.jsx", contacts);  
+  // console.log("contact in contacts.jsx", contacts);
   async function changeCurrentChat(index, contact) {
     const newContact = contact;
-    
+
     setCurrentSelected(newContact);
     // console.log("current select", currentSelected);
 
     changeChat(contact);
     // console.log("changeChat contact", contact);
-    
-  };
+  }
 
-  
   return (
     <>
       {/* {currentUserImage && currentUserImage && ( */}
@@ -54,32 +52,33 @@ export default function Contacts({ contacts, changeChat, viewerid, currentChat }
                     <h4 className="font-bold text-[14px] truncate">{contact.username}</h4>
                   </div>
                 </div>
-                
-                // <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
-                
-                // Originial method:
-                // <div
-                //   key={contact._id}
-                //   className={`contact ${
-                //     index === currentSelected ? "selected" : ""
-                //   }`}
-                //   onClick={() => changeCurrentChat(index, contact)}
-                // >
-                //   <div className="avatar">
-                //     <img
-                //     //   src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                //       alt=""
-                //     />
-                //   </div>
-                //   <div className="username">
-                //     <h3>{contact.username}</h3>
-                //   </div>
-                //   </div>
-              ):(<></>);
-            })}
-          </div>
-            
-            {/* <div className="current-user">  
+            ) : (
+              // <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
+
+              // Originial method:
+              // <div
+              //   key={contact._id}
+              //   className={`contact ${
+              //     index === currentSelected ? "selected" : ""
+              //   }`}
+              //   onClick={() => changeCurrentChat(index, contact)}
+              // >
+              //   <div className="avatar">
+              //     <img
+              //     //   src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+              //       alt=""
+              //     />
+              //   </div>
+              //   <div className="username">
+              //     <h3>{contact.username}</h3>
+              //   </div>
+              //   </div>
+              <></>
+            );
+          })}
+        </div>
+
+        {/* <div className="current-user">  
                 <div className="avatar">
                 <img
                     // src={`data:image/svg+xml;base64,${currentUserImage}`}
@@ -90,7 +89,7 @@ export default function Contacts({ contacts, changeChat, viewerid, currentChat }
                 <h2>{currentUserName}</h2>
                 </div>
             </div> */}
-        </div>
+      </div>
       {/* )} */}
     </>
   );
