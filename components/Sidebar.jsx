@@ -75,6 +75,15 @@ export default function Sidebar({ user, update = () => {} }) {
             </div>
           </Link>
 
+          {user.userId == "adminid" ? (
+            <Link href={"/admin"}>
+              <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
+                <UserRemoveIcon className="w-7" />
+                <span className="font-[500] text-primary-black text-lg hidden md:block">Admin Panel</span>
+              </div>
+            </Link>
+          ) : ("")}
+
           <Link href={"/explore"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <SparklesIcon className="w-7" />
