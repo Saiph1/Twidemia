@@ -18,6 +18,18 @@ export default function Users({ users }) {
     userId: "",
   });
 
+  useEffect(() => {
+    const tmp = users.filter(
+      (user) =>
+        !query ||
+        (user.userId.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase()) ||
+        (user.username.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase())
+    );
+    setShowUser(tmp);
+  }, [users]);
+
   function handleclick(user) {
     setOpen(true);
     setDeleteUser(user);
@@ -41,7 +53,6 @@ export default function Users({ users }) {
     );
     setShowUser(tmp);
   };
-  useEffect(() => {}, []);
   const handleDelete = async () => {
     const endpoint = `/api/user/${deleteUser.userId}`;
     const options = {

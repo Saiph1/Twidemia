@@ -197,6 +197,7 @@ export default function Verify({ qtoken }) {
                         ""
                       )}
                     </div>
+                    {session?.user ? (
                     <div class="flex items-center justify-center flex-col">
                       <button
                         type="button"
@@ -217,6 +218,7 @@ export default function Verify({ qtoken }) {
                         Click to change account.
                       </button>
                     </div>
+                    ) : ""}
                     <button
                       type="submit"
                       class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"
@@ -345,4 +347,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-Verify.login = true;
+Verify.noVerify = true;

@@ -2,9 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   presets: ["next/babel"],
-  experimental: {
-    forceSwcTransforms: true,
-  },
+  // experimental: {
+  //   forceSwcTransforms: true,
+  // },
 };
 
 module.exports = nextConfig;

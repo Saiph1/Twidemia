@@ -7,9 +7,28 @@ import Widgets from "@/components/Widgets";
 import Sidebar from "@/components/Sidebar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import {useState, useEffect} from "react";
 
-export default function Admin({ users }) {
+export default function Admin({ users: usersProp }) {
+  const router = useRouter();
   const { data: session } = useSession();
+  const [users, setUsers] = useState(usersProp);
+  const [check, setCheck] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      fetch("/api/user/")
+        .then((res) => res.json())
+        .then((data) => {
+          setUsers(data.data);
+          // console.log("fetched all user.");
+          console.log(data.data);
+        })
+      setCheck(!check);
+    }, 3000);
+    return () => clearInterval(id);
+  }, [check])
+
   return (
     <>
       <Head>
