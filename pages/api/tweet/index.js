@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const tweets = await Tweet.find({}); //.populate("followerlist");
+        const tweets = await Tweet.find({}) //.populate("followerlist");
         res.status(200).json({ success: true, data: tweets });
       } catch (error) {
         res.status(400).json({ success: false });

@@ -1,20 +1,21 @@
 import Head from "next/head";
 import dbConnect from "../lib/dbConnect";
-import User from "../models/User";
 import Feed from "@/components/Feed";
 import Users from "@/components/Users";
 import Widgets from "@/components/Widgets";
 import Sidebar from "@/components/Sidebar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
+import { UserContext } from "@/pages/_app";
 
 export default function Admin({ users: usersProp }) {
   const router = useRouter();
   const { data: session } = useSession();
+  const users = useContext(UserContext);
+  /*
   const [users, setUsers] = useState(usersProp);
   const [check, setCheck] = useState(0);
-
   useEffect(() => {
     const id = setInterval(() => {
       fetch("/api/user/")
@@ -28,6 +29,7 @@ export default function Admin({ users: usersProp }) {
     }, 3000);
     return () => clearInterval(id);
   }, [check])
+  */
 
   return (
     <>
@@ -54,9 +56,12 @@ export async function getStaticProps() {
   try {
     // Try to connect the DB.
     await dbConnect();
-    const users = await User.find({});
+    // const users = await User.find({});
     return {
-      props: { users: JSON.parse(JSON.stringify(users)) },
+      props: { 
+        // dbConnect
+        // users: JSON.parse(JSON.stringify(users)) },
+      }
     };
   } catch (e) {
     // If it cannot connect to DB, output log to console by using error flag.

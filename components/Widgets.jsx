@@ -1,14 +1,22 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import Widgets_item from "@/components/Widgets_item";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "@/pages/_app";
 
 export default function Widgets({ user, update_page }) {
-  const [alluser, setalluser] = useState();
-  const [load, setload] = useState(false);
+  // const [alluser, setalluser] = useState();
+  const alluser = useContext(UserContext);
+  const [load, setload] = useState(alluser!=[]?true:false);
   const [focus, setFocus] = useState(false);
   const [searchUserList, setSearchUserList] = useState([]);
   const [filteredList, setFilteredList] = new useState([]);
 
+  console.log(alluser)
+  useEffect(() => {
+    setload(true);
+  }, [alluser]);
+
+  /*
   useEffect(() => {
     fetch("/api/user/")
       .then((res) => res.json())
@@ -18,7 +26,9 @@ export default function Widgets({ user, update_page }) {
       })
       .then(() => setload(true));
   }, [load]);
+  */
 
+  /*
   useEffect(() => {
     fetch("/api/user/")
       .then((res) => res.json())
@@ -29,13 +39,14 @@ export default function Widgets({ user, update_page }) {
         console.log(searchUserList);
       });
   }, [focus]);
+  */
 
   // https://contactmentor.com/build-reactjs-search-filter/
   const filterBySearch = (event) => {
     // Access input value
     const query = event.target.value;
     // Create copy of item list
-    var updatedList = [...searchUserList];
+    var updatedList = [...alluser];
 
     // console.log("update list", updatedList);
     // Include all elements which includes the search query
@@ -49,7 +60,7 @@ export default function Widgets({ user, update_page }) {
     });
     // Trigger render with updated values
     setFilteredList(updatedList);
-    console.log(filteredList);
+    // console.log(filteredList);
     // setFilteredList()
   };
 
@@ -106,7 +117,7 @@ export default function Widgets({ user, update_page }) {
         <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
           <h4 className="font-bold text-xl px-4">Who to follow</h4>
           {alluser.map((file, index) =>
-            (alluser[index].userId != user)&&(index<3) ? (
+            (alluser[index].userId != user)&&(index<123) ? (
               <Widgets_item
                 key={index}
                 update_page={update_page}

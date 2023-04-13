@@ -2,40 +2,103 @@ import "@/styles/globals.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState, createContext, useEffect } from "react";
 
+export const UserContext = createContext();
+export const TweetContext = createContext();
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [users, setUsers] = useState([]);
+  const [tweets, setTweets] = useState([]);
+  const [check, setCheck] = useState(1);
+
+  async function fetchData() {
+      if (users.length) {
+        fetch("/api/user/")
+          .then((res) => res.json())
+          .then((data) => {
+            setUsers(data.data);
+            // console.log("fetched all user.");
+          })
+      } else {
+        fetch("/api/user?fast=1")
+          .then((res) => res.json())
+          .then((data) => {
+            setUsers(data.data);
+            // console.log("fast fetched all user.");
+          })
+        fetch("/api/user/")
+          .then((res) => res.json())
+          .then((data) => {
+            setUsers(data.data);
+            // console.log("fetched all user.");
+          })
+      }
+      fetch("/api/tweet/")
+        .then((res) => res.json())
+        .then((data) => {
+          setTweets(data.data);
+          // console.log("fetched all tweets.");
+        })
+  }
+
+  useEffect(() => {
+    fetchData();
+    const id = setInterval(async () => {
+      fetchData();
+      setCheck(!check);
+    }, 600000); // 2 mins
+    return () => clearInterval(id);
+  }, [check])
+
+
   const getLayout = Component.getLayout || ((page) => page);
+  const TweetUserLayoutComponent = (
+    <TweetContext.Provider value={tweets}>
+      <UserContext.Provider value={users}>
+        {getLayout(<Component {...pageProps} />)}
+      </UserContext.Provider>
+    </TweetContext.Provider>
+  )
+
   if (Component.admin) {
     return (
       <SessionProvider session={session}>
-        <Admin>{getLayout(<Component {...pageProps} />)}</Admin>
+        <Admin>
+          {TweetUserLayoutComponent}
+        </Admin>
       </SessionProvider>
     );
   } else if (Component.verify) {
     return (
       <SessionProvider session={session}>
-        <Verify>{getLayout(<Component {...pageProps} />)}</Verify>
+        <Verify>
+          {TweetUserLayoutComponent}
+        </Verify>
       </SessionProvider>
     );
   } else if (Component.noVerify) {
     return (
       <SessionProvider session={session}>
-        <NoVerify>{getLayout(<Component {...pageProps} />)}</NoVerify>
+        <NoVerify>
+          {TweetUserLayoutComponent}
+        </NoVerify>
       </SessionProvider>
     );
   } else if (Component.noLogin) {
     return (
       <SessionProvider session={session}>
-        <NoLogin>{getLayout(<Component {...pageProps} />)}</NoLogin>
+        <NoLogin>
+          {TweetUserLayoutComponent}
+        </NoLogin>
       </SessionProvider>
     );
   } else {
     return (
       <SessionProvider session={session}>
-        {getLayout(<Component {...pageProps} />)}
+          {TweetUserLayoutComponent}
       </SessionProvider>
     );
   }

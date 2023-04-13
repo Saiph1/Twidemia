@@ -2,15 +2,16 @@ import Head from "next/head";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import dbConnect from "../lib/dbConnect";
-import Tweet from "../models/Tweet";
-import User from "../models/User";
+// import dbConnect from "../lib/dbConnect";
+// import Tweet from "../models/Tweet";
+// import User from "../models/User";
 
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import Slider from "@mui/material/Slider";
 import Layout from "@/components/Layout";
+import { useState, createContext, useContext } from "react";
 // import '../styles/Index.mudule.css'
 
 Home.getLayout = function getLayout(page) {
@@ -35,7 +36,7 @@ export default function Home({ users, tweets}) {
         {/* <Sidebar user={session.user} /> */}
 
         {/* Feed */}
-        <Feed tweets={tweets} users={users} />
+        <Feed/>
 
         {/* Widgets */}
         {/* <Widgets user={session.user.userId} /> */}
@@ -46,17 +47,18 @@ export default function Home({ users, tweets}) {
   );
 }
 
+/*
 // export async function getServerSideProps() {
 export async function getStaticProps() {
   try {
     // Try to connect the DB.
     await dbConnect();
-    const tweets = await Tweet.find();
-    const users = await User.find().populate("tweetlist");
+    // const tweets = await Tweet.find();
+    // const users = await User.find().populate("tweetlist");
     return {
       props: {
-        users: JSON.parse(JSON.stringify(users)),
-        tweets: JSON.parse(JSON.stringify(tweets)),
+        // users: JSON.parse(JSON.stringify(users)),
+        // tweets: JSON.parse(JSON.stringify(tweets)),
       },
     };
   } catch (e) {
@@ -64,5 +66,6 @@ export async function getStaticProps() {
     console.error(e);
   }
 }
+*/
 
 Home.verify = true;

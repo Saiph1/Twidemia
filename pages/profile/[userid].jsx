@@ -39,13 +39,10 @@ export default function Home(props) {
   // fetching user data for profile
   useEffect(() => {
     if (!session) return;
-    console.log(props.id);
     fetch("/api/user/" + props.id)
       .then((res) => res.json())
       .then((data) => {
-        console.log("data.data", data.data); 
         setUserdata(data.data);
-        console.log(userdata);
         setfollow(
           data.data.followerlist
             .map((item) => item.userId === session.user.userId)
@@ -134,7 +131,7 @@ export default function Home(props) {
                   block_update={block_update}
                 />
                 <div className="py-8 flex flex-col items-center gap-4 bg-white">
-                  {userdata.tweetlist?.map((item)=><Tweet_profile tweet={item} 
+                  {userdata.tweetlist?.map((item)=><Tweet_profile key={item?.userId} tweet={item} 
                     viewer={props.id}
                   />)}
                 </div>
