@@ -30,7 +30,7 @@ export default function Contacts({ contacts, changeChat, viewerid }) {
   return (
     <>
       {/* {currentUserImage && currentUserImage && ( */}
-      <div className="border-r-[2px]">
+      <div className="border-r-[2px] w-[200px] md:w-[300px]">
         <div className="brand border-b-[2px]">
           {/* <img src={Logo} alt="logo" /> */}
           <div className="py-3 px-2 text-center font-semibold flex justify-center items-center gap-2">

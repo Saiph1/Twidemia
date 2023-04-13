@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Tweet from "./Tweet/Tweet";
 import TweetInput from "./Tweet/TweetInput";
 //import TweetData from "./tweetHub"; // <-- delete later after the backend and database complete
@@ -10,8 +11,11 @@ export default function Input() {
   // Using .map() to generate each tweet post corresponds to each tweet object in database
   const [tweetData, setTweetData] = useState();
   const [alluser, setalluser] = useState();
+  const { status, data: session } = useSession();
 
   // Simulating get data from backend
+
+  var current_user = -1;
 
   useEffect(() => {
     fetch("/api/tweet")
@@ -43,22 +47,43 @@ export default function Input() {
 
       <div className="flex flex-col items-center gap-8 mt-8">
         {tweetData?.map((tweet) => {
+          if (current_user == -1) {
+            for (var i in alluser) {
+              if (alluser[i].userId == session.user.userId) {
+                current_user = alluser[i];
+                break;
+              }
+            }
+          }
+
           var uid = tweet.userID;
-          var creator = { iconURL: "", username: "", userId: 0 };
+          var creator = -1;
+
           for (var i in alluser) {
             if (alluser[i]._id == uid) {
               creator = alluser[i];
-              break;
+            }
+            break;
+          }
+
+          if (current_user != -1) {
+            if (
+              tweet.visibility == 0 ||
+              (tweet.visibility == 1 &&
+                current_user.followinglist.includes(creator._id)) ||
+              (tweet.visibility >= 1 && session.user.userId == creator.userId)
+            ) {
+              //tweet.iconURL = creator.iconURL;
+              tweet.userName = creator.username;
+              tweet.userCustomizeID = creator.userId;
+              tweet.tweetContent = tweet.content;
+              tweet.postDateTime = tweet.date;
+              tweet.numOfComments = tweet.comments.length;
+              tweet.numOfLikes = tweet.likers.length;
+              console.log(tweet.content, creator);
+              return <Tweet tweet={tweet} key={tweet.tweetID} />;
             }
           }
-          //tweet.iconURL = creator.iconURL;
-          tweet.userName = creator.username;
-          tweet.userCustomizeID = creator.userId;
-          tweet.tweetContent = tweet.content;
-          tweet.postDateTime = tweet.date;
-          tweet.numOfComments = tweet.comments.length;
-          tweet.numOfLikes = tweet.likers.length;
-          return <Tweet tweet={tweet} key={tweet.tweetID} />;
         })}
       </div>
     </div>

@@ -131,7 +131,8 @@ export default function ChatContainer({ currentChat, viewer = "" }) {
     <div className="w-full">
       <div className="chat-header">
         <div className="user-details">
-          <div className="username border-b-[2px]">
+          <div className="username border-b-[2px] flex items-center">
+            <img src="123" />
             <p className="py-3 px-6 font-semibold">{currentChat.username}</p>
           </div>
         </div>
@@ -159,7 +160,7 @@ export default function ChatContainer({ currentChat, viewer = "" }) {
             <span class="sr-only">Loading...</span>
           </div>
         ) : (
-          <div className="chat-messages px-6 overflow-y-scroll h-full bg-gray-400">
+          <div className="chat-messages px-6 overflow-y-scroll h-auto bg-gray-400">
             {messages.map((message) => {
               return (
                 <div key={message}>

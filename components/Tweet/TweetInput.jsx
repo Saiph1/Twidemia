@@ -1,40 +1,34 @@
 import { useState } from "react";
-
-import axios from "axios";
 import { useSession } from "next-auth/react";
 
 export default function TweetInput() {
-  // const { status, data: session } = useSession({
-  //   required: true,
-  //   onUnauthenticated() {
-  //     signIn();
-  //   },
-  // });
+  const [privacySetting, setPrivacySetting] = useState("Public");
+  const [input, setInput] = useState("Public");
+  const { status, data: session } = useSession();
+  var a = "";
 
-  // console.log("user object id: "+ session.user._id);
+  const handleChange = (event) => {
+    a = event.target.value;
+    console.log(event.target.value);
+  };
 
-  const [privacySetting, setPrivacySetting] = useState("Public"); // Public, Follower, Self
-  const [tweetContent, setTweetContent] = useState("");
-
-  const [tweetInputWarning, setTweetInputWarning] = useState(false);
-
-  async function handlePostTweet(e) {
-    e.preventDefault();
-    if (!tweetContent) {
-      setTweetInputWarning(true);
-      setTimeout(() => {
-        setTweetInputWarning(false);
-      }, [4000]);
-      return;
+  function postTweet() {
+    var b;
+    if (privacySetting == "Public") {
+      b = 0;
+    } else if (privacySetting == "Follower") {
+      b = 1;
+    } else if (privacySetting == "Self") {
+      b = 2;
     }
-    const response = await axios.post("/api/tweet/compose", {
-      privacySetting,
-      tweetContent,
-      userID: 123,
+    fetch("/api/tweet", {
+      method: "POST",
+      body: JSON.stringify({
+        content: a,
+        vis: b,
+        creator: session.user.userId,
+      }),
     });
-    const { data } = await response;
-    setTweetContent("");
-    console.log(data);
   }
 
   function privacyOptionUI(name) {
@@ -116,24 +110,10 @@ export default function TweetInput() {
         />
       </div>
 
-      {tweetInputWarning && (
-        <div className="border-l-[6px] border-[#b3935d] max-h-[70px] h-full w-[360px] bg-[#ffd48a] rounded-md absolute py-3 px-3 z-[500] flex justify-between items-center left-[50%] transform translate-x-[-50%] top-[16%]">
-          <h3 className="text-lg font-semibold">
-            You forgot to share something..
-          </h3>
-          <span
-            className="text-2xl cursor-pointer"
-            onClick={() => setTweetInputWarning(false)}
-          >
-            &times;
-          </span>
-        </div>
-      )}
-
       <div className="pr-4 w-full relative">
         {/* privacy setting here */}
         <div className="px-2 reletive grid gap-3">
-          <button className="toggle" onClick={(e) => e.preventDefault()}>
+          <button className="toggle">
             <div className="flex gap-3">{privacyOptionUI(privacySetting)}</div>
           </button>
           <ul className="list">
@@ -160,10 +140,9 @@ export default function TweetInput() {
 
         {/* Input tweet content area */}
         <textarea
+          onChange={handleChange}
           className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm text-xl text-primary-black focus:outline-0 placeholder:text-xl bg-transparent"
           placeholder="What is happening?"
-          value={tweetContent}
-          onChange={(e) => setTweetContent(e.target.value)}
         />
         <div className="flex justify-between ml-3 items-center border-t pt-3">
           <div className="flex gap-4">
@@ -224,11 +203,9 @@ export default function TweetInput() {
               />
             </svg>
           </div>
-
-          {/* Post tweet button */}
           <button
+            onClick={postTweet}
             className="bg-[#1D9BF0] text-white py-2 px-4 rounded-3xl"
-            onClick={(e) => handlePostTweet(e)}
           >
             Tweet
           </button>
