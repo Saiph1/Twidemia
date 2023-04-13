@@ -71,21 +71,21 @@ export default function Widgets({ user, update_page }) {
   if (load) {
     return (
       <div className="w-full xl:w-[360px] hidden lg:inline px-5 space-y-5 bg-white">
-        <div className="sticky top-0 bg-white py-1.5 z-20">
-          <div className="flex items-center p-3 rounded-full relative">
+        <div className="sticky top-0 bg-white py-1.5 z-50">
+          <div className="flex items-center p-3 rounded-full relative full">
             <SearchIcon className="h-5 z-50 text-gray-500" />
             <input
               id="searchbar"
               type="text"
               placeholder="Search Twitter"
-              className="absolute inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "
+              className="absolute w-full inset-0 rounded-full pl-11 border-gray-500 text-gray-700 focus:shadow-lg focus:bg-white bg-gray-100 "
               onChange={filterBySearch}
               // onFocus={()=>setFocus(true)}
               // onBlur={(e)=>{e.preventDefault; document.getElementById("searchbar").value = ""; setFilteredList([])}}
               // onInput={() => setSearch(document.getElementById('input').value)}
             />
           </div>
-          <div class="absolute bg-gray-400 width=500 shadow-2xl rounded-2xl">
+          <div class="absolute bg-gray-400 w-full width=500 shadow-2xl rounded-2xl">
             {filteredList.map((file, index) => (
               <Widgets_item
                 key={index}

@@ -53,7 +53,7 @@ export default function Widgets_item({
   }
 
   return (
-    <div className="flex items-center px-4 py-2 hover:bg-gray-200">
+    <div className="w-full flex items-center px-4 py-2 hover:bg-gray-200 ">
       <img
         className="rounded-full"
         width="40"
