@@ -7,16 +7,6 @@ import Button from "@mui/material/Button";
 
 export default function ChatInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
-  //   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  //   const handleEmojiPickerhideShow = () => {
-  //     setShowEmojiPicker(!showEmojiPicker);
-  //   };
-
-  //   const handleEmojiClick = (event, emojiObject) => {
-  //     let message = msg;
-  //     message += emojiObject.emoji;
-  //     setMsg(message);
-  //   };
 
   const sendChat = (event) => {
     event.preventDefault();
@@ -27,7 +17,7 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <div className="p-6">
+    <div className="py-2 md:py-4 px-4  border-t border-neutral-100">
       <div className="button-container">
         {/* <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
@@ -35,7 +25,7 @@ export default function ChatInput({ handleSendMsg }) {
         </div> */}
       </div>
       <form
-        className="input-container border py-2 px-4 rounded-full w-full flex items-center justify-between"
+        className="input-container border border-neutral-400 py-2 px-4 rounded-full w-full flex items-center justify-between"
         onSubmit={(event) => sendChat(event)}
       >
         <input
@@ -43,7 +33,7 @@ export default function ChatInput({ handleSendMsg }) {
           placeholder="Type your message here.."
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          className="focus:outline-none bg-transparent pl-2"
+          className="focus:outline-none bg-transparent pl-2 w-full"
         />
 
         <button

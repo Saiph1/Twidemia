@@ -10,6 +10,15 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
+    case "DELETE":
+      try {
+        await User.deleteOne({ userId: req.query.userid });
+        res.status(200).json({ success: true });
+      } catch (error) {
+        res.status(400).json({ success: false });
+      }
+
+      break;
     case "GET":
       try {
         const users = await User.findOne({ userId: req.query.userid })
@@ -49,6 +58,8 @@ export default async function handler(req, res) {
           if (updateUser.year) user.year = updateUser.year;
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
+          if (updateUser.password) user.password = updateUser.password;
+          if (updateUser.verified) user.verified = updateUser.verified;
           if (updateUser.avatar) {
             const image_new = new Image({
               content: updateUser.avatar,

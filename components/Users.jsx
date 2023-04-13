@@ -10,6 +10,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 export default function Users({ users }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [showUser, setShowUser] = useState(users);
+  const [query, setQuery] = useState("");
   const [deleteUser, setDeleteUser] = useState({
     username: "",
     email: "",
@@ -24,6 +26,42 @@ export default function Users({ users }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const changeSearch = (event) => {
+    const query = event.target.value;
+    setQuery(query);
+    const tmp = users.filter(
+      (user) =>
+        !query ||
+        (user.userId.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase()) ||
+        (user.username.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase())
+    );
+    setShowUser(tmp);
+  };
+  useEffect(() => {}, []);
+  const handleDelete = async () => {
+    const endpoint = `/api/user/${deleteUser.userId}`;
+    const options = {
+      method: "DELETE",
+    };
+    const response = await fetch(endpoint, options);
+    const result = await response.json();
+    const idx = users.indexOf(deleteUser);
+    users.splice(idx, 1);
+    const tmp = users.filter(
+      (user) =>
+        !query ||
+        (user.userId.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase()) ||
+        (user.username.toLowerCase().indexOf(query.toLowerCase()) !== -1 &&
+          query.toLowerCase())
+    );
+    setShowUser(tmp);
+
+    handleClose();
   };
 
   return (
@@ -51,7 +89,7 @@ export default function Users({ users }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleDelete} autoFocus>
             Confirm
           </Button>
         </DialogActions>
@@ -78,6 +116,7 @@ export default function Users({ users }) {
         <input
           type="text"
           placeholder="User ID.."
+          onChange={changeSearch}
           className="py-4 px-6 focus:outline-none text-lg w-full"
         />
       </div>
@@ -100,13 +139,13 @@ export default function Users({ users }) {
             </div>
           </div>
         </div>
-        {users
-          .filter((user) => !user.admin && user.userId != "1234")
+        {showUser
+          .filter((user) => !user.admin)
           .map((user) => {
             return (
               <div
                 key={user.userId}
-                className="border bg-white flex w-full gap-4 py-6 px-3 hover:bg-gray-200"
+                className="border bg-white flex w-full gap-4 py-4 px-2 hover:bg-gray-200"
               >
                 {/* <div className="max-w-[3rem]">
                   <img
@@ -126,9 +165,7 @@ export default function Users({ users }) {
                         &#x2715;
                       </button>
                     </div>
-                    <h5 className="font-bold text-center">
-                      {user.userId}1983234o23iu4oi23
-                    </h5>
+                    <h5 className="font-bold text-center">{user.userId}</h5>
                     <h5 className="font-bold text-center truncate">
                       {user.username}
                     </h5>

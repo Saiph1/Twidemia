@@ -3,20 +3,14 @@ import Typography from "@mui/material/Typography";
 // import styled from "styled-components";
 // import Logo from "../assets/logo.svg";
 
-export default function Contacts({ contacts, changeChat, viewerid }) {
+export default function Contacts({
+  contacts,
+  changeChat,
+  viewerid,
+  currentChat,
+}) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
-  //   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-  //   useEffect(async () => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     console.log(data);
-  //     setCurrentUserName(data.username);
-  //     setCurrentUserImage(data.avatarImage);
-  //   }, []);
-
-  // console.log("contact in contacts.jsx", contacts);
   async function changeCurrentChat(index, contact) {
     const newContact = contact;
 
@@ -30,18 +24,18 @@ export default function Contacts({ contacts, changeChat, viewerid }) {
   return (
     <>
       {/* {currentUserImage && currentUserImage && ( */}
-      <div className="border-r-[2px]">
-        <div className="brand border-b-[2px]">
+      <div className="border-r-[1px] border-neutral-200 h-full flex flex-col">
+        <div className="brand border-b-[1px] border-neutral-200 bg-primary-blue">
           {/* <img src={Logo} alt="logo" /> */}
-          <div className="py-3 px-2 text-center font-semibold flex justify-center items-center gap-2">
-            <span>Messages</span>
+          <div className="py-3 px-2 text-center font-semibold flex justify-center items-center gap-2 text-white">
+            <span className="hidden md:block">Messages</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.75"
               stroke="currentColor"
-              className="w-5 h-5"
+              className="w-6 h-6"
             >
               <path
                 stroke-linecap="round"
@@ -51,11 +45,16 @@ export default function Contacts({ contacts, changeChat, viewerid }) {
             </svg>
           </div>
         </div>
-        <div className="contacts">
+
+        <div className="contacts h-full overflow-y-auto flex flex-col">
           {contacts.map((contact, index) => {
             return contacts[index].userId != viewerid ? (
               <div
-                className="flex items-center px-4 py-2 hover:bg-gray-200"
+                className={`flex items-center px-4 py-2 ${
+                  contact.username === currentChat.username
+                    ? "bg-gray-300 scale-120 border-l-[4px] border-primary-blue"
+                    : "hover:bg-gray-200 "
+                }`}
                 onClick={() => changeCurrentChat(index, contact)}
               >
                 <img
@@ -65,34 +64,12 @@ export default function Contacts({ contacts, changeChat, viewerid }) {
                   alt="img"
                 />
                 <div className="truncate ml-4 leading-5">
-                  <Typography>
-                    <h4 className="font-bold text-[14px] truncate">
-                      {contact.username}
-                    </h4>
-                  </Typography>
+                  <h4 className="font-bold text-[14px] truncate">
+                    {contact.username}
+                  </h4>
                 </div>
               </div>
             ) : (
-              // <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
-
-              // Originial method:
-              // <div
-              //   key={contact._id}
-              //   className={`contact ${
-              //     index === currentSelected ? "selected" : ""
-              //   }`}
-              //   onClick={() => changeCurrentChat(index, contact)}
-              // >
-              //   <div className="avatar">
-              //     <img
-              //     //   src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-              //       alt=""
-              //     />
-              //   </div>
-              //   <div className="username">
-              //     <h3>{contact.username}</h3>
-              //   </div>
-              //   </div>
               <></>
             );
           })}

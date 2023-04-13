@@ -7,6 +7,7 @@ import {
   InboxIcon,
   SparklesIcon,
   BookOpenIcon,
+  UserRemoveIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
@@ -24,6 +25,7 @@ import { useState } from "react";
 import Tweet from "./Tweet/Tweet";
 import Input from "./Input";
 import TweetInput from "./Tweet/TweetInput";
+import OverlayTweetInput from "./Tweet/OverlayTweetInput";
 
 export default function Sidebar({ user, update = () => {} }) {
   // const handleProfile = (id, e) => {
@@ -113,23 +115,7 @@ export default function Sidebar({ user, update = () => {} }) {
       </div>
 
       {/* Overlay part after the Tweet button is clicked */}
-      <div
-        className={`tweetOverlay ${
-          open ? "visible opacity-100" : "hidden opacity-0"
-        }`}
-      >
-        <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[40%] mx-auto mt-20 relative">
-          <span
-            className="text-[32px] font-[300] text-gray-600 cursor-pointer"
-            onClick={() => setOpen(false)}
-          >
-            &times;
-          </span>
-          <div className="mt-4">
-            <TweetInput />
-          </div>
-        </div>
-      </div>
+      <OverlayTweetInput open={open} setOpen={setOpen} />
 
       {/* Mini-Profile */}
       <button

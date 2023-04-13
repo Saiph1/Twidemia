@@ -25,6 +25,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import FollowerListItem from "./Profile/FollowerListItem";
+import axios from "axios";
 
 // import avatar from "./Avatar_test.png"
 
@@ -260,7 +262,7 @@ export default function ProfileContainer({
   if (loaded) {
     return (
       <div className="w-full min-h-screen">
-        <div className="flex py-4 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="flex py-4 px-3 sticky top-0 z-20 bg-white border-b border-gray-200">
           <h4 className="sm:text-xl font-semibold cursor-pointer">Profile</h4>
         </div>
 
@@ -611,16 +613,3 @@ export default function ProfileContainer({
     );
   }
 }
-
-// function convertToBase64(file){
-//   return new Promise((resolve, reject) => {
-//     const fileReader = new FileReader();
-//     fileReader.readAsDataURL(file);
-//     fileReader.onload = () => {
-//       resolve(fileReader.result)
-//     };
-//     fileReader.onerror = (error) => {
-//       reject(error)
-//     }
-//   })
-// }

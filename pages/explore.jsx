@@ -15,13 +15,6 @@ Explore.getLayout = function getLayout(page) {
 };
 
 export default function Explore() {
-  const { status, data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      signIn();
-    },
-  });
-
   return (
     <>
       <Head>
@@ -117,3 +110,5 @@ export default function Explore() {
     </>
   );
 }
+
+Explore.verify = true;

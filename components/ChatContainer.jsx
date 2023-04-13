@@ -54,28 +54,6 @@ export default function ChatContainer({ currentChat, viewer = "" }) {
       .then(() => setload(true));
   }, [currentChat]);
 
-  //   useEffect(async () => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     const response = await axios.post(recieveMessageRoute, {
-  //       from: data._id,
-  //       to: currentChat._id,
-  //     });
-  //     setMessages(response.data);
-  //   }, [currentChat]);
-
-  //   useEffect(() => {
-  //     const getCurrentChat = async () => {
-  //       if (currentChat) {
-  //         await JSON.parse(
-  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //         )._id;
-  //       }
-  //     };
-  //     getCurrentChat();
-  //   }, [currentChat]);
-
   const handleSendMsg = async (msg) => {
     console.log(msg);
     fetch("/api/Chat/" + viewer + "/" + currentChat.userId, {
@@ -90,55 +68,27 @@ export default function ChatContainer({ currentChat, viewer = "" }) {
       });
     socket.emit("input-change", msg);
   };
-  //   const handleSendMsg = async (msg) => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     socket.current.emit("send-msg", {
-  //       to: currentChat._id,
-  //       from: data._id,
-  //       msg,
-  //     });
-  //     await axios.post(sendMessageRoute, {
-  //       from: data._id,
-  //       to: currentChat._id,
-  //       message: msg,
-  //     });
-
-  //     const msgs = [...messages];
-  //     msgs.push({ fromSelf: true, message: msg });
-  //     setMessages(msgs);
-  //   };
-
-  //   useEffect(() => {
-  //     if (socket.current) {
-  //       socket.current.on("msg-recieve", (msg) => {
-  //         setArrivalMessage({ fromSelf: false, message: msg });
-  //       });
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  //   }, [arrivalMessage]);
-
-  //   useEffect(() => {
-  //     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  //   }, [messages]);
 
   return (
-    <div className="w-full">
-      <div className="chat-header">
-        <div className="user-details">
-          <div className="username border-b-[2px]">
-            <p className="py-3 px-6 font-semibold">{currentChat.username}</p>
+    <>
+      <div className="flex flex-col h-full">
+        <div className="chat-header">
+          <div className="user-details">
+            <div className="username border-b-[1px] border-neutral-200 flex items-center bg-primary-blue text-white">
+              <div className="flex ml-3 w-[36px] bg-gray-800 rounded-full overflow-hidden h-[36px]">
+                <img src="123" className="aspect-square object-cover w-full" />
+              </div>
+              <p className="px-2 py-3 font-semibold whitespace-nowrap">
+                {currentChat.username}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full overflow-y-scroll pt-2 relative">
         {!load ? (
-          <div role="status">
+          <div role="status" className="flex flex-col gap-2 h-full px-4">
             <svg
               aria-hidden="true"
               class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -176,6 +126,6 @@ export default function ChatContainer({ currentChat, viewer = "" }) {
 
         <ChatInput handleSendMsg={handleSendMsg} />
       </div>
-    </div>
+    </>
   );
 }

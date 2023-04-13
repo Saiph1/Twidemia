@@ -1,18 +1,23 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Tweet from "./Tweet/Tweet";
 import TweetInput from "./Tweet/TweetInput";
 //import TweetData from "./tweetHub"; // <-- delete later after the backend and database complete
 
 //https://www.youtube.com/watch?v=u5gBoKVukIU  <--  UI design Link
 
-export default function Input() {
+export default function Input({ users, tweets }) {
   // Using .map() to generate each tweet post corresponds to each tweet object in database
-  const [tweetData, setTweetData] = useState();
-  const [alluser, setalluser] = useState();
+  const [tweetData, setTweetData] = useState(tweets);
+  const [alluser, setalluser] = useState(users);
+  const { status, data: session } = useSession();
 
   // Simulating get data from backend
 
+  var current_user = -1;
+
+  /*
   useEffect(() => {
     fetch("/api/tweet")
       .then((res) => res.json())
@@ -32,6 +37,7 @@ export default function Input() {
         console.log(data.data);
       });
   }, []);
+  */
 
   return (
     <div className="min-h-[100vh] bg-white w-full pb-8">
@@ -43,22 +49,43 @@ export default function Input() {
 
       <div className="flex flex-col items-center gap-8 mt-8">
         {tweetData?.map((tweet) => {
+          if (current_user == -1) {
+            for (var i in alluser) {
+              if (alluser[i].userId == session.user.userId) {
+                current_user = alluser[i];
+                break;
+              }
+            }
+          }
+
           var uid = tweet.userID;
-          var creator = { iconURL: "", username: "", userId: 0 };
+          var creator = -1;
+
           for (var i in alluser) {
             if (alluser[i]._id == uid) {
               creator = alluser[i];
-              break;
+            }
+            break;
+          }
+
+          if (current_user != -1) {
+            if (
+              tweet.visibility == 0 ||
+              (tweet.visibility == 1 &&
+                current_user.followinglist.includes(creator._id)) ||
+              (tweet.visibility >= 1 && session.user.userId == creator.userId)
+            ) {
+              //tweet.iconURL = creator.iconURL;
+              tweet.userName = creator.username;
+              tweet.userCustomizeID = creator.userId;
+              tweet.tweetContent = tweet.content;
+              tweet.postDateTime = tweet.date;
+              tweet.numOfComments = tweet.comments.length;
+              tweet.numOfLikes = tweet.likers.length;
+              console.log(tweet.content, creator);
+              return <Tweet tweet={tweet} key={tweet.tweetID} />;
             }
           }
-          //tweet.iconURL = creator.iconURL;
-          tweet.userName = creator.username;
-          tweet.userCustomizeID = creator.userId;
-          tweet.tweetContent = tweet.content;
-          tweet.postDateTime = tweet.date;
-          tweet.numOfComments = tweet.comments.length;
-          tweet.numOfLikes = tweet.likers.length;
-          return <Tweet tweet={tweet} key={tweet.tweetID} />;
         })}
       </div>
     </div>

@@ -13,18 +13,20 @@ const UserSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true,
   },
   userId: {
     type: String,
-    unique: true,
   },
   faculty: {
     type: String,
   },
+  verified: {
+    type: Boolean,
+    require: true,
+    default: false,
+  },
   year: {
     type: Number,
-    required: true,
   },
   createdDate: {
     type: Date,

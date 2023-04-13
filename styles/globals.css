@@ -18,11 +18,9 @@
     }
 }
 
-/* :root {
-    --purple: rgb(123, 31, 162);
-    --violet: rgb(103, 58, 183);
-    --pink: rgb(244, 143, 177);
-} */
+body {
+    -webkit-overflow-scrolling: touch;
+}
 
 .shining_word {
     background: linear-gradient(
@@ -51,7 +49,7 @@
     z-index: 999;
 }
 .tweetDialog {
-    transition: all 5s ease-in-out;
+    /* transition: all 5s ease-in-out; */
 }
   
 

@@ -73,36 +73,6 @@ export default function Chat(props) {
       });
   }, [session, props]);
 
-  // replaced by session above (identify current user)
-  //   useEffect(async () => {
-  //     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-  //       navigate("/login");
-  //     } else {
-  //       setCurrentUser(
-  //         await JSON.parse(
-  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //         )
-  //       );
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (currentUser) {
-  //       socket.current = io("http://localhost:3001");
-  //       socket.current.emit("add-user", currentUser._id);
-  //     }
-  //   }, [currentUser]);
-
-  //   useEffect(async () => {
-  //     if (currentUser) {
-  //       if (currentUser.isAvatarImageSet) {
-  //         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-  //         setContacts(data.data);
-  //       } else {
-  //         navigate("/setAvatar");
-  //       }
-  //     }
-  //   }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
     console.log("in chatv2", chat);
@@ -118,21 +88,16 @@ export default function Chat(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="flex h-screen max-w-6xl mx-auto w-full">
+        <main className="flex max-h-screen h-full max-w-6xl mx-auto w-full gap-0 md:gap-12 overflow-y-hidden">
           <Sidebar user={session.user} />
 
-          <div className="bg-green-200 w-full h-full">
-            <div className="bg-white flex my-8 mx-12 rounded-md  max-h-[90%] h-full">
+          <div className="w-full grid grid-cols-7 my-auto mr-4 md:mx-12 rounded-md max-h-[90vh] bg-gray-100">
+            <div className="col-span-2 h-[90vh]">
               <Contacts
                 contacts={contacts}
                 changeChat={handleChatChange}
                 viewerid={session.user.userId}
               />
-              {/* {currentChat === undefined ? (
-                  <Welcome />
-                ) : (
-                  <ChatContainer currentChat={currentChat} socket={socket} />
-                )} */}
               <ChatContainer
                 currentChat={currentChat}
                 viewer={session.user.userId}
@@ -145,23 +110,7 @@ export default function Chat(props) {
     );
   }
 
-  //   return (
-  //     <>
-  //       <div>
-  //         <div className="container">
-  //           <Contacts contacts={contacts} changeChat={handleChatChange} />
-  //           {/* {currentChat === undefined ? (
-  //             <Welcome />
-  //           ) : (
-  //             <ChatContainer currentChat={currentChat} socket={socket} />
-  //           )} */}
-  //           <ChatContainer currentChat={currentChat} socket={socket} />
-  //         </div>
-  //       </div>
-  //     </>
-  //   );
 }
-
 // const Container = styled.div`
 //   height: 100vh;
 //   width: 100vw;
