@@ -7,6 +7,7 @@ import {
   InboxIcon,
   SparklesIcon,
   BookOpenIcon,
+  UserRemoveIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { signOut } from "next-auth/react";

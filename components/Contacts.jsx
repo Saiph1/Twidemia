@@ -10,18 +10,7 @@ export default function Contacts({
   currentChat,
 }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
-  //   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-  //   useEffect(async () => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     console.log(data);
-  //     setCurrentUserName(data.username);
-  //     setCurrentUserImage(data.avatarImage);
-  //   }, []);
-
-  // console.log("contact in contacts.jsx", contacts);
   async function changeCurrentChat(index, contact) {
     const newContact = contact;
 
@@ -81,26 +70,6 @@ export default function Contacts({
                 </div>
               </div>
             ) : (
-              // <Contact_item single_userdata={contact} onClick={() => changeCurrentChat(index, contact)}/>
-
-              // Originial method:
-              // <div
-              //   key={contact._id}
-              //   className={`contact ${
-              //     index === currentSelected ? "selected" : ""
-              //   }`}
-              //   onClick={() => changeCurrentChat(index, contact)}
-              // >
-              //   <div className="avatar">
-              //     <img
-              //     //   src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-              //       alt=""
-              //     />
-              //   </div>
-              //   <div className="username">
-              //     <h3>{contact.username}</h3>
-              //   </div>
-              //   </div>
               <></>
             );
           })}

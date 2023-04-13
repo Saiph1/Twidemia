@@ -73,36 +73,6 @@ export default function Chat(props) {
       });
   }, [session, props]);
 
-  // replaced by session above (identify current user)
-  //   useEffect(async () => {
-  //     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-  //       navigate("/login");
-  //     } else {
-  //       setCurrentUser(
-  //         await JSON.parse(
-  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //         )
-  //       );
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (currentUser) {
-  //       socket.current = io("http://localhost:3001");
-  //       socket.current.emit("add-user", currentUser._id);
-  //     }
-  //   }, [currentUser]);
-
-  //   useEffect(async () => {
-  //     if (currentUser) {
-  //       if (currentUser.isAvatarImageSet) {
-  //         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-  //         setContacts(data.data);
-  //       } else {
-  //         navigate("/setAvatar");
-  //       }
-  //     }
-  //   }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
     console.log("in chatv2", chat);
@@ -142,22 +112,6 @@ export default function Chat(props) {
       </>
     );
   }
-
-  //   return (
-  //     <>
-  //       <div>
-  //         <div className="container">
-  //           <Contacts contacts={contacts} changeChat={handleChatChange} />
-  //           {/* {currentChat === undefined ? (
-  //             <Welcome />
-  //           ) : (
-  //             <ChatContainer currentChat={currentChat} socket={socket} />
-  //           )} */}
-  //           <ChatContainer currentChat={currentChat} socket={socket} />
-  //         </div>
-  //       </div>
-  //     </>
-  //   );
 }
 
 // const Container = styled.div`

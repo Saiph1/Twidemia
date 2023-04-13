@@ -9,6 +9,15 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
+    case "DELETE":
+      try {
+        await User.deleteOne({ userId: req.query.userid });
+        res.status(200).json({ success: true });
+      } catch (error) {
+        res.status(400).json({ success: false });
+      }
+
+      break;
     case "GET":
       try {
         const users = await User.findOne({ userId: req.query.userid }).populate(
@@ -26,13 +35,10 @@ export default async function handler(req, res) {
 
     case "PUT":
       let updateUser = req.body;
-      console.log(updateUser);
       try {
         const user = await User.findOne({ userId: req.query.userid });
         // When user exist, update user info
         if (user) {
-          // console.log(user);
-
           // // Find the user in the user database first.
           // let user = await User.findOne({_id: req.query.userid});
           // if (!user) {
@@ -44,9 +50,12 @@ export default async function handler(req, res) {
           if (updateUser.username) user.username = updateUser.username;
           if (updateUser.description) user.Description = updateUser.description;
           if (updateUser.facultyValue) user.faculty = updateUser.facultyValue;
+          if (updateUser.password) user.password = updateUser.password;
+          if (updateUser.verified) user.verified = updateUser.verified;
 
           // Save and return.
-          await user.save();
+          const r = await user.save();
+          console.log(r);
           res.status(200).json(user);
         } else res.status(404).json({ error: "User not found." });
       } catch (error) {

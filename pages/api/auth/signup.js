@@ -8,7 +8,7 @@ async function handler(req, res) {
 
   const data = req.body;
 
-  const { email, password } = data;
+  const { email, password, userId, username } = data;
 
   await dbConnect();
   try {
@@ -20,11 +20,23 @@ async function handler(req, res) {
       });
       return;
     }
-    const user = new User({
+    /*
+    existUser = await User.exists({ userId: userId });
+    if (existUser) {
+      res.status(200).json({
+        user: null,
+        message: `Email registered already!`,
+      });
+      return;
+    }
+    */
+    let user = new User({
       email: email,
       password: password,
+      userId: userId,
+      username: username,
     });
-    user.save();
+    user = await user.save();
     res.status(201).json({
       user: user,
     });
