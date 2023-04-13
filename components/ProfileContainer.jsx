@@ -94,7 +94,6 @@ export default function ProfileContainer({
     // console.log(document.getElementById("name").value);
     // console.log(document.getElementById("description").value);
 
-    createPost(postImage); // for image upload
     console.log("Uploaded");
 
     updateUser();
@@ -176,23 +175,6 @@ export default function ProfileContainer({
     // .then(()=>updates_true())
   };
 
-  // post profile image
-  const createPost = async (newImage) => {
-    try {
-      await axios.post(url, newImage);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // post background image
-  const createBgPost = async (newImage) => {
-    try {
-      await axios.post(url, newImage);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -216,7 +198,6 @@ export default function ProfileContainer({
 
   const handleBgFileSubmit = (e) => {
     e.preventDefault();
-    createBgPost(postBgImage);
     console.log("Uploaded bg image");
   };
 
