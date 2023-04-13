@@ -17,7 +17,7 @@ Home.getLayout = function getLayout(page) {
   return <Layout title={"Favourite"}>{page}</Layout>;
 };
 
-export default function Home({ users, tweets }) {
+export default function Home({ users, tweets}) {
   const { status, data: session } = useSession();
 
   return (
@@ -52,7 +52,7 @@ export async function getStaticProps() {
     // Try to connect the DB.
     await dbConnect();
     const tweets = await Tweet.find();
-    const users = await User.find();
+    const users = await User.find().populate("tweetlist");
     return {
       props: {
         users: JSON.parse(JSON.stringify(users)),

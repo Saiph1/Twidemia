@@ -2,8 +2,9 @@ import Link from "next/link";
 import React from "react";
 import { useSession } from "next-auth/react";
 
-const Tweet = ({ tweet }) => {
-  const { status, data: session } = useSession();
+const Tweet = ({ tweet, viewer}) => {
+  const [retweet, setretweet] = React.useState(viewer.tweetlist.map((item) => {return item.tweetID === tweet.tweetID})
+            .includes(true));
 
   function calculatePostedTime(time) {
     const postTime = new Date(time).getTime() / 1000
@@ -34,6 +35,24 @@ const Tweet = ({ tweet }) => {
         liker: uid
       }),
     });
+  }
+  function handle_retweet(){
+    console.log(retweet);
+    fetch("/api/tweet/"+tweet.tweetID,{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({viewer:viewer, retweet:true}),
+    }).then((res)=>res.json())
+    .then((data)=>{console.log("retweet done.");setretweet(!retweet);});
+  }
+
+  function handle_unretweet(){
+    fetch("/api/tweet/"+tweet.tweetID,{
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({viewer:viewer, retweet:false}),
+    }).then(()=>console.log("undone retweet done."))
+    .then(()=>setretweet(!retweet));
   }
 
   return (
@@ -94,7 +113,8 @@ const Tweet = ({ tweet }) => {
               viewBox="0 0 24 24"
               stroke-width="1.75"
               stroke="currentColor"
-              class="w-5 h-5 text-gray-400 hover:text-green-500"
+              onClick={()=>{if (!retweet) handle_retweet(); else handle_unretweet();}}
+              class={"w-5 h-5 hover:text-green-500"+(retweet?" text-green-400":" text-gray-400")}
             >
               <path
                 stroke-linecap="round"

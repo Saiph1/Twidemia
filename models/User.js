@@ -74,6 +74,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Image",
     },
   ],
+  tweetlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Tweet",
+    },
+  ],
 });
 
 // hash password if password is changed
