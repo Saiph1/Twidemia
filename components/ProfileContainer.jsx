@@ -19,6 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
 
 import Link from "@mui/material/Link";
+import imageCompression from "browser-image-compression";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -181,20 +182,23 @@ export default function ProfileContainer({
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     // console.log("file", file)
-    const base64 = await convertToBase64(file);
-    console.log(base64);
-    setavatar(base64);
-    setPostImage({ ...postImage, myFile: base64 });
+    // const base64 = await convertToBase64(file);
+    const compressed = await imageCompression(file, {maxSizeMB: 0.01, useWebWorker: true})
+    const compressedbase64 = await convertToBase64(compressed);
+    console.log(compressedbase64);
+    setavatar(compressedbase64);
+    setPostImage({ ...postImage, myFile: compressedbase64 });
     // console.log("postimage", postImage.myFile);
   };
 
   const handleBgFileUpload = async (e) => {
     const file = e.target.files[0];
-    // console.log("file", file)
-    const base64 = await convertToBase64(file);
-    console.log(base64);
-    setbackground(base64);
-    setPostBgImage({ ...postBgImage, myBgFile: base64 });
+    // const base64 = await convertToBase64(file);
+    const compressed = await imageCompression(file, {maxSizeMB: 0.01, useWebWorker: true})
+    const compressedbase64 = await convertToBase64(compressed);
+    console.log(compressedbase64);
+    setbackground(compressedbase64);
+    setPostBgImage({ ...postBgImage, myBgFile: compressedbase64 });
     // console.log("postimage", postImage.myFile);
   };
 
