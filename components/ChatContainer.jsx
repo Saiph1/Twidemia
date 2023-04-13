@@ -18,12 +18,14 @@ export default function ChatContainer({ currentChat, viewer="", session }) {
 
   let socket=io();
   useEffect(() => {
+    
     socketInitializer();
     // setupdate_done(true);
   }, [])
   
   const socketInitializer = async () => {
     await fetch('/api/socket');
+    setMessages([]);
     console.log(viewer);
     console.log(currentChat.userId);
     socket.on('connect', () => {
@@ -31,13 +33,13 @@ export default function ChatContainer({ currentChat, viewer="", session }) {
     })
 
     socket.on('update-input', msg => {
-      setMessages((prevMessages)=>[...prevMessages, msg]);
       console.log(messages);
     })
   }
 
   useEffect(()=>{
-    setload(false);
+    // setload(false);
+    // setMessages([]);
     fetch("/api/Chat/"+viewer+"/"+currentChat.userId)
     .then((res)=>res.json())
     .then((data)=>{
@@ -80,6 +82,7 @@ export default function ChatContainer({ currentChat, viewer="", session }) {
         body: JSON.stringify({content: msg})
     }).then((obj)=>obj.json())
     .then((data)=>{console.log("post done."); console.log(data);})
+      setMessages((prevMessages)=>[...prevMessages, msg+"(from ID=@"+session.user.userId+")"]);
       socket.emit('input-change', msg+"(from ID=@"+session.user.userId+")");
     };
 //   const handleSendMsg = async (msg) => {

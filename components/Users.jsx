@@ -132,7 +132,7 @@ export default function Users({ users }) {
         />
       </div>
 
-      <div className="flex flex-col items-center mt-8 [&>*:nth-child(odd)]:bg-gray-100 rounded-2xl overflow-hidden w-[90%] mx-auto">
+      <div className="flex flex-col items-center mt-8 [&>*:nth-child(odd)]:bg-gray-100 rounded-2xl overflow-hidden w-[90%] mx-auto pb-8">
         <div className="border bg-white flex w-full gap-4 py-6 px-3 hover:bg-gray-200">
           <div className="w-full items-center">
             <div className="grid grid-cols-[1fr_3fr_2fr_2fr_2fr] gap-2 items-center justify-center">
