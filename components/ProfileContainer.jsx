@@ -532,14 +532,14 @@ export default function ProfileContainer({
                     <div className="mt-4">
 
                       {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
-                      <FollowerListItem followed={false}/>
-                      <FollowerListItem followed={true}/> 
+                      {/* <FollowerListItem />
+                      <FollowerListItem />  */}
 
-                      {/* {user.followerlist.map((file, index) => (
+                      {user.followerlist.map((file, index) => (
                           <div key={user.followerlist[index].userId}>
-                              <div>
+                              {/* <div>
                                   <img src="123" alt="user-icon" />
-                              </div>
+                              </div> */}
                               <div>
                                 <span>
                                   {user.followerlist[index].username}
@@ -549,7 +549,7 @@ export default function ProfileContainer({
                                 </span>
                               </div>
                           </div>
-                      ))} */}
+                      ))}
                     </div>
                 </div>
             </div>
@@ -563,8 +563,24 @@ export default function ProfileContainer({
                 <div className="mt-4">
 
                   {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
-                  <FollowerListItem followed={false}/>
-                  <FollowerListItem followed={true}/> 
+                  {/* <FollowerListItem followed={false}/>
+                  <FollowerListItem followed={true}/>  */}
+
+                  {user.followinglist.map((file, index) => (
+                          <div key={user.followinglist[index].userId}>
+                              {/* <div>
+                                  <img src="123" alt="user-icon" />
+                              </div> */}
+                              <div>
+                                <span>
+                                  {user.followinglist[index].username}
+                                </span>
+                                <span>
+                                  {"@" + user.followinglist[index].userId}
+                                </span>
+                              </div>
+                          </div>
+                      ))}
                 </div>
                </div> 
             </div>

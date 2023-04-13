@@ -66,6 +66,7 @@ export default function Input({ users, tweets }) {
               tweet.numOfComments = tweet.comments.length;
               tweet.numOfLikes = tweet.likers?.length;
               tweet.tweetID = tweet.tweetID;
+              tweet.userId = tweet.userId;
               console.log(tweet.content,creator)
               return <Tweet tweet={tweet} key={tweet.tweetID} viewer={current_user} />;
             }
