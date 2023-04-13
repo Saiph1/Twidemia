@@ -18,6 +18,7 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
+      // Post tweet
     case "POST":
       try {
         var body = JSON.parse(req.body);
@@ -32,13 +33,16 @@ export default async function handler(req, res) {
           likers: [],
           comments: [],
         });
+        
         tweet.save();
+        creator.tweetlist.addToSet(tweet._id); 
+        creator.save(); 
         res.status(201).json({ success: true, data: tweet });
       } catch (error) {
         res.status(400).json({ success: false });
       }
       break;
-
+      
     default:
       res.status(400).json({ success: false });
       break;
