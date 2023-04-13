@@ -8,6 +8,7 @@ import ProfileContainer from "@/components/ProfileContainer";
 import { useSession, signIn } from "next-auth/react";
 import Slider from "@mui/material/Slider";
 import dbConnect from "../../lib/dbConnect";
+import Tweet_profile from "@/components/Tweet/Tweet_profile";
 
 export default function Home(props) {
   const { status, data: session } = useSession({
@@ -42,6 +43,7 @@ export default function Home(props) {
     fetch("/api/user/" + props.id)
       .then((res) => res.json())
       .then((data) => {
+        console.log("data.data", data.data); 
         setUserdata(data.data);
         console.log(userdata);
         setfollow(
@@ -131,6 +133,11 @@ export default function Home(props) {
                   updates_true={() => updates_true()}
                   block_update={block_update}
                 />
+                <div className="py-8 flex flex-col items-center gap-4 bg-white">
+                  {userdata.tweetlist?.map((item)=><Tweet_profile tweet={item} 
+                    viewer={props.id}
+                  />)}
+                </div>
               </div>
               <Widgets
                 update_page={updates}

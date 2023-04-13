@@ -26,7 +26,8 @@ export default async function handler(req, res) {
           .populate("followinglist")
           .populate("blocklist")
           .populate("avatar")
-          .populate("background");
+          .populate("background")
+          .populate([{ path: "tweetlist", populate: { path: "userID" } }]);
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         res.status(400).json({ success: false });

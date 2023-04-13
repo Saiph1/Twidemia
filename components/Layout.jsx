@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
             <div className="col-span-4 lg:col-span-3 border-x-[1px]">
               {children}
             </div>
-            <Widgets user={session?.user} />
+            <Widgets user={session?.user.userId} />
             {/* <Widgets /> */}
           </div>
         </div>
