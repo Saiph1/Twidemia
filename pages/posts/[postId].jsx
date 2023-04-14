@@ -237,7 +237,7 @@ if (session) {
         </div>
 
         {/* comments */}
-        {tweetInfo?.comments?.map((comment) => {
+        {tweetInfo?.comments?.map((comment, index) => {
             // console.log("logged comment", tweetInfo.comments);
             // let tmp = []; 
             // tmp.push(tweetInfo.comments[index]);
@@ -246,7 +246,7 @@ if (session) {
             // console.log(comment.content1)
             // comment.author1 = comment.author.userId;
             // comment.postDateTime1 = toString(comment.postDateTime); 
-            return (<Comment content={comment[0]} author={comment[1]} postDateTime={comment[2]}/>);
+            return (<Comment content={comment[0]} author={comment[1]} postDateTime={comment[2]} key={index}/>);
             // return <Comment comment={comment} key={comment._id} />;
           })}
 

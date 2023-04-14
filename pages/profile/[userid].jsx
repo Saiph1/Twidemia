@@ -134,8 +134,8 @@ export default function Home(props) {
                   block_update={block_update}
                 />
                 <div className="py-8 flex flex-col items-center gap-4 bg-white">
-                  {userdata.tweetlist?.map((item)=><Tweet_profile tweet={item} 
-                    viewerid={props.id}
+                  {userdata.tweetlist?.map((item, index)=><Tweet_profile tweet={item} 
+                    viewerid={props.id} key={index}
                   />)}
                 </div>
               </div>
