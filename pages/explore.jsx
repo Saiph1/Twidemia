@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 import ExploreHeader from "@/components/Explore/ExploreHeader";
 import Layout from "@/components/Layout";
 import dbConnect from "@/lib/dbConnect";
-import User from "../models/User"
-import Tweet from "../models/Tweet"
+import User from "../models/User";
+import Tweet from "../models/Tweet";
 
 Explore.getLayout = function getLayout(page) {
   return <Layout title={"Favourite"}>{page}</Layout>;
@@ -22,36 +22,40 @@ export async function getServerSideProps() {
   try {
     await dbConnect();
     const tweets = await Tweet.find();
-    const users = await User.find(); 
+    const users = await User.find();
     return {
       props: {
         tweets: JSON.parse(JSON.stringify(tweets)),
         users: JSON.parse(JSON.stringify(users)),
-      }
-    }
+      },
+    };
   } catch (error) {
     console.error(error.message);
   }
 }
 
 function calculatePostedTime(time) {
-    const postTime = new Date(time).getTime() / 1000
-    const currentTime = new Date().getTime() / 1000
-    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
-    if(timeDifferenceInMinute > (60*24*30*12)) { // year
-      return Math.round(timeDifferenceInMinute/60/24/30/12) + "yr"
-    } else if(timeDifferenceInMinute > (60*24*30)) { // month
-      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
-    } else if (timeDifferenceInMinute > (60*24)) { // day
-      return Math.round(timeDifferenceInMinute/60/24) + "day"
-    } else if (timeDifferenceInMinute > 60) { // hour
-      return Math.round(timeDifferenceInMinute/60) + "hr"
-    } else if (timeDifferenceInMinute < 1) {
-      return 'just now'
-    } else {
-      return timeDifferenceInMinute + "min"
-    } 
+  const postTime = new Date(time).getTime() / 1000;
+  const currentTime = new Date().getTime() / 1000;
+  const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60);
+  if (timeDifferenceInMinute > 60 * 24 * 30 * 12) {
+    // year
+    return Math.round(timeDifferenceInMinute / 60 / 24 / 30 / 12) + "yr";
+  } else if (timeDifferenceInMinute > 60 * 24 * 30) {
+    // month
+    return Math.round(timeDifferenceInMinute / 60 / 24 / 30) + "mo";
+  } else if (timeDifferenceInMinute > 60 * 24) {
+    // day
+    return Math.round(timeDifferenceInMinute / 60 / 24) + "day";
+  } else if (timeDifferenceInMinute > 60) {
+    // hour
+    return Math.round(timeDifferenceInMinute / 60) + "hr";
+  } else if (timeDifferenceInMinute < 1) {
+    return "just now";
+  } else {
+    return timeDifferenceInMinute + "min";
   }
+}
 
 export default function Explore({ users, tweets }) {
   const { status, data: session } = useSession();
@@ -68,36 +72,30 @@ export default function Explore({ users, tweets }) {
     }
   }
 
-
-  if (sortBy == "topRated"){
-    tweets.sort(function(a,b){
-      if (a.likers.length == b.likers.length){
+  if (sortBy == "topRated") {
+    tweets.sort(function (a, b) {
+      if (a.likers.length == b.likers.length) {
         return new Date(b.date) - new Date(a.date);
-      }
-      else{
+      } else {
         return b.likers.length - a.likers.length;
       }
-    })
-  }
-  else if (sortBy == "recent"){
-    tweets.sort(function(a,b){
+    });
+  } else if (sortBy == "recent") {
+    tweets.sort(function (a, b) {
       return new Date(b.date) - new Date(a.date);
-    })
-  }
-  else if (sortBy == "popular"){
-    let now = Date.now()
-    tweets.sort(function(a,b){
-      let ad = now - new Date(a.date).getTime()
-      let bd = now - new Date(b.date).getTime()
-      if (a.likers.length == 0 && b.likers.length == 0){
-        return ad - bd
+    });
+  } else if (sortBy == "popular") {
+    let now = Date.now();
+    tweets.sort(function (a, b) {
+      let ad = now - new Date(a.date).getTime();
+      let bd = now - new Date(b.date).getTime();
+      if (a.likers.length == 0 && b.likers.length == 0) {
+        return ad - bd;
+      } else {
+        return b.likers.length * ad - a.likers.length * bd;
       }
-      else {
-        return (b.likers.length*ad - a.likers.length*bd);
-      }
-    })
+    });
   }
-
 
   return (
     <>
@@ -113,12 +111,11 @@ export default function Explore({ users, tweets }) {
 
         {/*ExploreContainer ?*/}
         <div className="border-gray-200 flex-grow w-full">
-          <ExploreHeader sortBy={sortBy} setSortBy={setSortBy}/>
+          <ExploreHeader sortBy={sortBy} setSortBy={setSortBy} />
 
           {/* delete later !! all comments */}
           <div className="py-8 flex flex-col items-center gap-4 bg-white">
             {tweets?.map((tweet) => {
-
               var uid = tweet.userID;
               var creator = -1;
 
@@ -129,21 +126,27 @@ export default function Explore({ users, tweets }) {
                 }
               }
 
-              if (tweet.visibility == 0 ||
-                  tweet.visibility == 1 &&
-                  current_user.followinglist.includes(creator._id) ||
-                  tweet.visibility >= 1 && session.user.userId == creator.userId) {
-                return <ExploreTweet tweet={tweet} key={tweet.tweetID}
-                  imageURL={
-                    "https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"
-                  }
-                  name={creator.username}
-                  userTag={creator.userId}
-                  time={calculatePostedTime(new Date(tweet.date))}
-                  content={tweet.content}
-                  commentNum={tweet.comments.length}
-                  likes={tweet.likers.length}
-                />                
+              if (
+                tweet.visibility == 0 ||
+                (tweet.visibility == 1 &&
+                  current_user.followinglist.includes(creator._id)) ||
+                (tweet.visibility >= 1 && session.user.userId == creator.userId)
+              ) {
+                return (
+                  <ExploreTweet
+                    tweet={tweet}
+                    key={tweet.tweetID}
+                    imageURL={
+                      "https://croucher.org.hk/wp-content/uploads/2011/07/Lyu-R-Michael-e1310028295489.jpg"
+                    }
+                    name={creator.username}
+                    userTag={creator.userId}
+                    time={calculatePostedTime(new Date(tweet.date))}
+                    content={tweet.content}
+                    commentNum={tweet.comments.length}
+                    likes={tweet.likers.length}
+                  />
+                );
               }
             })}
           </div>
@@ -156,4 +159,3 @@ export default function Explore({ users, tweets }) {
 }
 
 Explore.verify = true;
-

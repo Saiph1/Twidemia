@@ -1,22 +1,24 @@
 import React from "react";
 
-const Comment = ({  content, author, postDateTime }) => {
-  
+const Comment = ({ content, author, postDateTime }) => {
   function calculatePostedTime(time) {
-    const postTime = new Date(time).getTime() / 1000
-    const currentTime = new Date().getTime() / 1000
-    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
-    if(timeDifferenceInMinute > (60*24*30)) { // month
-      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
-    } else if (timeDifferenceInMinute > (60*24)) { // day
-      return Math.round(timeDifferenceInMinute/60/24) + "day"
-    } else if (timeDifferenceInMinute > 60) { // hour
-      return Math.round(timeDifferenceInMinute/60) + "hr"
+    const postTime = new Date(time).getTime() / 1000;
+    const currentTime = new Date().getTime() / 1000;
+    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60);
+    if (timeDifferenceInMinute > 60 * 24 * 30) {
+      // month
+      return Math.round(timeDifferenceInMinute / 60 / 24 / 30) + "mo";
+    } else if (timeDifferenceInMinute > 60 * 24) {
+      // day
+      return Math.round(timeDifferenceInMinute / 60 / 24) + "day";
+    } else if (timeDifferenceInMinute > 60) {
+      // hour
+      return Math.round(timeDifferenceInMinute / 60) + "hr";
     } else if (timeDifferenceInMinute < 1) {
-      return 'just now'
+      return "just now";
     } else {
-      return timeDifferenceInMinute + "min"
-    } 
+      return timeDifferenceInMinute + "min";
+    }
   }
 
   return (

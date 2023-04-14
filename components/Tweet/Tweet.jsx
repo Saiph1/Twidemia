@@ -4,62 +4,76 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const Tweet = ({ tweet, viewer }) => {
-  const [retweet, setretweet] = React.useState(viewer.tweetlist.map((item) => {return item.tweetID === tweet.tweetID})
-            .includes(true));
-  const  { status, data: session } = useSession();
-  const router = useRouter()
+  const [retweet, setretweet] = React.useState(
+    viewer.tweetlist
+      .map((item) => {
+        return item.tweetID === tweet.tweetID;
+      })
+      .includes(true)
+  );
+  const { status, data: session } = useSession();
+  const router = useRouter();
 
   function calculatePostedTime(time) {
-    const postTime = new Date(time).getTime() / 1000
-    const currentTime = new Date().getTime() / 1000
-    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
-    if(timeDifferenceInMinute > (60*24*30*12)) { // year
-      return Math.round(timeDifferenceInMinute/60/24/30/12) + "yr"
-    } else if(timeDifferenceInMinute > (60*24*30)) { // month
-      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
-    } else if (timeDifferenceInMinute > (60*24)) { // day
-      return Math.round(timeDifferenceInMinute/60/24) + "day"
-    } else if (timeDifferenceInMinute > 60) { // hour
-      return Math.round(timeDifferenceInMinute/60) + "hr"
+    const postTime = new Date(time).getTime() / 1000;
+    const currentTime = new Date().getTime() / 1000;
+    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60);
+    if (timeDifferenceInMinute > 60 * 24 * 30 * 12) {
+      // year
+      return Math.round(timeDifferenceInMinute / 60 / 24 / 30 / 12) + "yr";
+    } else if (timeDifferenceInMinute > 60 * 24 * 30) {
+      // month
+      return Math.round(timeDifferenceInMinute / 60 / 24 / 30) + "mo";
+    } else if (timeDifferenceInMinute > 60 * 24) {
+      // day
+      return Math.round(timeDifferenceInMinute / 60 / 24) + "day";
+    } else if (timeDifferenceInMinute > 60) {
+      // hour
+      return Math.round(timeDifferenceInMinute / 60) + "hr";
     } else if (timeDifferenceInMinute < 1) {
-      return 'just now'
+      return "just now";
     } else {
-      return timeDifferenceInMinute + "min"
-    } 
+      return timeDifferenceInMinute + "min";
+    }
   }
 
   async function giveLike() {
-    var uid = session.user.userId
-    console.log(tweet.tweetID)
+    var uid = session.user.userId;
+    console.log(tweet.tweetID);
     await fetch("/api/tweet/" + tweet.tweetID, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         tweetID: tweet.tweetID,
-        liker: uid
+        liker: uid,
       }),
     }).then(() => {
-      router.replace(router.asPath)
-    })
+      router.replace(router.asPath);
+    });
   }
 
-  function handle_retweet(){
+  function handle_retweet() {
     console.log(retweet);
-    fetch("/api/tweet/"+tweet.tweetID,{
+    fetch("/api/tweet/" + tweet.tweetID, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({viewer:viewer, retweet:true}),
-    }).then((res)=>res.json())
-    .then((data)=>{console.log("retweet done.");setretweet(!retweet);});
+      body: JSON.stringify({ viewer: viewer, retweet: true }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("retweet done.");
+        setretweet(!retweet);
+      });
   }
 
-  function handle_unretweet(){
-    fetch("/api/tweet/"+tweet.tweetID,{
+  function handle_unretweet() {
+    fetch("/api/tweet/" + tweet.tweetID, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({viewer:viewer, retweet:false}),
-    }).then(()=>console.log("undone retweet done."))
-    .then(()=>setretweet(!retweet));
+      body: JSON.stringify({ viewer: viewer, retweet: false }),
+    })
+      .then(() => console.log("undone retweet done."))
+      .then(() => setretweet(!retweet));
   }
 
   return (
@@ -82,7 +96,9 @@ const Tweet = ({ tweet, viewer }) => {
             <h5 className="font-bold">{tweet.userName}</h5>
             <small className="text-gray-400">@{tweet.userCustomizeID}</small>
           </div>
-          <p className="text-gray-500 text-[12px]">{calculatePostedTime(tweet.postDateTime)}</p>
+          <p className="text-gray-500 text-[12px]">
+            {calculatePostedTime(tweet.postDateTime)}
+          </p>
         </div>
 
         {/* This part is tweet content */}
@@ -120,8 +136,14 @@ const Tweet = ({ tweet, viewer }) => {
               viewBox="0 0 24 24"
               stroke-width="1.75"
               stroke="currentColor"
-              onClick={()=>{if (!retweet) handle_retweet(); else handle_unretweet();}}
-              class={"w-5 h-5 hover:text-green-500"+(retweet?" text-green-400":" text-gray-400")}
+              onClick={() => {
+                if (!retweet) handle_retweet();
+                else handle_unretweet();
+              }}
+              class={
+                "w-5 h-5 hover:text-green-500" +
+                (retweet ? " text-green-400" : " text-gray-400")
+              }
             >
               <path
                 stroke-linecap="round"
@@ -134,9 +156,13 @@ const Tweet = ({ tweet, viewer }) => {
           <label className="cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={tweet.likers?.includes(session.user.userId)? '#FE8E86' : 'none'}
+              fill={
+                tweet.likers?.includes(session.user.userId) ? "#FE8E86" : "none"
+              }
               viewBox="0 0 24 24"
-              stroke-width={tweet.likers?.includes(session.user.userId)? '0' : '1.75'}
+              stroke-width={
+                tweet.likers?.includes(session.user.userId) ? "0" : "1.75"
+              }
               stroke="currentColor"
               class="w-5 h-5 "
             >
@@ -146,7 +172,9 @@ const Tweet = ({ tweet, viewer }) => {
                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
               />
             </svg>
-            <button onClick={giveLike} className="text-[14px] ">{tweet.numOfLikes}</button>
+            <button onClick={giveLike} className="text-[14px] ">
+              {tweet.numOfLikes}
+            </button>
           </label>
         </div>
       </div>

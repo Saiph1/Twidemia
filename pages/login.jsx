@@ -51,7 +51,11 @@ export default function Login({ csrfToken, error, providers }) {
       </Head>
 
       <main class="" id="login_container">
-        <section className={`${Dark? 'dark-fancy-background' : 'light-fancy-background'} min-h-[100vh]`}>
+        <section
+          className={`${
+            Dark ? "dark-fancy-background" : "light-fancy-background"
+          } min-h-[100vh]`}
+        >
           <button
             onClick={() => {
               setDark(!Dark);
@@ -156,10 +160,7 @@ export default function Login({ csrfToken, error, providers }) {
                     />
                   </div>
                   {errorMessage ? (
-                    <div className="text-red-500">
-                      {" "}
-                      Error : {errorMessage}
-                    </div>
+                    <div className="text-red-500"> Error : {errorMessage}</div>
                   ) : (
                     ""
                   )}

@@ -198,27 +198,29 @@ export default function Verify({ qtoken }) {
                       )}
                     </div>
                     {session?.user ? (
-                    <div class="flex items-center justify-center flex-col">
-                      <button
-                        type="button"
-                        formNoValidate
-                        onClick={() => resentToken()}
-                        class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
-                      >
-                        Did not receive? Click to resend token
-                      </button>
-                      <button
-                        type="button"
-                        formNoValidate
-                        onClick={() => signOut()}
-                        class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
-                      >
-                        Currently login as {session.user.username}.
-                        <br />
-                        Click to change account.
-                      </button>
-                    </div>
-                    ) : ""}
+                      <div class="flex items-center justify-center flex-col">
+                        <button
+                          type="button"
+                          formNoValidate
+                          onClick={() => resentToken()}
+                          class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
+                        >
+                          Did not receive? Click to resend token
+                        </button>
+                        <button
+                          type="button"
+                          formNoValidate
+                          onClick={() => signOut()}
+                          class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-800 dark:text-white text-center"
+                        >
+                          Currently login as {session.user.username}.
+                          <br />
+                          Click to change account.
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <button
                       type="submit"
                       class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"

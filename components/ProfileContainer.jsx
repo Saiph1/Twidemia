@@ -90,7 +90,6 @@ export default function ProfileContainer({
     setPostImage({ myFile: "" });
     setPostBgImage({ myFile: "" });
     setOpen(false);
-    
   };
 
   const handleDoneClose = () => {
@@ -104,7 +103,7 @@ export default function ProfileContainer({
     console.log("Uploaded");
     updateUser();
     editupdate();
-    location.reload()
+    location.reload();
     setOpen(false);
   };
 
@@ -182,12 +181,14 @@ export default function ProfileContainer({
     // .then(()=>updates_true())
   };
 
-
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     // console.log("file", file)
     // const base64 = await convertToBase64(file);
-    const compressed = await imageCompression(file, {maxSizeMB: 0.01, useWebWorker: true})
+    const compressed = await imageCompression(file, {
+      maxSizeMB: 0.01,
+      useWebWorker: true,
+    });
     const compressedbase64 = await convertToBase64(compressed);
     console.log(compressedbase64);
     setavatar(compressedbase64);
@@ -198,7 +199,10 @@ export default function ProfileContainer({
   const handleBgFileUpload = async (e) => {
     const file = e.target.files[0];
     // const base64 = await convertToBase64(file);
-    const compressed = await imageCompression(file, {maxSizeMB: 0.01, useWebWorker: true})
+    const compressed = await imageCompression(file, {
+      maxSizeMB: 0.01,
+      useWebWorker: true,
+    });
     const compressedbase64 = await convertToBase64(compressed);
     console.log(compressedbase64);
     setbackground(compressedbase64);
@@ -527,66 +531,74 @@ export default function ProfileContainer({
           </Dialog>
 
           <div>
-            <div className={`tweetOverlay ${follower? 'visible opacity-100': 'hidden opacity-0'}`}>
-                <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[40%] mx-auto mt-20 relative">
-                    <div className="relative border-b-[1px] border-neutral-300 flex justify-center">
-                      <p className="py-3 text-lg font-[500]">Follower</p>
-                      <span className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer " onClick={() => setFollowerOpen(false)}>&times;</span>
-                    </div>
-                    <div className="mt-4">
-
-                      {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
-                      {/* <FollowerListItem />
+            <div
+              className={`tweetOverlay ${
+                follower ? "visible opacity-100" : "hidden opacity-0"
+              }`}
+            >
+              <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[40%] mx-auto mt-20 relative">
+                <div className="relative border-b-[1px] border-neutral-300 flex justify-center">
+                  <p className="py-3 text-lg font-[500]">Follower</p>
+                  <span
+                    className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer "
+                    onClick={() => setFollowerOpen(false)}
+                  >
+                    &times;
+                  </span>
+                </div>
+                <div className="mt-4">
+                  {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
+                  {/* <FollowerListItem />
                       <FollowerListItem />  */}
 
-                      {user.followerlist.map((file, index) => (
-                          <div key={user.followerlist[index].userId}>
-                              {/* <div>
+                  {user.followerlist.map((file, index) => (
+                    <div key={user.followerlist[index].userId}>
+                      {/* <div>
                                   <img src="123" alt="user-icon" />
                               </div> */}
-                              <div>
-                                <span>
-                                  {user.followerlist[index].username}
-                                </span>
-                                <span>
-                                  {"@" + user.followerlist[index].userId}
-                                </span>
-                              </div>
-                          </div>
-                      ))}
+                      <div>
+                        <span>{user.followerlist[index].username}</span>
+                        <span>{"@" + user.followerlist[index].userId}</span>
+                      </div>
                     </div>
+                  ))}
                 </div>
+              </div>
             </div>
 
-            <div className={`tweetOverlay ${following? 'visible opacity-100': 'hidden opacity-0'}`}>
+            <div
+              className={`tweetOverlay ${
+                following ? "visible opacity-100" : "hidden opacity-0"
+              }`}
+            >
               <div class="tweetDialog bg-gray-100 rounded-md px-4 pb-4 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[40%] mx-auto mt-20 relative">
                 <div className="relative border-b-[1px] border-neutral-300 flex justify-center">
                   <p className="py-3 text-lg font-[500]">Following</p>
-                  <span className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer " onClick={() => setFollowingOpen(false)}>&times;</span>
+                  <span
+                    className="absolute right-0 top-0 font-[300] text-gray-600 text-[32px] w-fit  cursor-pointer "
+                    onClick={() => setFollowingOpen(false)}
+                  >
+                    &times;
+                  </span>
                 </div>
                 <div className="mt-4">
-
                   {/* @Jen, map the followerlist with this component, but I haven't set and props inside */}
                   {/* <FollowerListItem followed={false}/>
                   <FollowerListItem followed={true}/>  */}
 
                   {user.followinglist.map((file, index) => (
-                          <div key={user.followinglist[index].userId}>
-                              {/* <div>
+                    <div key={user.followinglist[index].userId}>
+                      {/* <div>
                                   <img src="123" alt="user-icon" />
                               </div> */}
-                              <div>
-                                <span>
-                                  {user.followinglist[index].username}
-                                </span>
-                                <span>
-                                  {"@" + user.followinglist[index].userId}
-                                </span>
-                              </div>
-                          </div>
-                      ))}
+                      <div>
+                        <span>{user.followinglist[index].username}</span>
+                        <span>{"@" + user.followinglist[index].userId}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-               </div> 
+              </div>
             </div>
           </div>
         </div>

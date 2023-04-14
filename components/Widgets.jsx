@@ -6,12 +6,12 @@ import { UserContext } from "@/pages/_app";
 export default function Widgets({ user, update_page }) {
   // const [alluser, setalluser] = useState();
   const alluser = useContext(UserContext);
-  const [load, setload] = useState(alluser!=[]?true:false);
+  const [load, setload] = useState(alluser != [] ? true : false);
   const [focus, setFocus] = useState(false);
   const [searchUserList, setSearchUserList] = useState([]);
   const [filteredList, setFilteredList] = new useState([]);
 
-  console.log(alluser)
+  console.log(alluser);
   useEffect(() => {
     setload(true);
   }, [alluser]);
@@ -118,7 +118,7 @@ export default function Widgets({ user, update_page }) {
         <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl ">
           <h4 className="font-bold text-xl px-4">Who to follow</h4>
           {alluser.map((file, index) =>
-            (alluser[index].userId != user)&&(index<4) ? (
+            alluser[index].userId != user && index < 4 ? (
               <Widgets_item
                 key={index}
                 update_page={update_page}

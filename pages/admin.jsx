@@ -6,7 +6,7 @@ import Widgets from "@/components/Widgets";
 import Sidebar from "@/components/Sidebar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import {useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { UserContext } from "@/pages/_app";
 
 export default function Admin({ users: usersProp }) {
@@ -62,10 +62,10 @@ export async function getStaticProps() {
     await dbConnect();
     // const users = await User.find({});
     return {
-      props: { 
+      props: {
         // dbConnect
         // users: JSON.parse(JSON.stringify(users)) },
-      }
+      },
     };
   } catch (e) {
     // If it cannot connect to DB, output log to console by using error flag.

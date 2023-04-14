@@ -15,33 +15,33 @@ export default function App({
   const [check, setCheck] = useState(1);
 
   async function fetchData() {
-      if (users.length) {
-        fetch("/api/user/")
-          .then((res) => res.json())
-          .then((data) => {
-            setUsers(data.data);
-            // console.log("fetched all user.");
-          })
-      } else {
-        fetch("/api/user?fast=1")
-          .then((res) => res.json())
-          .then((data) => {
-            setUsers(data.data);
-            // console.log("fast fetched all user.");
-          })
-        fetch("/api/user/")
-          .then((res) => res.json())
-          .then((data) => {
-            setUsers(data.data);
-            // console.log("fetched all user.");
-          })
-      }
-      fetch("/api/tweet/")
+    if (users.length) {
+      fetch("/api/user/")
         .then((res) => res.json())
         .then((data) => {
-          setTweets(data.data);
-          // console.log("fetched all tweets.");
-        })
+          setUsers(data.data);
+          // console.log("fetched all user.");
+        });
+    } else {
+      fetch("/api/user?fast=1")
+        .then((res) => res.json())
+        .then((data) => {
+          setUsers(data.data);
+          // console.log("fast fetched all user.");
+        });
+      fetch("/api/user/")
+        .then((res) => res.json())
+        .then((data) => {
+          setUsers(data.data);
+          // console.log("fetched all user.");
+        });
+    }
+    fetch("/api/tweet/")
+      .then((res) => res.json())
+      .then((data) => {
+        setTweets(data.data);
+        // console.log("fetched all tweets.");
+      });
   }
 
   useEffect(() => {
@@ -51,8 +51,7 @@ export default function App({
       setCheck(!check);
     }, 600000); // 2 mins
     return () => clearInterval(id);
-  }, [check])
-
+  }, [check]);
 
   const getLayout = Component.getLayout || ((page) => page);
   const TweetUserLayoutComponent = (
@@ -61,44 +60,36 @@ export default function App({
         {getLayout(<Component {...pageProps} />)}
       </UserContext.Provider>
     </TweetContext.Provider>
-  )
+  );
 
   if (Component.admin) {
     return (
       <SessionProvider session={session}>
-        <Admin>
-          {TweetUserLayoutComponent}
-        </Admin>
+        <Admin>{TweetUserLayoutComponent}</Admin>
       </SessionProvider>
     );
   } else if (Component.verify) {
     return (
       <SessionProvider session={session}>
-        <Verify>
-          {TweetUserLayoutComponent}
-        </Verify>
+        <Verify>{TweetUserLayoutComponent}</Verify>
       </SessionProvider>
     );
   } else if (Component.noVerify) {
     return (
       <SessionProvider session={session}>
-        <NoVerify>
-          {TweetUserLayoutComponent}
-        </NoVerify>
+        <NoVerify>{TweetUserLayoutComponent}</NoVerify>
       </SessionProvider>
     );
   } else if (Component.noLogin) {
     return (
       <SessionProvider session={session}>
-        <NoLogin>
-          {TweetUserLayoutComponent}
-        </NoLogin>
+        <NoLogin>{TweetUserLayoutComponent}</NoLogin>
       </SessionProvider>
     );
   } else {
     return (
       <SessionProvider session={session}>
-          {TweetUserLayoutComponent}
+        {TweetUserLayoutComponent}
       </SessionProvider>
     );
   }

@@ -5,7 +5,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 // import { useTheme } from 'next-themes'
 
 const Layout = ({ children }) => {
-
   const { status, data: session } = useSession({
     // required: true,
     // onUnauthenticated() {

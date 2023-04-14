@@ -36,7 +36,7 @@ export default function Home({ users, tweets }) {
         {/* <Sidebar user={session.user} /> */}
 
         {/* Feed */}
-        <Feed/>
+        <Feed />
 
         {/* Widgets */}
         {/* <Widgets user={session.user.userId} /> */}

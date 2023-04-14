@@ -60,19 +60,25 @@ export default function Sidebar({ user, update = () => {} }) {
           <Link href={"/"} active>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <HomeIcon className="w-7" />
-              <span className="font-[600] text-primary-black text-lg hidden md:block">Home</span>
+              <span className="font-[600] text-primary-black text-lg hidden md:block">
+                Home
+              </span>
             </div>
           </Link>
           <Link href={"/profile/" + user.userId}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <UserIcon className="w-7" />
-              <span className="font-[500] text-primary-black text-lg hidden md:block">Profile</span>
+              <span className="font-[500] text-primary-black text-lg hidden md:block">
+                Profile
+              </span>
             </div>
           </Link>
           <Link href={"/messages"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <InboxIcon className="w-7" />
-              <span className="font-[500] text-primary-black text-lg hidden md:block">Messages</span>
+              <span className="font-[500] text-primary-black text-lg hidden md:block">
+                Messages
+              </span>
             </div>
           </Link>
 
@@ -80,15 +86,21 @@ export default function Sidebar({ user, update = () => {} }) {
             <Link href={"/admin"}>
               <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
                 <PresentationChartBarIcon className="w-7" />
-                <span className="font-[500] text-primary-black text-lg hidden md:block">Admin Panel</span>
+                <span className="font-[500] text-primary-black text-lg hidden md:block">
+                  Admin Panel
+                </span>
               </div>
             </Link>
-          ) : ("")}
+          ) : (
+            ""
+          )}
 
           <Link href={"/explore"}>
             <div className="flex gap-3 rounded-full p-3 items-center hover:bg-gray-200">
               <SparklesIcon className="w-7 font-[800]" />
-              <span className="shining_word font-[700] text-lg hidden md:block">Explore</span>
+              <span className="shining_word font-[700] text-lg hidden md:block">
+                Explore
+              </span>
             </div>
           </Link>
         </div>
@@ -117,8 +129,7 @@ export default function Sidebar({ user, update = () => {} }) {
       </div>
 
       {/* Overlay part after the Tweet button is clicked */}
-      <OverlayTweetInput open={open} setOpen={setOpen}/>
-
+      <OverlayTweetInput open={open} setOpen={setOpen} />
 
       {/* Mini-Profile */}
       <button

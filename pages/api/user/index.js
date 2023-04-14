@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         if (query.fast) {
           users = await User.find({})
             .populate("followerlist")
-            .populate("blocklist")
+            .populate("blocklist");
         } else {
           users = await User.find({})
             .populate("followerlist")

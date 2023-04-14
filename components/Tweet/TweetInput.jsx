@@ -6,17 +6,17 @@ export default function TweetInput() {
   const [privacySetting, setPrivacySetting] = useState("Public");
   const [input, setInput] = useState("Public");
   const { status, data: session } = useSession();
-  const [content, setContent] = useState("")
-  const [tweetInputWarning, setTweetInputWarning] = useState(false)
+  const [content, setContent] = useState("");
+  const [tweetInputWarning, setTweetInputWarning] = useState(false);
 
   async function postTweet(e) {
-    e.preventDefault()
-    if(!content) {
-      setTweetInputWarning(true)
+    e.preventDefault();
+    if (!content) {
+      setTweetInputWarning(true);
       setTimeout(() => {
-        setTweetInputWarning(false)
-      }, [4000])
-      return
+        setTweetInputWarning(false);
+      }, [4000]);
+      return;
     }
     var privacy_num;
     if (privacySetting == "Public") {
@@ -35,8 +35,8 @@ export default function TweetInput() {
       }),
     });
 
-    setContent("")
-    alert("Success")
+    setContent("");
+    alert("Success");
   }
 
   function privacyOptionUI(name) {
@@ -120,8 +120,15 @@ export default function TweetInput() {
 
       {tweetInputWarning && (
         <div className="border-l-[6px] border-[#b3935d] max-h-[70px] h-full w-[360px] bg-[#ffd48a] rounded-md absolute py-3 px-3 z-[500] flex justify-between items-center left-[50%] transform translate-x-[-50%] top-[16%]">
-          <h3 className="text-lg font-semibold">You forgot to share something..</h3>
-          <span className="text-2xl cursor-pointer" onClick={() => setTweetInputWarning(false)}>&times;</span>
+          <h3 className="text-lg font-semibold">
+            You forgot to share something..
+          </h3>
+          <span
+            className="text-2xl cursor-pointer"
+            onClick={() => setTweetInputWarning(false)}
+          >
+            &times;
+          </span>
         </div>
       )}
 

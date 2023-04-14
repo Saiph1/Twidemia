@@ -49,9 +49,9 @@ export const authOptions = {
     },
     async session({ session, token }) {
       session.user.userId = token.userId;
-      console.log('start')
+      console.log("start");
       const user_new = await User.findOne({ userId: token.userId });
-      console.log('end')
+      console.log("end");
       token.username = user_new.username;
       token.email = user_new.email;
       token.admin = user_new.admin;

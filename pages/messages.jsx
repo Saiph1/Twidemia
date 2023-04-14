@@ -13,21 +13,19 @@ import Contacts from "../components/Contacts";
 import dbConnect from "../lib/dbConnect";
 import Layout from "@/components/Layout";
 
-
 // Chat.getLayout = function getLayout(page) {
 //   return (
 //       <Layout title={"Favourite"}>{page}</Layout>
 //   )
 // }
 
-
 export default function Chat(props) {
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
   // const socket = useRef();
   const [contacts, setContacts] = useState([]);
-  const [load, setload] = useState(false); 
-//   const [currentChat, setCurrentChat] = useState(undefined); 
-const [currentChat, setCurrentChat] = useState({
+  const [load, setload] = useState(false);
+  //   const [currentChat, setCurrentChat] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState({
     username: "Please select a user to start the conversation.",
     email: "Rendering...",
     userId: "Rendering...",
@@ -47,7 +45,7 @@ const [currentChat, setCurrentChat] = useState({
     faculty: "Rendering...",
     followerlist: [],
     followinglist: [],
-    year: 0, 
+    year: 0,
   });
 
   const { status, data: session } = useSession({
@@ -56,61 +54,61 @@ const [currentChat, setCurrentChat] = useState({
       signIn();
     },
   });
-  
+
   // fetching user data for profile
-  useEffect(()=>{
-    if (!session) return; 
+  useEffect(() => {
+    if (!session) return;
     console.log(session.user);
-    setCurrentUser(session.user);   //set the current user
+    setCurrentUser(session.user); //set the current user
     // console.log("current ", currentUser);
 
     // get all contacts (i.e., user data)
     fetch("/api/user/")
-    .then((res)=>res.json())
-    .then((data)=>{
-    //   setUserdata(data.data);console.log("user data", userdata);
-    setContacts(data.data);console.log("contacts data", contacts);
-    //   setfollow(data.data.followerlist.map(item=>(item.userId === session.user.userId)).includes(true));
-    });
+      .then((res) => res.json())
+      .then((data) => {
+        //   setUserdata(data.data);console.log("user data", userdata);
+        setContacts(data.data);
+        console.log("contacts data", contacts);
+        //   setfollow(data.data.followerlist.map(item=>(item.userId === session.user.userId)).includes(true));
+      });
   }, [session, props]);
-  
-// replaced by session above (identify current user)
-//   useEffect(async () => {
-//     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-//       navigate("/login");
-//     } else {
-//       setCurrentUser(
-//         await JSON.parse(
-//           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-//         )
-//       );
-//     }
-//   }, []);
 
+  // replaced by session above (identify current user)
+  //   useEffect(async () => {
+  //     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+  //       navigate("/login");
+  //     } else {
+  //       setCurrentUser(
+  //         await JSON.parse(
+  //           localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+  //         )
+  //       );
+  //     }
+  //   }, []);
 
-//   useEffect(() => {
-//     if (currentUser) {
-//       socket.current = io("http://localhost:3001");
-//       socket.current.emit("add-user", currentUser._id);
-//     }
-//   }, [currentUser]);
+  //   useEffect(() => {
+  //     if (currentUser) {
+  //       socket.current = io("http://localhost:3001");
+  //       socket.current.emit("add-user", currentUser._id);
+  //     }
+  //   }, [currentUser]);
 
-//   useEffect(async () => {
-//     if (currentUser) {
-//       if (currentUser.isAvatarImageSet) {
-//         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-//         setContacts(data.data);
-//       } else {
-//         navigate("/setAvatar");
-//       }
-//     }
-//   }, [currentUser]);
+  //   useEffect(async () => {
+  //     if (currentUser) {
+  //       if (currentUser.isAvatarImageSet) {
+  //         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+  //         setContacts(data.data);
+  //       } else {
+  //         navigate("/setAvatar");
+  //       }
+  //     }
+  //   }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
     console.log("in chatv2", chat);
   };
 
-  if (session) { 
+  if (session) {
     return (
       <>
         <Head>
@@ -125,34 +123,42 @@ const [currentChat, setCurrentChat] = useState({
 
           <div className="w-full grid grid-cols-7 my-auto mr-4 md:mx-12 rounded-md max-h-[90vh] bg-gray-100">
             <div className="col-span-2 h-[90vh]">
-              <Contacts contacts={contacts} changeChat={handleChatChange} viewerid={session.user.userId} currentChat={currentChat} />
+              <Contacts
+                contacts={contacts}
+                changeChat={handleChatChange}
+                viewerid={session.user.userId}
+                currentChat={currentChat}
+              />
             </div>
 
             <div className="col-span-5 h-[90vh]">
-              <ChatContainer currentChat={currentChat} session={session} viewer={session.user.userId}/>
+              <ChatContainer
+                currentChat={currentChat}
+                session={session}
+                viewer={session.user.userId}
+              />
             </div>
           </div>
-
         </main>
       </>
     );
-  };
+  }
 
-//   return (
-//     <>
-//       <div>
-//         <div className="container">
-//           <Contacts contacts={contacts} changeChat={handleChatChange} />
-//           {/* {currentChat === undefined ? (
-//             <Welcome />
-//           ) : (
-//             <ChatContainer currentChat={currentChat} socket={socket} />
-//           )} */}
-//           <ChatContainer currentChat={currentChat} socket={socket} />
-//         </div>
-//       </div>
-//     </>
-//   );
+  //   return (
+  //     <>
+  //       <div>
+  //         <div className="container">
+  //           <Contacts contacts={contacts} changeChat={handleChatChange} />
+  //           {/* {currentChat === undefined ? (
+  //             <Welcome />
+  //           ) : (
+  //             <ChatContainer currentChat={currentChat} socket={socket} />
+  //           )} */}
+  //           <ChatContainer currentChat={currentChat} socket={socket} />
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
 }
 
 // const Container = styled.div`
@@ -177,17 +183,17 @@ const [currentChat, setCurrentChat] = useState({
 // `;
 
 export async function getServerSideProps(context) {
-    let isDbConnected = false;
+  let isDbConnected = false;
 
-    try {
-        // Try to connect the DB.
-        if (await dbConnect()) isDbConnected = true;
-    } catch (e) {
-        // If it cannot connect to DB, output log to console by using error flag.
-        console.error(e)
-    }
+  try {
+    // Try to connect the DB.
+    if (await dbConnect()) isDbConnected = true;
+  } catch (e) {
+    // If it cannot connect to DB, output log to console by using error flag.
+    console.error(e);
+  }
 
-    let id = context.query.userid;
-    // Return all post and login status by props.
-    return {props: {isDbConnected}};
+  let id = context.query.userid;
+  // Return all post and login status by props.
+  return { props: { isDbConnected } };
 }

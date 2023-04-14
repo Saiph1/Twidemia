@@ -78,7 +78,7 @@ export default function Widgets_item({
           @{single_userdata.userId}
         </h5>
       </div>
-      {(!loading&&button) && (
+      {!loading && button && (
         <button
           className={
             !follow
@@ -93,7 +93,7 @@ export default function Widgets_item({
           {!follow ? "Follow" : "Unfollow"}
         </button>
       )}
-      {loading&&button && (
+      {loading && button && (
         <button
           disabled
           type="button"

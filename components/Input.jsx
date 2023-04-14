@@ -15,16 +15,15 @@ export default function Input() {
   const { status, data: session } = useSession();
   const tweets_ = useContext(TweetContext);
   const users = useContext(UserContext);
-  const [load, setload] = useState(tweets_.length?true:false)
+  const [load, setload] = useState(tweets_.length ? true : false);
   const [tweets, setTweets] = useState();
-
 
   useEffect(() => {
     setload(tweets_.length ? true : false);
     if (tweets_.length) {
       setTweets(tweets_);
     }
-  }, [tweets_])
+  }, [tweets_]);
 
   // Simulating get data from backend
   var current_user = -1;
@@ -42,7 +41,6 @@ export default function Input() {
 
   // console.log(current_user.followinglist)
 
-
   return (
     <div className="min-h-[100vh] bg-white w-full pb-8">
       <div className="pt-4 pb-4 px-3">
@@ -52,7 +50,6 @@ export default function Input() {
       {load ? (
         <div className="flex flex-col items-center gap-8 mt-8">
           {tweets?.map((tweet) => {
-
             var uid = tweet.userID;
             var creator = -1;
 
@@ -69,7 +66,8 @@ export default function Input() {
                 //(tweet.visibility == 1 &&
                 //  current_user.followinglist.includes(creator._id)) ||
                 //(tweet.visibility >= 1 && session.user.userId == creator.userId)
-                tweet.visibility <= 1 && current_user.followinglist.includes(creator._id)
+                tweet.visibility <= 1 &&
+                current_user.followinglist.includes(creator._id)
               ) {
                 //tweet.iconURL = creator.iconURL;
                 tweet.userName = creator.username;
@@ -80,18 +78,22 @@ export default function Input() {
                 tweet.numOfLikes = tweet.likers?.length;
                 tweet.tweetID = tweet.tweetID;
                 // console.log(tweet.content,creator)
-                return <Tweet tweet={tweet} key={tweet.tweetID} viewer={current_user} />;
+                return (
+                  <Tweet
+                    tweet={tweet}
+                    key={tweet.tweetID}
+                    viewer={current_user}
+                  />
+                );
               }
             }
           })}
         </div>
-
       ) : (
         <div className="h-[14px] bg-gray-100 border-l border-r">
           Loading ...
         </div>
       )}
-
     </div>
   );
 }
