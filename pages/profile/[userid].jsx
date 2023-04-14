@@ -112,7 +112,7 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="'min-h-screen bg-white">
+        <main className="min-h-screen bg-white">
           <div className="h-full max-w-6xl container mx-auto xl:px-30">
             <div className="h-full grid grid-cols-5">
               <Sidebar user={session.user} update={updates} />
@@ -131,8 +131,8 @@ export default function Home(props) {
                   block_update={block_update}
                 />
                 <div className="py-8 flex flex-col items-center gap-4 bg-white">
-                  {userdata.tweetlist?.map((item)=><Tweet_profile key={item?.userId} tweet={item} 
-                    viewerid={props.id}
+                  {userdata.tweetlist?.map((item, index)=><Tweet_profile tweet={item} 
+                    viewerid={props.id} key={index}
                   />)}
                 </div>
               </div>

@@ -8,7 +8,14 @@ async function handler(req, res) {
 
   const data = req.body;
 
-  const { email, password, userId, username } = data;
+  const { 
+    email, 
+    password, 
+    userId, 
+    username, 
+    year, 
+    faculty 
+  } = data;
 
   await dbConnect();
   try {
@@ -35,6 +42,8 @@ async function handler(req, res) {
       password: password,
       userId: userId,
       username: username,
+      faculty: faculty,
+      year: year,
     });
     user = await user.save();
     res.status(201).json({

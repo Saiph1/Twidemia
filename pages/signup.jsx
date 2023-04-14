@@ -58,10 +58,12 @@ export default function Signup() {
       username: event.target.username.value,
       userId: event.target.userId.value,
       password: event.target.password.value,
+      year: event.target.year.value,
+      faculty: event.target.faculty.value,
       password_confirm: event.target.password_confirm.value,
     };
-    // let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
-    let emailFormat = true;
+    let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
+    // let emailFormat = true;
     if (!emailFormat) {
       // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
@@ -216,6 +218,47 @@ export default function Signup() {
                       id="userId"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="userId"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="faculty"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your faculty
+                   <select name="faculty" id="faculty"
+                      class="placeholder:text-gray-300 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     required
+                   >
+  <option disabled selected value> -- Select your faculty -- </option>
+  <option value="Faculty of Arts">Faculty of Arts</option>
+  <option value="Faculty of Business Adminstration">Faculty of Business Adminstration</option>
+  <option value="Faculty of Education">Faculty of Education</option>
+  <option value="Faculty of Engineering">Faculty of Engineering</option>
+  <option value="Faculty of Law">Faculty of Law</option>
+  <option value="Faculty of Medicine">Faculty of Medicine</option>
+  <option value="Faculty of Science">Faculty of Science</option>
+  <option value="Faculty of Social Science">Faculty of Social Science</option>
+  <option value="Graduate School">Graduate School</option>
+  <option value="Other Academic Units">Other Academic Units</option>
+</select> </label>
+                  </div>
+                  <div>
+                    <label
+                      for="year"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your admission year
+                    </label>
+                    <input
+                      type="number"
+                      name="year"
+                      // value="2023"
+                      min="2000"
+                      max="2050"
+                      id="year"
+                      class="placeholder:text-gray-300 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     />
                   </div>

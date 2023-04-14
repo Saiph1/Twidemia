@@ -128,7 +128,7 @@ export default function ChatContainer({ currentChat, viewer="", session }) {
             <div className="user-details">
                 <div className="username border-b-[1px] border-neutral-200 flex items-center bg-primary-blue text-white">
                     <div className="flex ml-3 w-[36px] bg-gray-800 rounded-full overflow-hidden h-[36px]">
-                      <img src="123" className="aspect-square object-cover w-full"/>
+                      <img src="/default.png" className="aspect-square object-cover w-full"/>
                     </div>
                     <p className="px-2 py-3 font-semibold whitespace-nowrap">{currentChat.username}</p>
                 </div>
