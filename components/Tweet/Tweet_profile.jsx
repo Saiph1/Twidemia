@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 const Tweet_profile = ({ tweet, viewerid}) => {
   // const [viewer, setviewer] = useState({tweetlist:[]}); 
   // const [retweet, setretweet] = useState(false);
+  const router = useRouter();
   const [like, setlike] = useState(tweet.likers.includes(viewerid)); 
   
   function calculatePostedTime(time) {
@@ -35,7 +37,9 @@ const Tweet_profile = ({ tweet, viewerid}) => {
         tweetID: tweet.tweetID,
         liker: uid
       }),
-    }).then(()=>{console.log("like done"); setlike(true)});
+    }).then(()=>{console.log("like done"); setlike(true)})
+    // .then(()=>location.reload());
+    .then(()=>router.replace(router.asPath))
   }
 
   async function revokeLike() {
@@ -47,7 +51,10 @@ const Tweet_profile = ({ tweet, viewerid}) => {
         tweetID: tweet.tweetID,
         liker: uid
       }),
-    }).then(()=>{console.log("revoke like done"); setlike(false)});
+    }).then(()=>{console.log("revoke like done"); setlike(false)})
+    // .then(()=>location.reload());
+    .then(()=>router.replace(router.asPath));
+
   }
   // function handle_retweet(){
   //   console.log(retweet);
@@ -76,7 +83,7 @@ const Tweet_profile = ({ tweet, viewerid}) => {
       <div className="max-w-[3rem]">
         <img
         // this should be render accordingly
-          src={"/default.png"}
+          src={tweet.userID?.avatar[0].content||"/default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />
