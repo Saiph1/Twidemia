@@ -76,7 +76,7 @@ const Tweet_profile = ({ tweet, viewerid}) => {
       <div className="max-w-[3rem]">
         <img
         // this should be render accordingly
-          src={"/default.png"}
+          src={tweet.userID?.avatar[0].content||"/default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />
