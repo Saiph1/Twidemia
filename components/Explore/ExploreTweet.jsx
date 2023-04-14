@@ -1,7 +1,26 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 // *** this page is not finished~
 const ExploreTweet = (props) => {
+  const  { status, data: session } = useSession();
+  const router = useRouter();
+
+  async function giveLike() {
+    var uid = session.user.userId
+    await fetch("/api/tweet/" + props.tweet.tweetID, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tweetID: props.tweet.tweetID,
+        liker: uid
+      }),
+    }).then(() => {
+      router.replace(router.asPath)
+    })
+  }
+
   return (
     <div className="shadow-tweetPosts bg-white flex rounded-2xl w-[90%] gap-4 py-3 px-6 min-h-[8rem]">
       <div className="max-w-[3rem]">
@@ -67,9 +86,9 @@ const ExploreTweet = (props) => {
           <label className="cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="#FE8E86"
+              fill={props.tweet.likers?.includes(session.user.userId)? '#FE8E86' : 'none'}
               viewBox="0 0 24 24"
-              stroke-width="0"
+              stroke-width={props.tweet.likers?.includes(session.user.userId)? '0' : '1.75'}
               stroke="currentColor"
               class="w-5 h-5 "
             >
@@ -79,7 +98,7 @@ const ExploreTweet = (props) => {
                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
               />
             </svg>
-            <span className="text-[14px] ">{props.likes}</span>
+            <button onClick={giveLike} className="text-[14px] ">{props.likes}</button>
           </label>
         </div>
       </div>

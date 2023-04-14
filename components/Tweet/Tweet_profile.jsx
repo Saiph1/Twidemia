@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 const Tweet_profile = ({ tweet, viewerid}) => {
   // const [viewer, setviewer] = useState({tweetlist:[]}); 
   // const [retweet, setretweet] = useState(false);
-  const [like, setlike] = useState(tweet.likers.includes(viewerid)); 
+  const [like, setlike] = useState(tweet.likers.includes(viewerid));
+  const router = useRouter();
   
   function calculatePostedTime(time) {
     console.log("tweet = ", tweet);
@@ -47,7 +49,10 @@ const Tweet_profile = ({ tweet, viewerid}) => {
         tweetID: tweet.tweetID,
         liker: uid
       }),
-    }).then(()=>{console.log("revoke like done"); setlike(false)});
+    }).then(()=>{console.log("revoke like done"); setlike(false)})
+      .then(() => {
+        router.replace(router.asPath)
+      });
   }
   // function handle_retweet(){
   //   console.log(retweet);
