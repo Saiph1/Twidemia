@@ -8,31 +8,71 @@ import React, { useEffect, useState } from "react";
 import CommentData from "../../components/commentHub";
 import Link from "next/link";
 import Comment from "@/components/Comment";
+import { useSession, signIn } from "next-auth/react";
+import Layout from "@/components/Layout";
+
+// PostsDetail.getLayout = function getLayout(page) {
+//   return <Layout title={"Favourite"}>{page}</Layout>;
+// };
 
 const PostsDetail = () => {
   const router = useRouter();
   const { postId } = router.query;
-
   const [tweetOwnerInfo, setTweetOwnerInfo] = useState();
-  const [tweetInfo, setTweetInfo] = useState({});
+  const [tweetInfo, setTweetInfo] = useState();
+  const [load, setload] = useState(false); 
+  const [comment_array, setComment_array] = useState([1,2,3,4,5]);
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn();
+    },
+  });
+  
+  function calculatePostedTime(time) {
+    const postTime = new Date(time).getTime() / 1000
+    const currentTime = new Date().getTime() / 1000
+    const timeDifferenceInMinute = Math.round((currentTime - postTime) / 60)
+    if(timeDifferenceInMinute > (60*24*30)) { // month
+      return Math.round(timeDifferenceInMinute/60/24/30) + "mo"
+    } else if (timeDifferenceInMinute > (60*24)) { // day
+      return Math.round(timeDifferenceInMinute/60/24) + "day"
+    } else if (timeDifferenceInMinute > 60) { // hour
+      return Math.round(timeDifferenceInMinute/60) + "hr"
+    } else if (timeDifferenceInMinute < 1) {
+      return 'just now'
+    } else {
+      return timeDifferenceInMinute + "min"
+    } 
+  }
 
   useEffect(() => {
-    // if (!session) return;
+    if (!session) return;
     console.log(postId);
     fetch("/api/tweet/" + postId)
       .then((res) => res.json())
       .then((data) => {
-        // console.log("FETECH TWEET Data", data.data); // success fetch
+        console.log("FETECH TWEET Data", data); // success fetch
         setTweetInfo({
-          content: data.data.content,
-          userId: data.data.userID.userId,
-          username: data.data.userID.username,
-          date: data.data.date,
-          likelength: data.data.likers?.length
-        });
+          content: data.data?.tweet?.content,
+          userId: data.data?.tweet?.userID?.userId,
+          username: data.data?.tweet.userID?.username,
+          date: data.data?.tweet?.date,
+          likelength: data.data?.tweet?.likers?.length,
+          commentLength: data.data?.tweet?.comments?.length,
+          comments: data.data?.comment.map((item,index)=>[item.content, item.author.username, item.postDateTime])
+        })
+        setload(true); 
+        // console.log('123123123123' + tweetInfo?.content);
+        // console.log('123123123123' + tweetInfo?.userId);
+        // console.log('123123123123' + tweetInfo?.username);
+        // console.log('123123123123' + tweetInfo?.date);
+        // console.log('123123123123' + tweetInfo?.likelength);
+        // console.log('123123123123' + tweetInfo?.comments);
+          // setComment_array((prev)=>[...prev, "1122"]);
         // console.log("TweetData after fetch", tweetInfo);
       })
-  }, [postId]);
+  }, [postId, load]);
 
   // Fetch postId tweet data directly
   // const tweetInfo = TweetData.filter((tweet) => {
@@ -43,11 +83,42 @@ const PostsDetail = () => {
     return comment.tweetID === postId;
   });
 
-  return (
-    <main className="flex min-h-screen max-w-7xl w-full mx-auto">
-      <Sidebar />
+  const [commentContent, setCommentContent] = useState('')
 
-      <div className="border-l border-r border-gray-200 xl:min-w-[700px] flex-grow max-w-xl  mr-12">
+  function handlePost() {
+    setload(false); 
+    if (commentContent === "") {
+        return;
+        
+    }
+
+    fetch('/api/comment', {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify({content: commentContent,
+                              postId: postId, 
+                              userId: session.user.userId
+                })})
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("the data", data);
+            setCommentContent('')
+        })  
+  }
+
+
+
+if (session) {
+  return (
+    <main className="min-h-screen bg-white">
+    <div className="h-full max-w-6xl container mx-auto xl:px-30">
+      <div className="h-full grid grid-cols-5">
+      {/* <Sidebar /> */}
+      {/* <div className="col-span-1"> */}
+        <Sidebar user={session.user} />
+      {/* </div> */}
+      <div className="col-span-4 lg:col-span-3 border-x-[1px]">
+      <div className="w-full min-h-screen">
         <div className="">
           <Link
             href={"/"}
@@ -72,17 +143,17 @@ const PostsDetail = () => {
         </div>
 
         {/* tweet owner and tweet info */}
-        <div className="py-4 px-3 flex gap-4">
+        <div className="py-4 px-3 flex gap-4 w-full">
           {/* icon */}
-          <div className="max-w-[3rem]">
+          {/* <div className="max-w-[3rem]">
             <img
               src={tweetInfo?.iconURL}  
               className="rounded-full w-full object-cover aspect-square"
-            />  {/* icon not rendered yet */}
-          </div>
+            />  
+          </div> */}
 
-          <div>
-            <div className="flex justify-between items-center mb-2">
+          <div className="full">
+            <div className="flex justify-between items-center mb-2 w-full">
               <div className="inline-flex gap-2 items-center">
                 <p className="font-semibold">{tweetInfo?.username}</p> {/* usernaeme */}
                 <p className="text-gray-500 text-sm font-light">
@@ -90,7 +161,7 @@ const PostsDetail = () => {
                 </p>
               </div>
               <p className="text-gray-500 text-xs font-light">
-                {tweetInfo?.date}
+                {", sent "+ calculatePostedTime(tweetInfo?.date) + " ago"}
               </p>
             </div>
 
@@ -112,7 +183,7 @@ const PostsDetail = () => {
                     d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
                   />
                 </svg>
-                <span className="text-[14px] ">{tweetInfo?.comments}</span> {/* comments not rendered yet */}
+                <span className="text-[14px] ">{tweetInfo?.commentLength}</span> {/* comments not rendered yet */}
               </label>
               <label className="cursor-pointer inline-flex gap-1 items-center text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-100 py-1 px-2">
                 <svg
@@ -152,28 +223,42 @@ const PostsDetail = () => {
               <textarea
                 className="w-full min-h-[100px] my-1 py-2 px-3 rounded-sm focus:border-0"
                 placeholder="Tweet your reply.."
+                id = "commentForm"
+                onChange={(ev) => setCommentContent(ev.target.value)}
+                value={commentContent}
               />
             </div>
           </div>
           <div className="text-end pr-4">
-            <button className="bg-primary-blue text-white py-2 px-4 rounded-3xl">
+            <button onClick={handlePost} className="bg-primary-blue text-white py-2 px-4 rounded-3xl">
               Reply
             </button>
           </div>
         </div>
 
         {/* comments */}
-        {commentsOfTweet.length > 0 &&
-          commentsOfTweet?.map((comment) => {
-            return <Comment comment={comment} key={comment._id} />;
+        {tweetInfo?.comments?.map((comment) => {
+            // console.log("logged comment", tweetInfo.comments);
+            // let tmp = []; 
+            // tmp.push(tweetInfo.comments[index]);
+            // console.log("the tmp", tmp);
+            // comment.content1 = comment.content;
+            // console.log(comment.content1)
+            // comment.author1 = comment.author.userId;
+            // comment.postDateTime1 = toString(comment.postDateTime); 
+            return (<Comment content={comment[0]} author={comment[1]} postDateTime={comment[2]}/>);
+            // return <Comment comment={comment} key={comment._id} />;
           })}
+
+          {/* {tweetInfo?.comments} */}
       </div>
-
-      <Widgets />
-
+      </div>
+      <Widgets user={session.user.userId}/>
+      </div>
+    </div>
       {/* Model */}
     </main>
-  );
+  );}
 };
 
 export default PostsDetail;
@@ -197,3 +282,5 @@ export default PostsDetail;
 //   // Return all post and login status by props.
 //   return {props: {isDbConnected, id}};
 // }
+
+PostsDetail.verify = true;

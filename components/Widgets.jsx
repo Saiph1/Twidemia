@@ -24,9 +24,9 @@ export default function Widgets({ user, update_page }) {
       .then((res) => res.json())
       .then((data) => {
         setSearchUserList(data.data);
-        console.log("fetched all user for search list.");
-        console.log(data.data);
-        console.log(searchUserList);
+        // console.log("fetched all user for search list.");
+        // console.log(data.data);
+        // console.log(searchUserList);
       });
   }, [focus]);
 

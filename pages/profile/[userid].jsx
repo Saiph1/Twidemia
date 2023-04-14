@@ -115,7 +115,7 @@ export default function Home(props) {
           <link rel="icon" href="/Twidemia-logo.png" />
         </Head>
 
-        <main className="'min-h-screen bg-white">
+        <main className="min-h-screen bg-white">
           <div className="h-full max-w-6xl container mx-auto xl:px-30">
             <div className="h-full grid grid-cols-5">
               <Sidebar user={session.user} update={updates} />
