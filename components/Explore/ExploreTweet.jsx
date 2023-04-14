@@ -6,7 +6,7 @@ const ExploreTweet = (props) => {
     <div className="shadow-tweetPosts bg-white flex rounded-2xl w-[90%] gap-4 py-3 px-6 min-h-[8rem]">
       <div className="max-w-[3rem]">
         <img
-          src={props.imageURL}
+          src={"/default.png"}
           alt="icon"
           className="rounded-full w-full object-cover aspect-square"
         />
