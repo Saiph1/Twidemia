@@ -20,6 +20,7 @@ import CardMedia from "@mui/material/CardMedia";
 
 import Link from "@mui/material/Link";
 import imageCompression from "browser-image-compression";
+import { useRouter } from "next/router";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -59,6 +60,8 @@ export default function ProfileContainer({
   const [postBgImage, setPostBgImage] = React.useState({ myBgFile: "" });
   // const inputFile = useRef(null)
 
+  const router = useRouter();
+
   // https://codesandbox.io/s/9rm8pv?file=/demo.tsx
   const faculties = [
     {
@@ -87,6 +90,7 @@ export default function ProfileContainer({
     setPostImage({ myFile: "" });
     setPostBgImage({ myFile: "" });
     setOpen(false);
+    
   };
 
   const handleDoneClose = () => {
@@ -98,9 +102,9 @@ export default function ProfileContainer({
     // console.log(document.getElementById("description").value);
 
     console.log("Uploaded");
-
     updateUser();
     editupdate();
+    location.reload()
     setOpen(false);
   };
 
@@ -246,7 +250,7 @@ export default function ProfileContainer({
   // this loaded is used from the parent state "load"
   if (loaded) {
     return (
-      <div className="w-full min-h-screen">
+      <div className="w-full">
         <div className="flex py-4 px-3 sticky top-0 z-20 bg-white border-b border-gray-200">
           <h4 className="sm:text-xl font-semibold cursor-pointer">Profile</h4>
         </div>
