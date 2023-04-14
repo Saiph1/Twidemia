@@ -1,6 +1,8 @@
 import dbConnect from "../../../lib/dbConnect";
 import Tweet from "../../../models/Tweet";
 import User from "../../../models/User";
+import Comment from "../../../models/Comment";
+
 // https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
 export default async function handler(req, res) {
@@ -11,8 +13,15 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        var tweet = await Tweet.findOne({ tweetID: req.query.tweetID }).populate("userID");
-        res.status(201).json({ success: true, data: tweet });
+        var tweet = await Tweet.findOne({ tweetID: req.query.tweetID }).populate("userID").populate([{ path: "comments", populate: { path: "author" } }]);
+        // let arr = []; 
+        // for (let i = 0; i < tweet.comments.length; i++)
+        //   var comment = await Comment.findOne({_id: tweet.comments[0]._id});
+        //   arr=[...arr, comment]; 
+        // console.log("tweet data",tweet);
+        var comment = await Comment.find({tweet: tweet._id}).populate("author");
+
+        res.status(201).json({ success: true, data: {tweet:tweet, comment: comment}});
       } catch (error) {
         res.status(400).json({ success: false, error: error.toString()});
       }
