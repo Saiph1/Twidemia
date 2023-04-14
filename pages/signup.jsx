@@ -62,8 +62,8 @@ export default function Signup() {
       faculty: event.target.faculty.value,
       password_confirm: event.target.password_confirm.value,
     };
-    // let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
-    let emailFormat = true;
+    let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
+    // let emailFormat = true;
     if (!emailFormat) {
       // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";

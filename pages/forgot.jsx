@@ -19,7 +19,6 @@ export default function Forgot() {
     event.preventDefault();
 
     const sid = event.target.email_uid.value;
-    /*
     const email = sid + "@link.cuhk.edu.hk";
     let isnum = /\d{10}/.test(sid);
     if (!isnum) {
@@ -27,8 +26,7 @@ export default function Forgot() {
       setError(true);
       return;
     }
-    */
-    const email = sid;
+    // const email = sid;
     console.log("email verification. ");
     const endpoint = "/api/token";
     const options = {
