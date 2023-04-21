@@ -37,6 +37,21 @@ body {
     animation: text-shine 2s linear infinite;
 }
 
+.shining_word2 {
+    background: linear-gradient(
+        to right,
+        #E55D87 0%,
+        #5FC3E4  51%,
+        #E55D87  100%
+    );
+
+    white-space: nowrap;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200%;
+    animation: text-shine 2s linear infinite;
+}
+
 /* For pop up tweet dialog after clicking the button at left sidebar */
 .tweetOverlay {
     position: fixed;

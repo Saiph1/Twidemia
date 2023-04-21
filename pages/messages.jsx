@@ -26,7 +26,7 @@ export default function Chat(props) {
   const [load, setload] = useState(false);
   //   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentChat, setCurrentChat] = useState({
-    username: "Please select a user to start the conversation.",
+    username: "Please select a user to start a conversation.",
     email: "Rendering...",
     userId: "Rendering...",
     password: "Rendering...",

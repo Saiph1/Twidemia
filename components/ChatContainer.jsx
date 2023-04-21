@@ -31,7 +31,7 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
 
     socket.off("update-input").on("update-input", (msg) => {
       if (msg == "") return;
-      setMessages((prevMessages) => [...prevMessages, msg]);
+      setMessages((prevMessages) => [...prevMessages, [msg.content,msg.from]]);
       console.log("income message = ", msg);
     });
   };
@@ -51,10 +51,7 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
         for (let i = 0; i < data2.data.message.length; i++)
           setMessages((prevMessages) => [
             ...prevMessages,
-            data2.data.message[i].content +
-              "(from ID=@" +
-              data2.data.message[i].sender.userId +
-              ")",
+            [data2.data.message[i].content, data2.data.message[i].sender.userId],
           ]);
       })
       .then(() => setload(true));
@@ -62,17 +59,32 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
 
   const handleSendMsg = async (msg) => {
     console.log(msg);
-    fetch("/api/Chat/" + viewer + "/" + currentChat.userId, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: msg }),
-    })
-      .then((obj) => obj.json())
-      .then((data) => {
-        console.log("post done.");
-        console.log(data);
-      });
-    socket.emit("input-change", msg + "(from ID=@" + session.user.userId + ")");
+    if (!(currentChat.userId === "GPTutor")){
+      fetch("/api/Chat/" + viewer + "/" + currentChat.userId, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: msg }),
+      })
+        .then((obj) => obj.json())
+        .then((data) => {
+          console.log("post done.");
+          console.log(data);
+        });
+    }
+    socket.emit("input-change", {content: msg, from: session.user.userId});
+
+    if (currentChat.userId === "GPTutor"){
+      fetch("/api/gpt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(msg),
+      }).then((res)=>res.json())
+      .then((data)=> {console.log(data); 
+        setMessages((prevMessages) => [...prevMessages, [data.data.choices[0].text,"GPTutor"]]);
+        // socket.emit("input-change", {content: data.data.choices[0].text, from: "GPTutor"})
+        console.log(data.data.choices[0].text);
+      }); 
+    }
   };
 
   return (
@@ -87,7 +99,7 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
                   className="aspect-square object-cover w-full"
                 />
               </div>
-              <p className="px-2 py-3 font-semibold whitespace-nowrap">
+              <p className={"px-2 py-3 font-semibold whitespace-nowrap" + (currentChat.username === "GPTutor"? " shining_word2": "")}>
                 {currentChat.username}
               </p>
             </div>
@@ -122,19 +134,19 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
                   <div className={`content w-full flex`} key={index}>
                     <p
                       className={`w-full p-3 rounded-2xl ${
-                        message.includes(session.user.userId)
+                        message[1] === session.user.userId
                           ? "text-end"
                           : "text-start"
                       }`}
                     >
                       <span
                         className={`w-full h-full p-3 rounded-2xl ${
-                          message.includes(session.user.userId)
+                          message[1] === session.user.userId
                             ? "bg-primary-blue"
                             : "bg-gray-200"
                         }`}
                       >
-                        {message}
+                        {message[0]}
                       </span>
                     </p>
                   </div>

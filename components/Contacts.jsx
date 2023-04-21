@@ -58,6 +58,27 @@ export default function Contacts({
         </div>
 
         <div className="contacts h-full overflow-y-auto flex flex-col">
+            <div
+              className={`flex items-center px-4 py-2 ${
+                currentChat.username === "GPTutor"
+                  ? "bg-gray-300 scale-120 border-l-[4px] border-primary-blue"
+                  : "hover:bg-gray-200 "
+              }`}
+              onClick={() => changeCurrentChat(0, {username: "GPTutor", userId: "GPTutor"})}
+            >
+              <img
+                className="rounded-full"
+                width="40"
+                src={"/default.png"}
+                alt="img"
+              />
+              <div className="truncate ml-4 leading-5">
+                <h4 className="font-bold text-[14px] truncate shining_word2">
+                  GPTutor
+                </h4>
+              </div>
+            </div>
+
           {contacts.map((contact, index) => {
             return contacts[index].userId != viewerid ? (
               <div
