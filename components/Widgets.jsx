@@ -16,31 +16,7 @@ export default function Widgets({ user, update_page }) {
     setload(true);
   }, [alluser]);
 
-  /*
-  useEffect(() => {
-    fetch("/api/user/")
-      .then((res) => res.json())
-      .then((data) => {
-        setalluser(data.data.sort((a, b) => b.followerlist.length - a.followerlist.length));
-        console.log("fetched all user.");
-      })
-      .then(() => setload(true));
-  }, [load]);
-  */
-
-  /*
-  useEffect(() => {
-    fetch("/api/user/")
-      .then((res) => res.json())
-      .then((data) => {
-        setSearchUserList(data.data);
-        // console.log("fetched all user for search list.");
-        // console.log(data.data);
-        // console.log(searchUserList);
-      });
-  }, [focus]);
-  */
-
+ 
   // https://contactmentor.com/build-reactjs-search-filter/
   const filterBySearch = (event) => {
     // Access input value
@@ -64,18 +40,6 @@ export default function Widgets({ user, update_page }) {
     // setFilteredList()
   };
 
-  // const filterBySearch = (event) => {
-  //   // Access input value
-  //   const query = event.target.value;
-  //   // Create copy of item list
-  //   var updatedList = [...itemList];
-  //   // Include all elements which includes the search query
-  //   updatedList = updatedList.filter((item) => {
-  //     return item.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  //   });
-  //   // Trigger render with updated values
-  //   setFilteredList(updatedList);
-  // };
 
   if (load) {
     return (
@@ -105,13 +69,6 @@ export default function Widgets({ user, update_page }) {
                 button={false}
               />
             ))}
-            {/* {true? <div id="item-list">
-              <ol>
-                {filteredList.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ol>
-          </div> : <div></div>} */}
           </div>
         </div>
 
