@@ -12,6 +12,7 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
+      // create new token, given email / userId, type
     case "POST":
       try {
         console.log(req.body);
@@ -26,6 +27,7 @@ export default async function handler(req, res) {
           });
           return;
         }
+        // randomize token string and save to db
         const hash = crypto.randomBytes(16).toString("hex");
         const token = new Token({
           userId: user.userId,

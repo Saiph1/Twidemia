@@ -37,6 +37,7 @@ export const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    // set jwt token
     async jwt({ token, user }) {
       if (user) {
         token.userId = user.userId;
@@ -47,11 +48,10 @@ export const authOptions = {
       }
       return token;
     },
+    // set session value
     async session({ session, token }) {
       session.user.userId = token.userId;
-      console.log("start");
       const user_new = await User.findOne({ userId: token.userId });
-      console.log("end");
       token.username = user_new.username;
       token.email = user_new.email;
       token.admin = user_new.admin;

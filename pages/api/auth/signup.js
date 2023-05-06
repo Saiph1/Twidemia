@@ -12,6 +12,7 @@ async function handler(req, res) {
 
   await dbConnect();
   try {
+    // check email registered or not
     const existUser = await User.exists({ email: email });
     if (existUser) {
       res.status(200).json({
@@ -20,16 +21,8 @@ async function handler(req, res) {
       });
       return;
     }
-    /*
-    existUser = await User.exists({ userId: userId });
-    if (existUser) {
-      res.status(200).json({
-        user: null,
-        message: `Email registered already!`,
-      });
-      return;
-    }
-    */
+
+    // create new user and save to db
     let user = new User({
       email: email,
       password: password,

@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, createContext, useEffect } from "react";
 
+// fetch data and store in context
 export const UserContext = createContext();
 export const TweetContext = createContext();
 export default function App({
@@ -20,27 +21,23 @@ export default function App({
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.data);
-          // console.log("fetched all user.");
         });
     } else {
       fetch("/api/user?fast=1")
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.data);
-          // console.log("fast fetched all user.");
         });
       fetch("/api/user/")
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.data);
-          // console.log("fetched all user.");
         });
     }
     fetch("/api/tweet/")
       .then((res) => res.json())
       .then((data) => {
         setTweets(data.data);
-        // console.log("fetched all tweets.");
       });
   }
 
@@ -95,6 +92,7 @@ export default function App({
   }
 }
 
+// different component that require different authentication level
 function NoVerify({ children }) {
   const router = useRouter();
   const { status, data: session } = useSession();

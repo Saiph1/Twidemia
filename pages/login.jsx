@@ -9,13 +9,15 @@ import Link from "next/link";
 // https://flowbite.com/blocks/marketing/login/
 
 export default function Login({ csrfToken, error, providers }) {
-  // Just a simple example for testing backend
   const [errorMessage, setErrorMessage] = useState("");
   const [Dark, setDark] = useState(false); // Default white theme, used in rendering the toggle button.
 
+  /*
+  // Just a simple example for testing backend
   const handleclick = () => {
     fetch("api/user", { method: "POST" }).then(() => console.log("success."));
   };
+  */
 
   if (!providers.credentials) throw new Error("provider not supported");
 
@@ -24,11 +26,6 @@ export default function Login({ csrfToken, error, providers }) {
       email_uid: event.target.email_uid.value,
       password: event.target.password.value,
     };
-    // front end checking can be done here. currently there is no checking
-    if (data.email_uid === "catch it") {
-      event.preventDefault();
-      setErrorMessage("catch some problem in email / uid");
-    }
   }
 
   // handle function for the button click event, setting the class of the container to dark, tailwind uses this to determine the dark scheme.

@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 // https://flowbite.com/blocks/marketing/login/
 
 export default function Verify({ qtoken }) {
-  // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
   const [message, setMessage] = useState("");
@@ -59,6 +58,7 @@ export default function Verify({ qtoken }) {
             verified: true,
           }),
         });
+        // redirect to home page if verified
         if (responseVerify.ok) {
           setVerified(true);
           router.push("/");
@@ -90,6 +90,7 @@ export default function Verify({ qtoken }) {
     document.getElementById("container").className = Dark ? "dark" : "";
   }
 
+  // if there is query token in url
   useEffect(() => {
     if (qtoken) {
       checkToken(qtoken);

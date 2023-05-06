@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 
+// create user
 async function createUser(data) {
   const endpointUser = "/api/auth/signup";
   const optionsUser = {
@@ -62,20 +63,17 @@ export default function Signup() {
       faculty: event.target.faculty.value,
       password_confirm: event.target.password_confirm.value,
     };
+    // input validation
     let emailFormat = /^\d{10}@link.cuhk.edu.hk$/.test(data.email);
-    // let emailFormat = true;
     if (!emailFormat) {
-      // messageTmp += "Please use a cuhk email that ends with link.cuhk.edu.hk\n";
       messageTmp = "Please use a cuhk email that ends with @link.cuhk.edu.hk\n";
       errorTmp = true;
     }
     if (data.password.length < 4) {
-      // messageTmp += "Password length should be at least 4\n";
       messageTmp = "Password length should be at least 4\n";
       errorTmp = true;
     }
     if (data.password != data.password_confirm) {
-      // messageTmp += "Passwords are not same\n";
       messageTmp = "Passwords are not same\n";
       errorTmp = true;
     }

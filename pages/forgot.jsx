@@ -8,7 +8,6 @@ import Link from "next/link";
 // https://flowbite.com/blocks/marketing/login/
 
 export default function Forgot() {
-  // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
   const [message, setMessage] = useState("");
@@ -20,13 +19,13 @@ export default function Forgot() {
 
     const sid = event.target.email_uid.value;
     const email = sid + "@link.cuhk.edu.hk";
+    // check if sid is 10 digit with regular expression
     let isnum = /\d{10}/.test(sid);
     if (!isnum) {
       setMessage("Please enter a valid student ID.");
       setError(true);
       return;
     }
-    // const email = sid;
     console.log("email verification. ");
     const endpoint = "/api/token";
     const options = {

@@ -1,7 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import Token from "../../../models/Token";
 
-// https://itnext.io/using-mongoose-with-next-js-11-b2a08ff2dd3c
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -9,6 +8,7 @@ export default async function handler(req, res) {
   await dbConnect();
 
   switch (method) {
+      // check if token exists in db
     case "GET":
       try {
         const { hash } = req.query;
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false, message: error.message });
       }
       break;
+      // delete token
     case "DELETE":
       const { hash } = req.query;
       try {

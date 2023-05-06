@@ -7,7 +7,6 @@ import User from "@/models/User";
 import Token from "@/models/Token";
 
 export default function Reset({ isDbConnected, user, token }) {
-  // Just a simple example for testing backend
   const router = useRouter();
   const { status, data: session } = useSession();
   const [message, setMessage] = useState("");
@@ -20,6 +19,7 @@ export default function Reset({ isDbConnected, user, token }) {
       password: event.target.password.value,
       password_confirm: event.target.password_confirm.value,
     };
+    // input validation
     if (data.password.length < 4) {
       setMessage("Password length should be at least 4");
       setError(true);
