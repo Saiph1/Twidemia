@@ -23,7 +23,21 @@ Through Twidemia GPTutor , we seek to build a supportive virtual community that 
     NEXTAUTH_SECRET=YxHMNOc9B+x9LlUD3wYU/ewzBgaI0bSmbnOZDoWEHZg=
     NEXTAUTH_URL=http://localhost:3000
     OPENAIKEY=YOUR_REQUESTED_KEY
+    
+    SMTP_HOST=smtp.gmail.com
+    SMTP_PORT=465
+    SMTP_USER=noreply.twidemia@gmail.com
+    SMTP_PASSWORD=lnkfoqavvcgouazw
+    SMTP_FROM_EMAIL=noreply.twidemia@gmail.com
 
+    DOMAIN=http://localhost:3000
+
+    ```
+    
+    Alternatively, use another email account:
+    ```
+    SMTP_USER=bot.twidemia@gmail.com
+    SMTP_PASSWORD=rsturtnocotliakb
     ```
 
 1. Run nextjs server in development mode
