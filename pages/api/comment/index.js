@@ -1,3 +1,5 @@
+// Purpose: API for commenting post
+
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Tweet from "../../../models/Tweet";
@@ -47,6 +49,7 @@ export default async function handler(req, res) {
         if (!tweet) res.status(500).json({ error: "Tweet not found." });
 
         res.status(201).json(comment);
+        console.log(comment);
       } catch (error) {
         // Return 500 if failed.
         console.log(error);

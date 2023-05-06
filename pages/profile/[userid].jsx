@@ -1,3 +1,5 @@
+// Purpose: user profile page, with dynamic routing to different users according to userid
+
 import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
