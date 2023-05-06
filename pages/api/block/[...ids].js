@@ -1,6 +1,6 @@
+// Purpose: API for blocking and unblocking users
+
 import dbConnect from "../../../lib/dbConnect";
-// import Chat from "./models/Chat";
-import Chat from "../../../models/chat";
 import User from "../../../models/User";
 import Message from "../../../models/Message";
 

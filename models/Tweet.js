@@ -1,3 +1,5 @@
+// Purpose: Tweet MongoDB Schema
+
 import mongoose, { Schema } from "mongoose";
 
 const TweetSchema = new mongoose.Schema({

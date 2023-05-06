@@ -1,3 +1,5 @@
+// Purpose: Message MongoDB Schema
+
 import mongoose, { Schema } from "mongoose";
 const MessageSchema = new mongoose.Schema(
   {

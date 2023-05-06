@@ -1,3 +1,5 @@
+// Purpose: Token MongoDB Schema
+
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
