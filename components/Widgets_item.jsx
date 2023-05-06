@@ -1,3 +1,5 @@
+// Purpose: Widgets item component
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect, useState } from "react";

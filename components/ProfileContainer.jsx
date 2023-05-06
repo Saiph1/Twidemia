@@ -1,6 +1,5 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+// Purpose: Profile Container 
+
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -30,7 +29,6 @@ import ListItemText from "@mui/material/ListItemText";
 import FollowerListItem from "./Profile/FollowerListItem";
 import axios from "axios";
 
-// import avatar from "./Avatar_test.png"
 
 export default function ProfileContainer({
   user,
@@ -93,13 +91,6 @@ export default function ProfileContainer({
   };
 
   const handleDoneClose = () => {
-    // setUsername(document.getElementById("name").value);
-    // setDescription(document.getElementById("description").value);
-    // // setFacultyValue(facultyValue);
-    // console.log(facultyValue);
-    // console.log(document.getElementById("name").value);
-    // console.log(document.getElementById("description").value);
-
     console.log("Uploaded");
     updateUser();
     editupdate();
@@ -110,13 +101,9 @@ export default function ProfileContainer({
   const handleCreateNewItem = (e) => {
     e.preventDefault();
     setFacultyValue(e.target.value);
-    // console.log(facultyValue)
   };
 
-  //   const handleClick = event => {
-  //     const { myValue } = event.currentTarget.dataset;
-  //     console.log(myValue) // --> 123
-  // }
+
 
   const handleFollowerOpen = () => {
     setFollowerOpen(true);
@@ -125,7 +112,7 @@ export default function ProfileContainer({
   const handleFollowerClose = () => {
     setFollowerOpen(false);
   };
-  // console.log("myprofile", myprofile)
+
 
   const handleFollowingOpen = () => {
     setFollowingOpen(true);
@@ -400,17 +387,12 @@ export default function ProfileContainer({
                 <></>
               )}
             </CardContent>
-            {/* <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions> */}
+  
           </Card>
           <Dialog open={open} onClose={handleEditClose}>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogContent>
-              {/* <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We
-                            will send updates occasionally.
-                        </DialogContentText> */}
+
 
               <Tooltip title="Change your avatar">
                 <IconButton

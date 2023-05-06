@@ -1,3 +1,5 @@
+// Purpose: Tweet input component
+
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Tweet from "./Tweet/Tweet";
@@ -6,7 +8,6 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "@/pages/_app";
 import { TweetContext } from "@/pages/_app";
 
-//import TweetData from "./tweetHub"; // <-- delete later after the backend and database complete
 
 //https://www.youtube.com/watch?v=u5gBoKVukIU  <--  UI design Link
 

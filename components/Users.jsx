@@ -1,3 +1,5 @@
+// Purpose: User component
+
 import TweetData from "./tweetHub";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";

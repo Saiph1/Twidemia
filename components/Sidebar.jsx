@@ -1,3 +1,5 @@
+// Purpose: Sidebar component
+
 import Image from "next/image";
 import SidebarMenuItem from "./SidebarMenuItem";
 import {

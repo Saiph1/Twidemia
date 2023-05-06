@@ -1,3 +1,5 @@
+// Purpose: Widgets component
+
 import { SearchIcon } from "@heroicons/react/outline";
 import Widgets_item from "@/components/Widgets_item";
 import { useState, useEffect, useContext } from "react";
