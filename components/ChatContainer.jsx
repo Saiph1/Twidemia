@@ -131,23 +131,23 @@ export default function ChatContainer({ currentChat, viewer = "", session }) {
             <div className="chat-messages px-4 overflow-y-scroll h-full flex flex-col gap-2 ">
               {messages.map((message, index) => {
                 return (
-                  <div className={`content w-full flex`} key={index}>
+                  <div className={`content w-full flex ${message[1] === session.user.userId?"justify-end":""}`} key={index}>
                     <p
-                      className={`w-full p-3 rounded-2xl ${
+                      className={`p-3 rounded-2xl ${
                         message[1] === session.user.userId
-                          ? "text-end"
+                          ? "text-end "
                           : "text-start"
                       }`}
                     >
-                      <span
-                        className={`w-full h-full p-3 rounded-2xl ${
+                      <div
+                        className={`ml-2 py-3 px-4 rounded-2xl ${
                           message[1] === session.user.userId
-                            ? "bg-primary-blue"
+                            ? "bg-primary-blue "
                             : "bg-gray-200"
                         }`}
                       >
                         {message[0]}
-                      </span>
+                      </div>
                     </p>
                   </div>
                 );

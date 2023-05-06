@@ -11,7 +11,6 @@ export default async function handler(req, res) {
     const { method } = req;
     // // Connect DB.
     // await dbConnect();
-
     // Check req method.
     switch (method) {
       // Create a new comment.
@@ -21,11 +20,11 @@ export default async function handler(req, res) {
             const completion = await openai.createCompletion({
                 model: 'text-davinci-002',
                 prompt: req.body,
-                temperature: 0.7,
+                temperature: 0.9,
                 top_p: 1,
                 frequency_penalty: 1,
                 presence_penalty: 1,
-                max_tokens: 20,
+                max_tokens: 100,
               });
               console.log("Promt result: ", completion.data);
               res.status(200).json({ success: true, data: completion.data });
