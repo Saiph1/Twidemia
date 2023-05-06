@@ -1,3 +1,5 @@
+// Purpose: explore page, with sorted tweets according to populartiy, time, and popularity/ time
+
 import ExploreTweet from "@/components/Explore/ExploreTweet";
 import Head from "next/head";
 import Image from "next/image";

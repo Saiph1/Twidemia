@@ -1,3 +1,5 @@
+// Purpose: Index page for Twidemia
+
 import Head from "next/head";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -47,25 +49,5 @@ export default function Home({ users, tweets }) {
   );
 }
 
-/*
-// export async function getServerSideProps() {
-export async function getStaticProps() {
-  try {
-    // Try to connect the DB.
-    await dbConnect();
-    // const tweets = await Tweet.find();
-    // const users = await User.find().populate("tweetlist");
-    return {
-      props: {
-        // users: JSON.parse(JSON.stringify(users)),
-        // tweets: JSON.parse(JSON.stringify(tweets)),
-      },
-    };
-  } catch (e) {
-    // If it cannot connect to DB, output log to console by using error flag.
-    console.error(e);
-  }
-}
-*/
 
 Home.verify = true;

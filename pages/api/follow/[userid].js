@@ -1,3 +1,5 @@
+// Purpose: API for following and unfollowing users
+
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 

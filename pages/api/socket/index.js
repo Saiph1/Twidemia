@@ -1,3 +1,5 @@
+// Purpose: API for sending and receiving messages with socket.io
+
 import { Server } from "socket.io";
 // import messageHandler from "../../utils/sockets/messageHandler";
 

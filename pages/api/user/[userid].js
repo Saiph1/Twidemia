@@ -1,3 +1,5 @@
+// Purpose: API for retrieving users (GET), updating users (PUT), and deleting users (DELETE) according to the query userId
+
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Image from "../../../models/Image";

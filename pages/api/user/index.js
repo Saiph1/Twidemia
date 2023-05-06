@@ -1,3 +1,5 @@
+// Purpose: API for retrieving the follower and block list
+
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Image from "../../../models/Image";
